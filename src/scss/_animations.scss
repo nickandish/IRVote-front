@@ -1,0 +1,73 @@
+@mixin circle-animation(
+  $size: 100px,
+  $color: blue,
+  $border: 2px solid #ada4ef44,
+  $duration: 2s,
+  $distance: 10px,
+  $top: 0,
+  $left: 0
+) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background-color: $color;
+  border: $border;
+  position: absolute;
+  top: $top;
+  left: $left;
+  overflow: hidden;
+  animation: subtleMove $duration infinite alternate;
+
+  @keyframes subtleMove {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate($distance, $distance);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+}
+
+// little ones
+
+@mixin little-circles(
+  $size: 100px,
+  $color: blue,
+  $duration: 2s,
+  $top: 0,
+  $left: 0
+) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background-color: $color;
+  position: absolute;
+  top: $top;
+  left: $left;
+  overflow: hidden;
+  animation: move infinite alternate;
+
+  @keyframes move {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(var(--move-x), var(--move-y));
+    }
+  }
+}
+
+// fix ones
+@mixin fix-circles($size: 100px, $color: blue, $top: 0, $left: 0) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background-color: $color;
+  position: absolute;
+  top: $top;
+  left: $left;
+  overflow: hidden;
+}

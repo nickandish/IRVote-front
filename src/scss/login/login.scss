@@ -1,0 +1,50 @@
+.login-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 357.33px;
+
+  &_mew {
+    padding: 3rem 2.5rem;
+  }
+  p {
+    color: #6a5ae0;
+    font-size: 14px;
+  }
+  &_input,
+  button {
+    border: 2px solid #6a5ae0;
+    border-radius: 50px;
+    padding: 1rem;
+    transition: 0.3s;
+  }
+  &_input {
+    &:focus {
+      border: 2px solid #6a5ae0 !important;
+      outline: none;
+    }
+  }
+  button {
+    background-color: #6a5ae0;
+    &:hover {
+      background-color: lighten($color: #6a5ae0, $amount: 3);
+    }
+  }
+  @media screen and (max-width: 400px) {
+    & {
+      min-width: 200.33px;
+      &_input {
+        width: 190px !important;
+        font-size: smaller;
+      }
+      button {
+        font-size: smaller;
+      }
+    }
+  }
+}

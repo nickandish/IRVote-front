@@ -1,0 +1,10 @@
+@font-face {
+  font-family: "Samim";
+  src: local("Samim"), url(../font/Samim.ttf) format("truettype");
+  font-family: "Samim-Bold";
+  src: local("Samim-Bold"), url(../font/Samim-Bold.ttf) format("truettype");
+}
+
+* {
+  font-family: Samim;
+}

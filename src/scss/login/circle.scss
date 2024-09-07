@@ -1,0 +1,56 @@
+@import "../animations";
+
+.circle-medium {
+  @include circle-animation(
+    220px,
+    transparent,
+    2px solid #ada4ef44,
+    28s,
+    1px,
+    50px,
+    90%
+  );
+}
+.circle-medium2 {
+  @include circle-animation(
+    170px,
+    transparent,
+    2px solid #ada4ef44,
+    25s,
+    10px,
+    28px,
+    -79px
+  );
+}
+
+.circle-large {
+  @include circle-animation(
+    350px,
+    transparent,
+    2px solid #ada4ef44,
+    50s,
+    -125px,
+    360px,
+    0
+  );
+}
+
+.circle1 {
+  @include little-circles(1rem, #ada4ef44, 5s, 0, 0);
+}
+.circle2 {
+  @include little-circles(2rem, #ada4ef44, 12s, 20rem, 0);
+}
+.circle3 {
+  @include little-circles(1.5rem, #ada4ef44, 2s, 0, 15rem);
+}
+.small {
+  @include little-circles(9px, #ada4ef44, 2s, 0, 0);
+}
+.fix {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: #ada4ef44;
+  position: absolute;
+}
