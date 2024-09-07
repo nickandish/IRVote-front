@@ -1,0 +1,42 @@
+.otp {
+  .otp-index {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 3px;
+    border-radius: 50%;
+    border: 1.5px solid #6a5ae0;
+    padding-top: 3px;
+    font-size: 0.87rem;
+    margin-bottom: 1.3rem !important;
+    &:focus {
+      border: 2px solid #6a5ae0 !important;
+      outline: none;
+    }
+  }
+  .p {
+    color: #ffff;
+    position: absolute;
+    bottom: -3rem;
+  }
+
+  &_right {
+    right: 0.9rem;
+    &:hover {
+      cursor: pointer;
+      text-shadow: 1px 1px 5px #000000;
+    }
+    &:active {
+      text-shadow: 1px 1px 2px #000000;
+    }
+  }
+  &_left {
+    left: 0.9rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    .otp-index {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}

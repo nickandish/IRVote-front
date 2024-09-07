@@ -1,12 +1,12 @@
 import { useRef, useEffect } from "react";
-import "../scss/login/circle.scss";
-import "../scss/login/mobileBack.scss";
-import LoginCard from "./LoginCard";
+4;
+import "../../scss/login/circle.scss";
+import "../../scss/login/mobileBack.scss";
 
 const getRandomPosition = (max: number) => Math.floor(Math.random() * max);
 const getRandomSpeed = () => Math.random() * 0.5;
 
-const Login: React.FC = () => {
+const Bg = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,7 +34,6 @@ const Login: React.FC = () => {
       moveCircle();
     });
   }, []);
-
   return (
     <div className="login-background">
       <div ref={containerRef} className="container">
@@ -70,10 +69,8 @@ const Login: React.FC = () => {
       <div className="circle-medium"></div>
       <div className="circle-medium2"></div>
       <div className="circle-large"></div>
-
-      <LoginCard />
     </div>
   );
 };
 
-export default Login;
+export default Bg;
