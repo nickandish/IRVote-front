@@ -4,6 +4,7 @@ import SignUp from "./pages/SignUp";
 import Main from "./pages/Main";
 import "./app.scss";
 import Captcha from "./pages/login/step2/Captcha";
+import MyElection from "./pages/app/myElection/MyElection";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/login/OTP" element={<Captcha />} />
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/my-elections" element={<MyElection />} />
         <Route path="/" element={<Main />} />
       </Routes>
     </BrowserRouter>

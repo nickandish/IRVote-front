@@ -1,0 +1,48 @@
+.header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  h1 {
+    color: white;
+    position: absolute;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.navbarr {
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  top: 85svh;
+  background-color: #6a5ae0;
+  border-radius: 20rem;
+
+  .icon-container {
+    width: 20%;
+
+    .add {
+      margin-left: 7px !important;
+    }
+    .profile {
+      font-size: 5rem;
+    }
+    p {
+      font-size: 0.75rem;
+    }
+    .icon {
+      font-size: 2rem;
+    }
+
+    &:hover {
+      cursor: pointer;
+      filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.35));
+    }
+    &:active {
+      filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.1));
+    }
+  }
+}

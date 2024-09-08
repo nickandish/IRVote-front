@@ -8,3 +8,12 @@
 * {
   font-family: Samim;
 }
+
+.body {
+  height: 100svh;
+  overflow-y: hidden;
+}
+
+.scroll {
+  overflow-y: auto;
+}

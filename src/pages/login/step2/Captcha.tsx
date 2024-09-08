@@ -1,9 +1,9 @@
 import { Card } from "react-bootstrap";
 import "../../../scss/login/login.scss";
 import Bg from "../Bg";
-import OTPInput from "./OtpInput";
 import CountDownTimer from "./CountDownTimer";
 import { Link } from "react-router-dom";
+import OTPInput from "./OTPInput";
 
 const Captcha = () => {
   return (
