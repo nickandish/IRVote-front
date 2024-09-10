@@ -8,6 +8,47 @@
     top: 1.2rem;
     left: 50%;
     transform: translateX(-50%);
+    font-size: 1.5rem;
+  }
+
+  @media screen and (min-width: 1300px) {
+    svg {
+      position: relative;
+      top: -13rem;
+      z-index: -1;
+    }
+  }
+
+  @media screen and (max-width: 1299px) and (min-width: 1000px) {
+    svg {
+      position: relative;
+      top: -8.9rem;
+      z-index: -1;
+    }
+  }
+
+  @media screen and (max-width: 999px) and (min-width: 771px) {
+    svg {
+      position: relative;
+      top: -5.2rem;
+      z-index: -1;
+    }
+  }
+
+  @media screen and (max-width: 771px) and (min-width: 550px) {
+    svg {
+      position: relative;
+      top: -3rem;
+      z-index: -1;
+    }
+  }
+
+  @media screen and (max-width: 549px) {
+    svg {
+      position: relative;
+      top: -100%;
+      z-index: -1;
+    }
   }
 }
 
@@ -28,13 +69,14 @@
       margin-left: 7px !important;
     }
     .profile {
-      font-size: 5rem;
+      margin-top: 7px;
+      font-size: 3.5rem;
     }
     p {
-      font-size: 0.75rem;
+      font-size: 0.5rem;
     }
     .icon {
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
 
     &:hover {

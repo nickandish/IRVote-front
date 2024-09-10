@@ -1,0 +1,31 @@
+$danger: #a6151a;
+$accept: #3cb764;
+$primary: #6a5ae0;
+$secondery: #ed9e00;
+
+@mixin box-color($color: $primary) {
+  margin: 1rem 0.5rem;
+  border-radius: 4.75rem;
+  border: 3px solid $color;
+  p {
+    color: $primary;
+  }
+  .icon {
+    color: $color;
+  }
+  .icon-left {
+    color: $primary;
+    font-size: 1.5rem;
+    margin-right: -1rem;
+  }
+  .info-p {
+    color: $color;
+  }
+  .icon-left {
+    color: $primary;
+  }
+  h6 {
+    color: $color;
+    padding-right: 10px;
+  }
+}

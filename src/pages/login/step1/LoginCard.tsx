@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 
 const LoginCard = () => {
   return (
-    <div className="login-card text-center align-item-center row justify-content-center d-flex ">
+    <div className="login-card text-center row d-flex ">
       <h1 className="text-light fw-bold mb-4">LOGO</h1>
       <h1 className="text-light fw-bold mb-4">نیک آرا</h1>
       <Card className=" text-center login-card_mew">

@@ -3,9 +3,6 @@
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   min-width: 357.33px;
 
@@ -37,13 +34,20 @@
   }
   @media screen and (max-width: 400px) {
     & {
+      width: 90%;
       min-width: 269.33px;
+      left: 53%;
       &_input {
         width: 190px !important;
         font-size: smaller;
       }
       button {
         font-size: smaller;
+      }
+
+      input,
+      button {
+        min-width: 200px;
       }
     }
   }
