@@ -20,7 +20,7 @@ const Box = () =>
     // };
 
     return (
-      <>
+      <Col className="col-lg-6 col-12">
         {/* <div className="box" style={{ borderColor: boxStyle.borderColor }}>
           <h2 style={{ color: boxStyle.titleColor }}>{title}</h2>
           <p>{details}</p>
@@ -59,7 +59,7 @@ const Box = () =>
             </div>
           </Row>
         </Row>
-      </>
+      </Col>
     );
   };
 
