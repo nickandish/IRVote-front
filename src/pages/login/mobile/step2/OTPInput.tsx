@@ -4,7 +4,7 @@ import React, {
   ChangeEvent,
   KeyboardEvent as ReactKeyboardEvent,
 } from "react";
-import "../../../scss/login/step2.scss";
+import "../../loginScss/step2.scss";
 
 interface OTPInputProps {
   length: number;

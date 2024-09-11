@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 4;
-import "../../scss/login/circle.scss";
-import "../../scss/login/mobileBack.scss";
+import "./loginScss/circle.scss";
+import "./loginScss/mobileBack.scss";
 
 const getRandomPosition = (max: number) => Math.floor(Math.random() * max);
 const getRandomSpeed = () => Math.random() * 0.5;

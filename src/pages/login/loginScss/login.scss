@@ -52,3 +52,24 @@
     }
   }
 }
+
+/* screen  */
+
+.mobile {
+  display: none;
+}
+
+.laptop {
+  display: block;
+}
+
+/* Show mobile view when screen width is 500px or less */
+@media only screen and (max-width: 500px) {
+  .mobile {
+    display: block;
+  }
+
+  .laptop {
+    display: none;
+  }
+}

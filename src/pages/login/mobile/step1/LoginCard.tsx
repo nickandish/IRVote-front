@@ -1,4 +1,4 @@
-import "../../../scss/login/login.scss";
+import "../../loginScss/login.scss";
 import { Card } from "react-bootstrap";
 
 const LoginCard = () => {

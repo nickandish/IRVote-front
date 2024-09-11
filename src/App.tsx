@@ -3,7 +3,7 @@ import Login from "./pages/login/Login";
 import SignUp from "./pages/SignUp";
 import Main from "./pages/Main";
 import "./app.scss";
-import Captcha from "./pages/login/step2/Captcha";
+import Captcha from "./pages/login/mobile/step2/Captcha";
 import MyElection from "./pages/app/myElection/MyElection";
 
 function App() {
