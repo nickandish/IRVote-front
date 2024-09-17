@@ -29,3 +29,48 @@ $secondery: #ed9e00;
     padding-right: 10px;
   }
 }
+
+@mixin ballot(
+  $color-status: $primary,
+  $color-active: $primary,
+  $color-unActive: white
+) {
+  padding: 0.5rem;
+
+  .ballot {
+    border: 3px solid $color-active;
+    background-color: $color-unActive;
+  }
+  .ballot_vote {
+    width: 4.2rem;
+    height: 4.2rem;
+    border-radius: 50%;
+    background-color: $color-status;
+
+    p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.85rem;
+    }
+  }
+
+  .ballot_icon,
+  .ballot_title,
+  .detail {
+    color: $color-active;
+  }
+
+  .ballot_view {
+    color: $secondery;
+  }
+
+  .ballot_button {
+    button {
+      background-color: $secondery;
+      border: none;
+      border-radius: 20px;
+    }
+  }
+}

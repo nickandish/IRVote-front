@@ -6,8 +6,8 @@ interface HeaderProp {
 
 const Header: React.FC<HeaderProp> = ({ title }) => {
   return (
-    <header className="header">
-      <h1 className="fw-bold">{title}</h1>
+    <header className="header text-center">
+      <h2 className="fw-bold">{title}</h2>
       <svg className="wave" viewBox="0 0 1440 320">
         <path
           className="path-sm"

@@ -1,6 +1,6 @@
 import Bg from "./Bg";
 import LoginCard from "./mobile/step1/LoginCard";
-import "";
+import "./loginScss/login.scss";
 import BgLaptop from "./laptop/BgLaptop";
 
 const Login: React.FC = () => {
