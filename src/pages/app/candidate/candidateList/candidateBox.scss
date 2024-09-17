@@ -1,0 +1,51 @@
+@import "../../../../scss/box.scss";
+
+.candidate-list {
+  padding-top: 6.9rem;
+  width: 100%;
+  padding-bottom: 4rem;
+}
+.pp {
+  color: $primary;
+}
+.candidateBox {
+  @include ballot($secondery, white, $primary);
+  position: relative;
+
+  .img,
+  img {
+    width: 7rem;
+    height: 7rem;
+    margin-bottom: 5px;
+    object-fit: cover;
+  }
+
+  &_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 20px;
+  }
+  button {
+    width: 10rem !important;
+  }
+
+  @media screen and (max-width: 500px) {
+    p,
+    button {
+      font-size: 14px !important;
+    }
+
+    .img,
+    img {
+      width: 5.6rem;
+      height: 5.6rem;
+    }
+
+    button {
+      position: absolute !important;
+      bottom: -1.3rem !important;
+      width: 7rem !important;
+    }
+  }
+}

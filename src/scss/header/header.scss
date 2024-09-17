@@ -2,6 +2,9 @@
   width: 100%;
   position: fixed;
   top: 0;
+
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.25));
+
   h2 {
     color: white;
     position: absolute;
@@ -66,6 +69,9 @@
   top: 85svh;
   background-color: #6a5ae0;
   border-radius: 20rem;
+
+  border: 3px solid white;
+  filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.25));
 
   .icon-container {
     width: 20%;
