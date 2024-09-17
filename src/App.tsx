@@ -6,6 +6,7 @@ import "./app.scss";
 import Captcha from "./pages/login/mobile/step2/Captcha";
 import MyElection from "./pages/app/myElection/MyElection";
 import Ballot from "./pages/app/ballot/Ballot";
+import Candidate from "./pages/app/candidate/Candidate";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/my-elections" element={<MyElection />} />
         <Route path="/ballots" element={<Ballot />} />
+        <Route path="/candidate" element={<Candidate />} />
         <Route path="/" element={<Main />} />
       </Routes>
     </BrowserRouter>
