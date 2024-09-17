@@ -9,7 +9,7 @@
     .my-line {
       background-color: $primary;
       height: 2px;
-      margin: 1rem;
+      margin: 0.4rem 1rem;
       width: 80%;
     }
 
@@ -47,6 +47,7 @@
         font-size: smaller;
       }
       p {
+        margin: 0;
         font-size: smaller;
       }
       .info-p {
