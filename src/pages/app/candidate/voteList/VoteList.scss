@@ -1,0 +1,42 @@
+@import "../../../../scss/box.scss";
+
+.tbl {
+  .tbl_accept {
+    @include table($accept);
+  }
+
+  .tbl_danger {
+    @include table($danger);
+  }
+
+  .tbl_blue {
+    @include table($blue);
+  }
+
+  @include table($primary);
+  margin: auto;
+
+  &_img,
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  td,
+  th {
+    font-weight: 600;
+    font-size: 13px;
+    padding: 12px 10px !important;
+  }
+  thead {
+    th:first-child {
+      border-top-right-radius: 1rem !important;
+      border-bottom-right-radius: 1rem !important;
+    }
+    th:last-child {
+      border-top-left-radius: 1rem !important;
+      border-bottom-left-radius: 1rem !important;
+    }
+  }
+}

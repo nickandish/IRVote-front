@@ -2,6 +2,7 @@ $danger: #a6151a;
 $accept: #3cb764;
 $primary: #6a5ae0;
 $secondery: #ed9e00;
+$blue: #2e82ff;
 
 @mixin box-color($color: $primary) {
   margin: 1rem 0.5rem;
@@ -72,5 +73,15 @@ $secondery: #ed9e00;
       border: none;
       border-radius: 20px;
     }
+  }
+}
+
+@mixin table($color: $primary) {
+  thead {
+    background-color: $primary;
+  }
+
+  td {
+    color: $color;
   }
 }
