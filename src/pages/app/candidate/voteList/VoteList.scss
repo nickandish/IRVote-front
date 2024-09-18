@@ -15,6 +15,11 @@
 
   @include table($primary);
   margin: auto;
+  max-width: 900px;
+  @media screen and (max-width: 500px) {
+    width: 95%;
+  }
+  width: 80%;
 
   &_img,
   img {

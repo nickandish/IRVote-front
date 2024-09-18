@@ -1,4 +1,3 @@
-import { Table } from "react-bootstrap";
 import { FaCircleCheck } from "react-icons/fa6";
 import "./VoteList.scss";
 import img from "../../../../assets/download.jpg";
