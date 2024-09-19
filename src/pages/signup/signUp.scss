@@ -1,0 +1,10 @@
+@import "../../scss/box.scss";
+
+.signUp_card {
+  .input {
+    width: 75%;
+    padding: 0.5rem;
+    border-radius: 20px;
+    border: 2px solid $primary;
+  }
+}

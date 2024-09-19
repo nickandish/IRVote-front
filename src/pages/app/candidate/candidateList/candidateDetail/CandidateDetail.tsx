@@ -16,12 +16,13 @@ const CandidateDetail: React.FC<CandidateProp> = ({ setModal }) => {
       <div className="candidate-detail_container">
         <div className="candidate-detail_container_top">
           <div className="div-1">
-            <button>
-              <IoClose
-                className="icon text-light"
-                onClick={() => setModal(false)}
-              />
-            </button>
+            <IoClose
+              className="icon text-light"
+              onClick={() => {
+                setModal(false);
+                console.log(false);
+              }}
+            />
           </div>
 
           <div className="div-6 text-center pic-container">

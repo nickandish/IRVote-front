@@ -48,9 +48,6 @@
       }
 
       .div-1 {
-        position: absolute;
-        right: 2.2rem;
-        top: 1.5rem;
       }
       .div-2 {
         position: absolute;
@@ -77,6 +74,10 @@
       }
       .icon {
         font-size: 2rem;
+        position: absolute;
+        right: 2.2rem;
+        top: 1.5rem;
+        cursor: pointer;
       }
 
       button {
