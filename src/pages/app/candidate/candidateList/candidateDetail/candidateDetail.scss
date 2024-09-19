@@ -1,0 +1,125 @@
+@import "../../../../../scss/box.scss";
+
+.candidate-detail {
+  position: absolute; /* Cover the entire screen */
+  top: 7rem;
+
+  bottom: 0;
+  z-index: 1000;
+  width: 100% !important;
+
+  &_container {
+    background-color: $primary;
+    padding: 1rem;
+    border-top-left-radius: 5rem;
+    border-top-right-radius: 5rem;
+
+    &_top {
+      .circle {
+        position: absolute;
+        border-bottom: 2px solid white;
+        border-radius: 50%;
+        width: 14rem;
+        height: 14rem;
+        top: -40%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .pic-container {
+        position: relative;
+        text-align: center;
+
+        top: -4rem;
+
+        .img-container {
+          margin: 0 auto;
+          width: 7rem;
+          height: 7rem;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 3px solid white;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+
+      .div-1 {
+        position: absolute;
+        right: 2.2rem;
+        top: 1.5rem;
+      }
+      .div-2 {
+        position: absolute;
+        left: 0rem;
+        bottom: -4.5rem;
+        width: 6rem;
+
+        .button {
+          background-color: white;
+          color: $primary;
+          font-weight: bold;
+          font-size: 12px;
+          border-radius: 1.2rem;
+          padding: 0rem 0.3rem;
+          margin-left: 2rem;
+          transition: 0.2s;
+
+          &:hover,
+          &:active {
+            background-color: $secondary !important;
+            color: white;
+          }
+        }
+      }
+      .icon {
+        font-size: 2rem;
+      }
+
+      button {
+        background-color: transparent;
+        border: none;
+      }
+    }
+
+    &_middle {
+      .icon {
+        font-size: 1.3rem;
+        margin-left: 0.2rem;
+      }
+
+      .img-container {
+        margin: 0 auto;
+        width: 100%;
+        height: 7rem;
+        overflow: hidden;
+        border: 3px solid white;
+        border-radius: 2rem;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .buttons {
+        //     $color: white,
+        // $border-color: $primary,
+        // $bg-color: $primary,
+        // $border-radius: 1rem
+        &1 {
+          @include button(white, white, $primary, 1rem);
+        }
+        &2 {
+          @include button($primary, white, white, 1rem);
+        }
+
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}

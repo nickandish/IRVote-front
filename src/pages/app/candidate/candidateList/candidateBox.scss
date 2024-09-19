@@ -9,7 +9,7 @@
   color: $primary;
 }
 .candidateBox {
-  @include ballot($secondery, white, $primary);
+  @include ballot($secondary, white, $primary);
   position: relative;
 
   .img,

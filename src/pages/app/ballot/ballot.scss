@@ -3,7 +3,7 @@
 .ballots {
   top: 6rem;
   position: absolute;
-  @include ballot($secondery, $primary, white);
+  @include ballot($secondary, $primary, white);
   margin: 0 !important;
   z-index: -1;
   padding: 48px;

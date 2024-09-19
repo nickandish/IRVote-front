@@ -1,7 +1,7 @@
 $danger: #a6151a;
 $accept: #3cb764;
 $primary: #6a5ae0;
-$secondery: #ed9e00;
+$secondary: #ed9e00;
 $blue: #2e82ff;
 
 @mixin box-color($color: $primary) {
@@ -64,12 +64,12 @@ $blue: #2e82ff;
   }
 
   .ballot_view {
-    color: $secondery;
+    color: $secondary;
   }
 
   .ballot_button {
     button {
-      background-color: $secondery;
+      background-color: $secondary;
       border: none;
       border-radius: 20px;
     }
@@ -84,4 +84,16 @@ $blue: #2e82ff;
   td {
     color: $color;
   }
+}
+
+@mixin button(
+  $color: white,
+  $border-color: $primary,
+  $bg-color: $primary,
+  $border-radius: 1rem
+) {
+  color: $color;
+  border-radius: $border-radius;
+  border: 2px solid $border-color;
+  background-color: $bg-color;
 }

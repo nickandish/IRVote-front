@@ -10,8 +10,11 @@ const Candidate = () => {
   const [voteList, setVoteList] = useState<boolean>(false);
   return (
     <>
-      <Header title="انتخابات انجمن اسلامی دانشگاه تهران-غرب" />
+      <div className="candidate_header">
+        <Header title="انتخابات انجمن اسلامی دانشگاه تهران-غرب" />
+      </div>
       <Navbar />
+
       <div className="candidate">
         <div className="candidate_container">
           <div className="div-6 btnn">
