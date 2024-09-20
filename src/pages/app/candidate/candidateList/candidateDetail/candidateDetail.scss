@@ -3,7 +3,6 @@
 .candidate-detail {
   position: absolute; /* Cover the entire screen */
   top: 7rem;
-
   bottom: 0;
   z-index: 1000;
   width: 100% !important;
@@ -28,7 +27,6 @@
       .pic-container {
         position: relative;
         text-align: center;
-
         top: -4rem;
 
         .img-container {
@@ -45,9 +43,6 @@
             object-fit: cover;
           }
         }
-      }
-
-      .div-1 {
       }
       .div-2 {
         position: absolute;
@@ -78,6 +73,7 @@
         right: 2.2rem;
         top: 1.5rem;
         cursor: pointer;
+        z-index: 1001; /* Ensure it's above other elements */
       }
 
       button {
@@ -108,10 +104,6 @@
       }
 
       .buttons {
-        //     $color: white,
-        // $border-color: $primary,
-        // $bg-color: $primary,
-        // $border-radius: 1rem
         &1 {
           @include button(white, white, $primary, 1rem);
         }
