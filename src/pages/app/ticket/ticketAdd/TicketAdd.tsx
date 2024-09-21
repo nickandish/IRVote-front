@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Col, Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Select, { SingleValue } from "react-select";
 import axios from "axios";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
 import "../ticketEdit/ticketEdit.scss";
+import "./ticketAdd.scss";
 
 interface Option {
   value: string;
@@ -33,7 +34,9 @@ const TicketAdd: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFile(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+      console.log("Selected-file:", selectedFile);
     }
   };
 
@@ -77,7 +80,7 @@ const TicketAdd: React.FC = () => {
       <Header title="ثبت درخواست" />
       <Navbar />
       <Container>
-        <div className="ticket-edit">
+        <div className="ticket-edit ticketAdd">
           <p className="text-center">02/03/01</p>
           <div className="mb-4">
             <input
@@ -127,14 +130,14 @@ const TicketAdd: React.FC = () => {
             name="comments"
             placeholder="Enter your comments here..."
           />
-
-          <Col className="btn-container">
+          <Col className="btn-container ">
             <button className="submit" onClick={handleSubmit}>
               ارسال درخواست
             </button>
             <input
               type="file"
               id="fileInput"
+              className="upload"
               style={{ display: "none" }}
               onChange={handleFileChange}
             />

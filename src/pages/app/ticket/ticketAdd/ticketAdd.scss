@@ -1,0 +1,46 @@
+@import "../../../../scss/box.scss";
+
+.ticketAdd {
+  //   .css-13cymwt-control {
+  //     border: 2px solid $primary;
+  //     padding: ;
+  //   }
+
+  .css-13cymwt-control,
+  .css-t3ipsp-control {
+    border: 2px solid #6a5ae0;
+    border-radius: 50px;
+    padding: 0.75rem;
+    transition: 0.3s;
+    width: 85%;
+    margin-right: 0;
+
+    &:hover {
+      border: 2px solid $primary;
+    }
+  }
+
+  .css-tj5bde-Svg {
+    color: $primary;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+
+    .submit,
+    .upload {
+      width: 10rem;
+      height: 2rem;
+      margin: 1rem;
+    }
+
+    .submit {
+      @include button(white, $primary, $primary, 1rem);
+    }
+    .upload {
+      @include button($primary, $primary, white, 1rem);
+    }
+  }
+}
