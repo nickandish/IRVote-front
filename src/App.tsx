@@ -9,19 +9,27 @@ import Candidate from "./pages/app/candidate/Candidate";
 import SignUp from "./pages/signup/SignUp";
 import TicketList from "./pages/app/ticket/ticketList/TicketList";
 import TicketEdit from "./pages/app/ticket/ticketEdit/TicketEdit";
+import TicketAdd from "./pages/app/ticket/ticketAdd/TicketAdd";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/login/OTP" element={<Captcha />} />
+        <Route path="/OTP" element={<Captcha />} />
+
         <Route path="/signUp" element={<SignUp />} />
+
         <Route path="/my-elections" element={<MyElection />} />
+
         <Route path="/ballots" element={<Ballot />} />
+
         <Route path="/candidate" element={<Candidate />} />
+
+        <Route path="/ticketAdd" element={<TicketAdd />} />
         <Route path="/ticketList" element={<TicketList />} />
         <Route path="/ticketEdit" element={<TicketEdit />} />
+
         <Route path="/" element={<Main />} />
       </Routes>
     </BrowserRouter>

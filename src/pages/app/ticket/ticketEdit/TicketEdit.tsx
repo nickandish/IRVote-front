@@ -1,9 +1,8 @@
 import { Col, Container, Row } from "react-bootstrap";
-// import "../../../login/loginScss/login.scss";
-import "./ticketEdit.scss";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
 import img from "../../../../assets/download.jpg";
+import "./ticketEdit.scss";
 
 const TicketEdit = () => {
   return (
