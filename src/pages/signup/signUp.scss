@@ -7,4 +7,36 @@
     border-radius: 20px;
     border: 2px solid $primary;
   }
+  .test {
+    display: flex;
+    justify-content: center;
+
+    .text {
+      position: absolute;
+      left: 5.1rem;
+      top: 14.7rem;
+    }
+    svg {
+      font-size: 1.3rem;
+      color: $primary;
+    }
+    @media screen and (max-width: 890px) {
+      .text {
+        left: 4.3rem;
+        top: 14.8rem;
+      }
+    }
+    @media screen and (max-width: 400px) {
+      .text {
+        left: 5.4rem;
+        top: 14.3rem;
+      }
+    }
+    @media screen and (max-width: 330px) {
+      .text {
+        left: 3.8rem;
+        top: 14.3rem;
+      }
+    }
+  }
 }
