@@ -4,6 +4,8 @@ $primary: #6a5ae0;
 $secondary: #ed9e00;
 $blue: #2e82ff;
 $purple-light: #f7f5ff;
+$gray: #ececec;
+$gray-light: #f5f5f5;
 
 @mixin box-color($color: $primary) {
   margin: 1rem 0.5rem;
