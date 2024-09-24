@@ -13,8 +13,13 @@
 
     .text {
       position: absolute;
-      left: 5.1rem;
-      top: 14.7rem;
+      left: 5.5rem;
+      top: 19rem;
+    }
+    .text-2 {
+      position: absolute;
+      left: 5.5rem;
+      top: 23.5rem;
     }
     svg {
       font-size: 1.3rem;
@@ -22,20 +27,32 @@
     }
     @media screen and (max-width: 890px) {
       .text {
-        left: 4.3rem;
-        top: 14.8rem;
+        left: 4.3rem !important;
+        top: 19.2rem !important;
+      }
+      .text-2 {
+        left: 4.5rem !important;
+        top: 23.5rem !important;
       }
     }
     @media screen and (max-width: 400px) {
       .text {
-        left: 5.4rem;
-        top: 14.3rem;
+        left: 23% !important;
+        top: 18.3rem !important;
+      }
+      .text-2 {
+        left: 23% !important;
+        top: 22.4rem !important;
       }
     }
-    @media screen and (max-width: 330px) {
+    @media screen and (max-width: 340px) {
       .text {
-        left: 3.8rem;
-        top: 14.3rem;
+        left: 3.7rem !important;
+        top: 18.3rem !important;
+      }
+      .text-2 {
+        left: 3.7rem !important;
+        top: 22.4rem !important;
       }
     }
   }
