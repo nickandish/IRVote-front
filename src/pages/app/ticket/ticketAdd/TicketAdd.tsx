@@ -77,8 +77,10 @@ const TicketAdd: React.FC = () => {
 
   return (
     <>
-      <Header title="ثبت درخواست" />
-      <Navbar />
+      <div className="up">
+        <Header title="ثبت درخواست" />
+        <Navbar />
+      </div>
       <Container>
         <div className="ticket-edit ticketAdd">
           <p className="text-center">02/03/01</p>
@@ -91,44 +93,52 @@ const TicketAdd: React.FC = () => {
             />
           </div>
 
-          <div className="mb-4">
-            <Select
-              placeholder="تیم مربوط"
-              options={teamOptions}
-              value={selectedTeam}
-              onChange={(newValue: SingleValue<Option>) =>
-                setSelectedTeam(newValue)
-              }
-              className="select login-card_select"
-            />
-          </div>
-          <div className="mb-4">
-            <Select
-              placeholder="نوع سرویس"
-              options={serviceOptions}
-              value={selectedServiceType}
-              onChange={(newValue: SingleValue<Option>) =>
-                setSelectedServiceType(newValue)
-              }
-              className="select login-card_select"
-            />
-          </div>
-          <div className="mb-4">
-            <Select
-              placeholder="نام سرویس"
-              options={serviceOptions}
-              value={selectedServiceName}
-              onChange={(newValue: SingleValue<Option>) =>
-                setSelectedServiceName(newValue)
-              }
-              className="select login-card_select"
-            />
+          <div className="select-container">
+            <div className="mb-4">
+              <Select
+                placeholder="تیم مربوط"
+                options={teamOptions}
+                value={selectedTeam}
+                onChange={(newValue: SingleValue<Option>) =>
+                  setSelectedTeam(newValue)
+                }
+                className="select login-card_select"
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+              />
+            </div>
+            <div className="mb-4">
+              <Select
+                placeholder="نوع سرویس"
+                options={serviceOptions}
+                value={selectedServiceType}
+                onChange={(newValue: SingleValue<Option>) =>
+                  setSelectedServiceType(newValue)
+                }
+                className="select login-card_select"
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+              />
+            </div>
+            <div className="mb-4">
+              <Select
+                placeholder="نام سرویس"
+                options={serviceOptions}
+                value={selectedServiceName}
+                onChange={(newValue: SingleValue<Option>) =>
+                  setSelectedServiceName(newValue)
+                }
+                className="select login-card_select"
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+              />
+            </div>
           </div>
 
           <textarea
             id="comments"
             name="comments"
-            placeholder="Enter your comments here..."
+            placeholder="درخواست خود را وارد کنید"
           />
           <Col className="btn-container ">
             <button className="submit" onClick={handleSubmit}>
