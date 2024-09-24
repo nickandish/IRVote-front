@@ -1,3 +1,5 @@
+@import "../../../scss/box.scss";
+
 .login-card {
   position: absolute;
   top: 45%;
@@ -8,30 +10,44 @@
 
   &_mew {
     padding: 3rem 2.5rem;
+    transition: 0.3;
   }
   p {
-    color: #6a5ae0;
+    color: $primary;
     font-size: 14px;
   }
   &_input,
   button {
-    border: 2px solid #6a5ae0;
+    border: 2px solid $primary;
     border-radius: 50px;
     padding: 1rem;
     transition: 0.3s;
   }
   &_input {
     &:focus {
-      border: 2px solid #6a5ae0 !important;
+      border: 2px solid $primary !important;
       outline: none;
     }
   }
   button {
-    background-color: #6a5ae0;
+    background-color: $primary;
     &:hover {
-      background-color: lighten($color: #6a5ae0, $amount: 3);
+      background-color: lighten($color: $primary, $amount: 3);
     }
   }
+
+  .p_email {
+    font-size: 1.1rem;
+    margin: 1.5rem 0 0 0;
+    transition: color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      cursor: pointer;
+      color: lighten($primary, 5%); // Lighten the color by 20%
+      transform: scale(1.1);
+    }
+  }
+
   @media screen and (max-width: 400px) {
     & {
       width: 90%;
