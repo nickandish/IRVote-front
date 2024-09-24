@@ -1,14 +1,13 @@
-import { Col, Row } from "react-bootstrap";
-
-import "./comment.scss";
+import { Col, Container, Row } from "react-bootstrap";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
+import "./comment.scss";
 
 const Comment = () => {
   return (
     <>
       <Header title={"کامنت"} />
-      <div className="container">
+      <Container className="fw-bold">
         <Row className="box">
           <Col className="col-12">
             <h2>انجام شده</h2>
@@ -21,11 +20,6 @@ const Comment = () => {
           <Col className="col-12">
             <p>
               نوع سرویس : <span> دیتاسنتر ابری </span>
-            </p>
-          </Col>
-          <Col className="col-12">
-            <p>
-              تیم مربوط : <span> فروش </span>
             </p>
           </Col>
 
@@ -71,7 +65,7 @@ const Comment = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
       <Navbar />
     </>
   );
