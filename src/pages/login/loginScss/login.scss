@@ -43,7 +43,7 @@
 
     &:hover {
       cursor: pointer;
-      color: lighten($primary, 5%); // Lighten the color by 20%
+      color: lighten($primary, 5%);
       transform: scale(1.1);
     }
   }
@@ -71,21 +71,21 @@
 
 /* screen  */
 
-.mobile {
-  display: none;
-}
+// .mobile {
+//   display: none;
+// }
 
-.laptop {
-  display: block;
-}
+// .laptop {
+//   display: block;
+// }
 
 /* Show mobile view when screen width is 500px or less */
-@media only screen and (max-width: 500px) {
-  .mobile {
-    display: block;
-  }
+// @media only screen and (max-width: 500px) {
+//   .mobile {
+//     display: block;
+//   }
 
-  .laptop {
-    display: none;
-  }
-}
+//   .laptop {
+//     display: none;
+//   }
+// }

@@ -74,6 +74,11 @@
         top: 1.5rem;
         cursor: pointer;
         z-index: 1001; /* Ensure it's above other elements */
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.2);
+        }
       }
 
       button {
@@ -106,9 +111,25 @@
       .buttons {
         &1 {
           @include button(white, white, $primary, 1rem);
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            @include button(white, white, $primary, 0);
+            transform: scale(1.06);
+            filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+          }
         }
+
         &2 {
           @include button($primary, white, white, 1rem);
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            @include button($primary, white, white, 0);
+
+            transform: scale(1.1);
+            filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+          }
         }
 
         margin-bottom: 2rem;

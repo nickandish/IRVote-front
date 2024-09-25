@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
 import Box from "./Box";
@@ -27,9 +27,12 @@ const MyElection = () => {
           />
         ))}
       </div> */}
-      <Container className="my-elections">
+      <Row className="my-elections">
         <Box />
-      </Container>
+        <Box />
+        <Box />
+        <Box />
+      </Row>
       <Navbar />
     </>
   );

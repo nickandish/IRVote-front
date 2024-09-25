@@ -20,6 +20,7 @@ const CandidateList = () => {
           <CandidateBox />
           <CandidateBox />
         </Row>
+        <button className="candidate-list_btn fw-bold">ثبت نهایی رای</button>
       </div>
     </div>
   );

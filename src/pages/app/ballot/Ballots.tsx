@@ -1,8 +1,15 @@
 import { Row, Col } from "react-bootstrap";
-import "./ballot.scss";
 import { LiaBoxOpenSolid } from "react-icons/lia";
+import { useNavigate } from "react-router-dom";
+import "./ballot.scss";
 
 const Ballots = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/candidate");
+  };
+
   return (
     <>
       <Col className=" col-6 col-md-4 col-lg-3 d-flex flex-column">
@@ -38,7 +45,12 @@ const Ballots = () => {
           </div>
 
           <div className="ballot_button text-center">
-            <button className="text-light fw-bold">مشاهده صندوق</button>
+            <button
+              className="text-light ballot-button fw-bold"
+              onClick={handleClick}
+            >
+              مشاهده صندوق
+            </button>
           </div>
         </Col>
       </Col>

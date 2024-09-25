@@ -63,7 +63,7 @@ const CandidateDetail: React.FC<CandidateProp> = ({ setModal }) => {
             <Col className="col-6">
               <button className="w-100 buttons2">
                 <RxDownload className="me-2 icon" />
-                نمایش فیلم
+                دانلود رزومه
               </button>
             </Col>
           </Row>

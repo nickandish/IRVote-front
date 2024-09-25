@@ -51,7 +51,7 @@ const TicketEdit = () => {
           <textarea
             id="comments"
             name="comments"
-            placeholder="Enter your comments here..."
+            placeholder="درخواست خود را وارد کنید"
           />
           <p className="p_text">فایل های آپلود شده</p>
           <Row>

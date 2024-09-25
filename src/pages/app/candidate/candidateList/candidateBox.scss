@@ -3,21 +3,67 @@
 .candidate-list {
   padding-top: 6.9rem;
   width: 100%;
-  padding-bottom: 4rem;
+
+  &_btn {
+    @include button(white, white, $secondary, 5rem);
+    margin: 2rem auto 8rem auto;
+    font-size: 19px;
+    width: 40%;
+    max-width: 20rem;
+    height: 4rem;
+    transition: all 0.3s ease-in-out;
+
+    &:hover,
+    &:active {
+      @include button($secondary, $secondary, white, 1rem);
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
+      transform: scale(1.04);
+    }
+
+    @media screen and (max-width: 500px) {
+      font-size: 17px;
+      min-width: 10rem;
+    }
+  }
 }
+
 .pp {
   color: $primary;
+  @media screen and (max-width: 360px) {
+    font-size: 14px;
+  }
 }
+
 .candidateBox {
-  @include ballot($secondary, white, $primary);
+  @include ballot($secondary, $primary, white);
   position: relative;
+  transition: all 0.3s ease-in-out;
+
+  .p {
+    color: $primary;
+    transition: all 0.1s ease-in-out;
+  }
+
+  &.active {
+    @include ballot($secondary, white, $primary);
+
+    .p {
+      color: white;
+    }
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  }
 
   .img,
   img {
-    width: 7rem;
-    height: 7rem;
+    width: 6.5rem !important;
+    height: 6.5rem !important;
     margin-bottom: 5px;
     object-fit: cover;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &_box {
@@ -26,8 +72,14 @@
     align-items: center;
     padding: 15px 20px;
   }
+
   button {
     width: 10rem !important;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1) translateX(-45%);
+    }
   }
 
   @media screen and (max-width: 500px) {
@@ -47,5 +99,8 @@
       bottom: -1.3rem !important;
       width: 7rem !important;
     }
+  }
+  @media screen and (max-width: 360px) {
+    margin-right: -2.6rem;
   }
 }

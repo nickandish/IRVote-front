@@ -5,8 +5,7 @@
 }
 .ticketAdd {
   margin-top: 0px;
-  margin-bottom: 5px;
-  padding-bottom: 4rem;
+  height: 100svh;
 
   textarea {
     border: 2px solid $primary;
@@ -14,6 +13,10 @@
 
   .select-container {
     width: 100%;
+  }
+
+  .select {
+    margin: auto;
   }
 
   .css-13cymwt-control,
@@ -24,7 +27,6 @@
     padding: 0.75rem;
     transition: 0.3s;
     width: 85%;
-    margin-right: 0;
 
     &:hover {
       border: 2px solid $primary;
@@ -53,10 +55,34 @@
 
     .submit {
       @include button(white, $primary, $primary, 1rem);
+      transition: all 0.3s ease-in;
+
+      &:hover {
+        @include button(white, $primary, $primary, 0);
+
+        transform: scale(1.1);
+      }
     }
 
     .upload {
       @include button($primary, $primary, white, 1rem);
+      transition: all 0.3s ease-in;
+
+      &:hover {
+        @include button($primary, $primary, white, 0);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .css-13cymwt-control,
+    .css-t3ipsp-control {
+      padding: 0;
+    }
+
+    .input {
+      padding: 0.5rem !important;
     }
   }
 }

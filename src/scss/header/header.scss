@@ -1,3 +1,5 @@
+@import "../box.scss";
+
 .header {
   width: 100%;
   position: fixed;
@@ -67,7 +69,7 @@
   left: 1rem;
   right: 1rem;
   top: 85svh;
-  background-color: #6a5ae0;
+  background-color: $primary;
   border-radius: 20rem;
 
   border: 3px solid white;
@@ -75,6 +77,12 @@
 
   .icon-container {
     width: 20%;
+    color: white !important;
+    transition: all 0.3s ease-in-out;
+    &:hover,
+    &:active {
+      transform: scale(1.1);
+    }
 
     .add {
       margin-left: 7px !important;

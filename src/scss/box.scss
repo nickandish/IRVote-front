@@ -42,7 +42,7 @@ $gray-light: #f5f5f5;
   padding: 0.5rem;
 
   .ballot {
-    border: 3px solid $color-active;
+    border: 0.15rem solid $color-active;
     background-color: $color-unActive;
   }
   .ballot_vote {
@@ -86,6 +86,10 @@ $gray-light: #f5f5f5;
 
   td {
     color: $color;
+  }
+
+  .icon {
+    color: $color !important;
   }
 }
 
