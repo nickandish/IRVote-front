@@ -4,7 +4,7 @@ import img from "../../../../assets/download.jpg";
 
 const VoteList = () => {
   return (
-    <>
+    <div className="text-center">
       <table className="text-center mt-4 tbl">
         <thead className="text-light ">
           <tr>
@@ -80,7 +80,9 @@ const VoteList = () => {
           </tr>
         </tbody>
       </table>
-    </>
+
+      <button className="candidate-list_btn fw-bold mt-5">ثبت نهایی رای</button>
+    </div>
   );
 };
 

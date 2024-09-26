@@ -6,8 +6,9 @@ import CandidateList from "./candidateList/CandidateList";
 import "./candidate.scss";
 
 const Candidate = () => {
-  const [candidateList, setCondidateList] = useState<boolean>(true);
+  const [candidateList, setCandidateList] = useState<boolean>(true);
   const [voteList, setVoteList] = useState<boolean>(false);
+
   return (
     <>
       <div className="candidate_header">
@@ -24,7 +25,7 @@ const Candidate = () => {
               }`}
               onClick={() => {
                 setVoteList(false);
-                setCondidateList(true);
+                setCandidateList(true);
               }}
             >
               کاندیدها
@@ -35,7 +36,7 @@ const Candidate = () => {
               className={`vote_btn fw-bold ${voteList ? "active" : ""}`}
               onClick={() => {
                 setVoteList(true);
-                setCondidateList(false);
+                setCandidateList(false);
               }}
             >
               رای‌های من
@@ -44,7 +45,12 @@ const Candidate = () => {
         </div>
 
         {voteList && <VoteList />}
-        {candidateList && <CandidateList />}
+        {candidateList && (
+          <CandidateList
+            setVoteList={setVoteList}
+            setCandidateList={setCandidateList}
+          />
+        )}
       </div>
     </>
   );

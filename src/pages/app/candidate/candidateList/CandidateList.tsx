@@ -1,8 +1,22 @@
 import { Row } from "react-bootstrap";
 import CandidateBox from "./CandidateBox";
 import "./candidateBox.scss";
+import React from "react";
 
-const CandidateList = () => {
+interface CandidateListProps {
+  setVoteList: (value: boolean) => void;
+  setCandidateList: (value: boolean) => void;
+}
+
+const CandidateList: React.FC<CandidateListProps> = ({
+  setVoteList,
+  setCandidateList,
+}) => {
+  const handleClick = () => {
+    setCandidateList(false);
+    setVoteList(true);
+  };
+
   return (
     <div className="candidate_list text-center">
       <p className="fw-bold pp p-4">
@@ -20,7 +34,9 @@ const CandidateList = () => {
           <CandidateBox />
           <CandidateBox />
         </Row>
-        <button className="candidate-list_btn fw-bold">ثبت نهایی رای</button>
+        <button className="candidate-list_btn fw-bold" onClick={handleClick}>
+          مشاهده رای‌های من
+        </button>
       </div>
     </div>
   );
