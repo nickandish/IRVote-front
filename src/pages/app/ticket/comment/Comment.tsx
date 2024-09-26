@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Col, Container, Row, Form } from "react-bootstrap";
 import { IoSend } from "react-icons/io5";
+import { GrAttachment } from "react-icons/gr";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
 import "./comment.scss";
@@ -12,61 +13,81 @@ interface Comment {
   type: "client" | "help";
 }
 
-// // Fetch comments from the API
-// const fetchComments = async (): Promise<Comment[]> => {
-//   const response = await axios.get<Comment[]>("/api/comments");
-//   return response.data;
-// };
+// Placeholder functions for API calls
+const fetchComments = async (): Promise<Comment[]> => {
+  // Simulate fetching comments
+  return [
+    { id: 1, text: "Initial comment from client", type: "client" },
+    { id: 2, text: "Initial comment from help", type: "help" },
+  ];
+};
 
-// // Post a new comment to the API
-// const postComment = async (comment: Comment): Promise<void> => {
-//   await axios.post("/api/comments", comment);
-// };
+const postComment = async (comment: Comment): Promise<void> => {
+  // Simulate posting a comment
+  console.log("Posted comment:", comment);
+};
 
-const Comment = () => {
+const CommentComponent = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
 
-  // useEffect(() => {
-  //   const loadComments = async () => {
-  //     try {
-  //       const data = await fetchComments();
-  //       setComments(data);
-  //     } catch (error) {
-  //       console.error("Error fetching comments:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const loadComments = async () => {
+      try {
+        const data = await fetchComments();
+        setComments(data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
 
-  //   loadComments();
-  // }, []);
+    loadComments();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewComment(e.target.value);
   };
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (newComment.trim() === "") return;
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+      console.log("Selected file:", selectedFile);
+    }
+  };
 
-  //   const newCommentObject: Comment = {
-  //     id: comments.length + 1,
-  //     text: newComment,
-  //     type: "client",
-  //   };
+  const handleUploadClick = () => {
+    document.getElementById("fileInput")?.click();
+  };
 
-  //   try {
-  //     await postComment(newCommentObject);
-  //     setComments([...comments, newCommentObject]);
-  //     setNewComment("");
-  //   } catch (error) {
-  //     console.error("Errore posting comment:", error);
-  //   }
-  // };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newComment.trim() === "") return;
+
+    const newCommentObject: Comment = {
+      id: comments.length + 1,
+      text: newComment,
+      type: "client",
+    };
+
+    try {
+      await postComment(newCommentObject);
+      setComments([...comments, newCommentObject]);
+      setNewComment("");
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
+  };
 
   return (
     <>
-      <Header title={"کامنت"} />
-      <Container className="fw-bold">
+      <div className="nav">
+        <Header title={"کامنت"} />
+        <Navbar />
+      </div>
+
+      <Container className="fw-bold comment-container">
         <Row className="box">
           <Col className="col-12">
             <h2>انجام شده</h2>
@@ -99,51 +120,22 @@ const Comment = () => {
         <div className="comment">
           <div className="comment_box">
             <div className="texts">
-              {/* {comments.map((comment) => (
-              <div
-                key={comment.id}
-                className={comment.type === "client" ? "client" : "help"}
-              >
-                <div className={comment.type === "client" ? "" : "postibaani"}>
-                  <p>{comment.text}</p>
+              {comments.map((comment) => (
+                <div
+                  key={comment.id}
+                  className={comment.type === "client" ? "client" : "help"}
+                >
+                  <div
+                    className={comment.type === "client" ? "" : "postibaani"}
+                  >
+                    <p>{comment.text}</p>
+                  </div>
                 </div>
-              </div>
-            ))} */}
-              <div className="client">
-                <p>
-                  سلااااااااامممممم سلاااااااممممم سلااااااممممممم
-                  سلاااااااممممم
-                </p>
-              </div>
-              <div className="help">
-                <div className="postibaani">
-                  <p>
-                    سلاااااااممممم سلااااااااامممممممممممم سلااااااامممممم
-                    سلاااااامممممم سلاااااااممممم
-                  </p>
-                </div>
-              </div>
-
-              <div className="client">
-                <p>
-                  سلااااااااامممممم سلاااااااممممم سلااااااممممممم
-                  سلاااااااممممم
-                </p>
-              </div>
-              <div className="help">
-                <div className="postibaani">
-                  <p>
-                    سلاااااااممممم سلااااااامممممم سلاااااامممممم سلاااااااممممم
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className="comment-input">
-            <Form
-              // onSubmit={handleSubmit}
-              className="mt-3"
-            >
+            <Form onSubmit={handleSubmit} className="mt-3">
               <Form.Group controlId="newComment">
                 <Form.Control
                   type="text"
@@ -153,6 +145,16 @@ const Comment = () => {
                   className="input-send"
                 />
               </Form.Group>
+
+              <input
+                type="file"
+                id="fileInput"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+              <button type="button" onClick={handleUploadClick}>
+                <GrAttachment className="icon-attach" />
+              </button>
               <button type="submit" className="button-send">
                 <IoSend className="icon" />
               </button>
@@ -160,9 +162,8 @@ const Comment = () => {
           </div>
         </div>
       </Container>
-      <Navbar />
     </>
   );
 };
 
-export default Comment;
+export default CommentComponent;

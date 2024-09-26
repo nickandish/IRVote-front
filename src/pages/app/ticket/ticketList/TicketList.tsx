@@ -27,7 +27,7 @@ const TicketList = () => {
               <td colSpan={2}>02/01/05</td>
               <td>تایید شده</td>
               <td>
-                <Link to="/ticketEdit">
+                <Link to="/ticketComment">
                   <FaRegEye className="icon" />
                 </Link>
               </td>
@@ -39,7 +39,7 @@ const TicketList = () => {
               <td colSpan={2}>02/01/05</td>
               <td>تایید شده</td>
               <td>
-                <Link to="/ticketEdit">
+                <Link to="/ticketComment">
                   <FaRegEye className="icon" />
                 </Link>
               </td>
@@ -51,7 +51,7 @@ const TicketList = () => {
               <td colSpan={2}>02/01/05</td>
               <td>تایید شده</td>
               <td>
-                <Link to="/ticketEdit">
+                <Link to="/ticketComment">
                   <FaRegEye className="icon" />
                 </Link>
               </td>

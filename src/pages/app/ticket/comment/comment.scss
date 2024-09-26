@@ -1,6 +1,10 @@
 @import "../../../../scss/box.scss";
 
-.container {
+.nav {
+  position: absolute;
+  z-index: 100;
+}
+.comment-container {
   width: 100% !important;
   height: 100vh !important;
   margin-top: 7rem !important;
@@ -90,7 +94,7 @@
       width: 70%;
       margin: auto;
       position: absolute;
-      bottom: 0.3rem;
+      bottom: 0.85rem;
       left: 10px;
       right: 10px;
 
@@ -111,6 +115,13 @@
           rotate: 90;
           color: $primary;
           margin-bottom: 5px;
+        }
+
+        .icon-attach {
+          color: $primary !important;
+          position: relative;
+          left: 1.5rem;
+          top: -0.15rem;
         }
       }
     }
