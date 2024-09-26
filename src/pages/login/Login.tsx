@@ -1,7 +1,7 @@
 import Bg from "./Bg";
 import LoginCard from "./mobile/step1/LoginCard";
 import "./loginScss/login.scss";
-import BgLaptop from "./laptop/BgLaptop";
+// import BgLaptop from "./laptop/BgLaptop";
 
 const Login: React.FC = () => {
   return (
@@ -11,10 +11,10 @@ const Login: React.FC = () => {
         <LoginCard />
       </div>
 
-      <div className="laptop">
+      {/* <div className="laptop">
         <BgLaptop />
         <LoginCard />
-      </div>
+      </div> */}
     </>
   );
 };

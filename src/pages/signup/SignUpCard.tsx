@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import "./signUp.scss";
 import { useReducer } from "react";
+import "./signUp.scss";
 
 type State = {
   email: string;
@@ -14,8 +14,10 @@ type State = {
   lastNameClass: string;
   pwdClass: string;
   pwdConfirmClass: string;
-  type: string;
-  icon: JSX.Element;
+  pwdType: string;
+  confirmPwdType: string;
+  pwdIcon: JSX.Element;
+  confirmPwdIcon: JSX.Element;
 };
 
 type Action =
@@ -24,7 +26,8 @@ type Action =
   | { type: "SET_LAST_NAME"; payload: string }
   | { type: "SET_PWD"; payload: string }
   | { type: "SET_CONFIRM_PWD"; payload: string }
-  | { type: "TOGGLE_PASSWORD_VISIBILITY" };
+  | { type: "TOGGLE_PWD_VISIBILITY" }
+  | { type: "TOGGLE_CONFIRM_PWD_VISIBILITY" };
 
 const initialState: State = {
   email: "",
@@ -37,8 +40,10 @@ const initialState: State = {
   lastNameClass: "",
   pwdClass: "",
   pwdConfirmClass: "",
-  type: "password",
-  icon: <FaRegEyeSlash />,
+  pwdType: "password",
+  confirmPwdType: "password",
+  pwdIcon: <FaRegEyeSlash />,
+  confirmPwdIcon: <FaRegEyeSlash />,
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -70,11 +75,21 @@ const reducer = (state: State, action: Action): State => {
           ? "is-valid"
           : "is-invalid";
       return { ...state, confirmPwd: action.payload, pwdConfirmClass };
-    case "TOGGLE_PASSWORD_VISIBILITY":
-      const newType = state.type === "password" ? "text" : "password";
-      const newIcon =
-        state.type === "password" ? <FaRegEye /> : <FaRegEyeSlash />;
-      return { ...state, type: newType, icon: newIcon };
+    case "TOGGLE_PWD_VISIBILITY":
+      const newPwdType = state.pwdType === "password" ? "text" : "password";
+      const newPwdIcon =
+        state.pwdType === "password" ? <FaRegEye /> : <FaRegEyeSlash />;
+      return { ...state, pwdType: newPwdType, pwdIcon: newPwdIcon };
+    case "TOGGLE_CONFIRM_PWD_VISIBILITY":
+      const newConfirmPwdType =
+        state.confirmPwdType === "password" ? "text" : "password";
+      const newConfirmPwdIcon =
+        state.confirmPwdType === "password" ? <FaRegEye /> : <FaRegEyeSlash />;
+      return {
+        ...state,
+        confirmPwdType: newConfirmPwdType,
+        confirmPwdIcon: newConfirmPwdIcon,
+      };
     default:
       return state;
   }
@@ -85,11 +100,11 @@ const SignUpCard: React.FC = () => {
 
   return (
     <div className="login-card text-center row d-flex ltr">
-      <h1 className="text-light fw-bold mb-4">LOGO</h1>
-      <h1 className="text-light fw-bold mb-4">نیک آرا</h1>
+      <h1 className="text-light fw-bold ">LOGO</h1>
+      <h1 className="text-light fw-bold ">نیک آرا</h1>
       <Card className="text-center login-card_mew signUp_card">
-        <p className="mb-4">اطلاعات خود را تکمیل کنید</p>
-        <div className="mb-4">
+        <p className="">اطلاعات خود را تکمیل کنید</p>
+        <div className="">
           <input
             placeholder="نام"
             id="firstName"
@@ -100,13 +115,11 @@ const SignUpCard: React.FC = () => {
             }
           />
           {state.firstNameClass === "is-invalid" && (
-            <p className="text-danger mx-5 w-100">
-              Name must be more than 3 letters
-            </p>
+            <p className="text-danger">نام حداقل باید شامل 3 حرف باشد</p>
           )}
         </div>
 
-        <div className="mb-4">
+        <div className="">
           <input
             placeholder="نام خانوادگی"
             id="lastName"
@@ -117,13 +130,13 @@ const SignUpCard: React.FC = () => {
             }
           />
           {state.lastNameClass === "is-invalid" && (
-            <p className="text-danger mx-5 w-100">
-              Last name must be more than 5 letters
+            <p className="text-danger">
+              نام خانوادگی حداقل باید شامل 5 حرف باشد
             </p>
           )}
         </div>
 
-        <div className="mb-4">
+        <div className="">
           <input
             placeholder="ایمیل"
             id="email"
@@ -134,55 +147,52 @@ const SignUpCard: React.FC = () => {
             }
           />
           {state.emailClass === "is-invalid" && (
-            <p className="text-danger mx-5 w-100">Please enter a valid email</p>
+            <p className="text-danger">لطفا یک ایمیل معتبر وارد کنید</p>
           )}
         </div>
 
-        <div className="mb-4 test">
+        <div className=" pwd">
           <input
             placeholder="رمز عبور"
             id="password"
-            type={state.type}
+            type={state.pwdType}
             className={`input login-card_input ${state.pwdClass}`}
             onChange={(e) =>
               dispatch({ type: "SET_PWD", payload: e.target.value })
             }
           />
-          <h3
-            className="text"
-            onClick={() => dispatch({ type: "TOGGLE_PASSWORD_VISIBILITY" })}
+          <div
+            className="icon-1"
+            onClick={() => dispatch({ type: "TOGGLE_PWD_VISIBILITY" })}
           >
-            {state.icon}
-          </h3>
+            {state.pwdIcon}
+          </div>
           {state.pwdClass === "is-invalid" && (
-            <p className="text-danger mx-5 w-100">
-              Password must be at least 8 characters long and include at least
-              one uppercase letter, one lowercase letter, one number, and one
-              special character
+            <p className="text-danger">
+              رمز عبور باید حداقل 8 کاراکتر و شامل یک حرف بزرگ، یک حرف کوچک، یک
+              شماره و یکی از % @ & ! باشد
             </p>
           )}
         </div>
 
-        <div className="mb-4 test">
+        <div className=" pwd">
           <input
             placeholder="تکرار رمز عبور"
             id="confirmPwd"
-            type={state.type}
+            type={state.confirmPwdType}
             className={`input login-card_input ${state.pwdConfirmClass}`}
             onChange={(e) =>
               dispatch({ type: "SET_CONFIRM_PWD", payload: e.target.value })
             }
           />
-          <h3
-            className="text-2"
-            onClick={() => dispatch({ type: "TOGGLE_PASSWORD_VISIBILITY" })}
+          <div
+            className="icon-2"
+            onClick={() => dispatch({ type: "TOGGLE_CONFIRM_PWD_VISIBILITY" })}
           >
-            {state.icon}
-          </h3>
+            {state.confirmPwdIcon}
+          </div>
           {state.pwdConfirmClass === "is-invalid" && (
-            <p className="text-danger mx-5 w-100">
-              Please confirm your password by entering it again
-            </p>
+            <p className="text-danger">لطفا رمز عبور خود را تایید کنید</p>
           )}
         </div>
 

@@ -10,7 +10,7 @@
 
   &_mew {
     padding: 3rem 2.5rem;
-    transition: 0.3;
+    transition: 0.3s;
   }
   p {
     color: $primary;
@@ -53,17 +53,35 @@
       width: 90%;
       min-width: 269.33px;
       left: 53%;
-      &_input {
-        width: 190px !important;
-        font-size: smaller;
+
+      &_mew {
+        padding: 1rem 0.5rem;
       }
+
+      p,
+      ::placeholder,
+      button {
+        font-size: 12px;
+      }
+
+      p {
+        margin: 0.7rem !important;
+      }
+
+      .p-email {
+        font-size: 13px;
+      }
+
       button {
         font-size: smaller;
+        margin-bottom: 15px !important;
       }
 
       input,
       button {
         min-width: 200px;
+        width: 200px;
+        margin: 3px auto !important;
       }
     }
   }

@@ -1,59 +1,39 @@
 @import "../../scss/box.scss";
 
 .signUp_card {
+  padding: 2rem 1rem !important;
+  max-width: 500px !important;
+
   .input {
     width: 75%;
     padding: 0.5rem;
+    margin-bottom: 9px;
     border-radius: 20px;
     border: 2px solid $primary;
+    max-width: 375px !important;
   }
-  .test {
-    display: flex;
-    justify-content: center;
 
-    .text {
-      position: absolute;
-      left: 5.5rem;
-      top: 19rem;
+  .text-danger {
+    font-size: 12px !important;
+    max-width: 375px !important;
+    margin: auto;
+    padding-bottom: 5px;
+
+    @media screen and (max-width: 400px) {
+      font-size: 11px !important;
+      margin: 3px auto !important;
+      max-width: 200px !important;
     }
-    .text-2 {
-      position: absolute;
-      left: 5.5rem;
-      top: 23.5rem;
-    }
+  }
+
+  .pwd {
+    position: relative;
     svg {
+      position: absolute;
+      left: 17%;
+      top: 0.8rem;
       font-size: 1.3rem;
       color: $primary;
-    }
-    @media screen and (max-width: 890px) {
-      .text {
-        left: 4.3rem !important;
-        top: 19.2rem !important;
-      }
-      .text-2 {
-        left: 4.5rem !important;
-        top: 23.5rem !important;
-      }
-    }
-    @media screen and (max-width: 400px) {
-      .text {
-        left: 23% !important;
-        top: 18.3rem !important;
-      }
-      .text-2 {
-        left: 23% !important;
-        top: 22.4rem !important;
-      }
-    }
-    @media screen and (max-width: 340px) {
-      .text {
-        left: 3.7rem !important;
-        top: 18.3rem !important;
-      }
-      .text-2 {
-        left: 3.7rem !important;
-        top: 22.4rem !important;
-      }
     }
   }
 }
