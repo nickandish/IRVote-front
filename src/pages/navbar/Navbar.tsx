@@ -18,7 +18,7 @@ const Navbar = () => {
         <p className="pt-1">نتایج انتخابات</p>
       </Link>
 
-      <Link to="/" className="icon-container text-center">
+      <Link to="/profile" className="icon-container text-center">
         <IoPersonCircleOutline className="profile" />
       </Link>
 

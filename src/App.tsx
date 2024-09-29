@@ -11,6 +11,7 @@ import TicketList from "./pages/app/ticket/ticketList/TicketList";
 import TicketEdit from "./pages/app/ticket/ticketEdit/TicketEdit";
 import TicketAdd from "./pages/app/ticket/ticketAdd/TicketAdd";
 import Comment from "./pages/app/ticket/comment/Comment";
+import Profile from "./pages/app/profile/Profile";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
         <Route path="/ticketList" element={<TicketList />} />
         <Route path="/ticketEdit" element={<TicketEdit />} />
         <Route path="/ticketComment" element={<Comment />} />
+
+        <Route path="/profile" element={<Profile />} />
 
         <Route path="/" element={<Main />} />
       </Routes>

@@ -1,0 +1,81 @@
+@import "../../../scss/box.scss";
+
+.profile {
+  width: 100%;
+  margin: 2rem auto !important;
+  padding: 0px !important;
+  display: flex;
+  flex-direction: column;
+
+  .warper {
+    width: 100%;
+    margin: 0px 0px 10px 0px !important;
+    text-align: center;
+    h2 {
+      color: $primary;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+
+  img {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50% !important;
+    object-fit: cover;
+    border: 2px solid $primary;
+  }
+  .prfl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    p {
+      padding: 0 0.5rem;
+      color: $primary;
+      margin: 0;
+    }
+    svg {
+      color: $primary;
+    }
+  }
+  .icon {
+    width: 47px;
+    height: 47px;
+    color: $primary;
+  }
+  &_field {
+    width: 400px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
+    &_btn {
+      position: relative !important;
+      button {
+        width: 334px;
+        height: 50px;
+        border: 1px solid $primary;
+        border-radius: 3rem;
+        padding: 0px 12px;
+        margin: 15px auto;
+        text-align: start;
+        background: white;
+        color: $primary;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      &_icon {
+        color: $primary;
+        width: 20px !important;
+        height: 20px !important;
+        position: absolute !important;
+        top: 2rem !important;
+        left: 3.2rem !important;
+      }
+    }
+  }
+}
