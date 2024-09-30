@@ -1,11 +1,9 @@
 @import "../../../scss/box.scss";
 
-.profile {
+.profile-page {
   width: 100%;
-  margin: 2rem auto !important;
+  margin: 8rem auto 18rem !important;
   padding: 0px !important;
-  display: flex;
-  flex-direction: column;
 
   .warper {
     width: 100%;
@@ -19,62 +17,89 @@
   }
 
   img {
-    width: 80px !important;
-    height: 80px !important;
-    border-radius: 50% !important;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     object-fit: cover;
     border: 2px solid $primary;
   }
-  .prfl {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1rem;
-    p {
-      padding: 0 0.5rem;
-      color: $primary;
-      margin: 0;
+
+  .text-container {
+    .prfl {
+      display: flex;
+      p {
+        padding: 0 0.5rem;
+        color: $primary;
+        margin: 0;
+      }
+      svg {
+        color: $primary;
+      }
     }
-    svg {
-      color: $primary;
+
+    .phone {
+      transform: rotate(90deg);
     }
   }
   .icon {
-    width: 47px;
-    height: 47px;
+    width: 45px;
+    height: 45px;
     color: $primary;
+    background-color: $primary;
+    border-radius: 50%;
+    padding: 0.6rem;
+
+    .i {
+      color: white;
+    }
   }
   &_field {
     width: 400px;
     height: 350px;
     display: flex;
     justify-content: center;
-    margin: 0 auto;
+    margin: auto !important;
     text-align: center;
+    padding-top: 1rem;
     &_btn {
-      position: relative !important;
       button {
+        @include button($primary, $primary, transparent, 3rem);
+
         width: 334px;
         height: 50px;
-        border: 1px solid $primary;
-        border-radius: 3rem;
         padding: 0px 12px;
-        margin: 15px auto;
+        margin: 7px auto;
         text-align: start;
-        background: white;
-        color: $primary;
-        &:hover {
+        tr &:hover {
           cursor: pointer;
         }
       }
 
       &_icon {
         color: $primary;
-        width: 20px !important;
-        height: 20px !important;
-        position: absolute !important;
-        top: 2rem !important;
-        left: 3.2rem !important;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        left: 2.5rem;
+      }
+    }
+  }
+  @media screen and (max-width: 400px) {
+    margin: 6rem auto 10rem !important;
+
+    h2,
+    p {
+      font-size: 13px !important;
+    }
+    &_field {
+      width: 80% !important;
+
+      &_btn {
+        width: 80%;
+      }
+      button {
+        width: 90%;
+        font-size: 13px;
       }
     }
   }
