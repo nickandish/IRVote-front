@@ -12,6 +12,7 @@ import TicketEdit from "./pages/app/ticket/ticketEdit/TicketEdit";
 import TicketAdd from "./pages/app/ticket/ticketAdd/TicketAdd";
 import Comment from "./pages/app/ticket/comment/Comment";
 import Profile from "./pages/app/profile/Profile";
+import Document from "./pages/app/document/Document";
 
 function App() {
   return (
@@ -23,10 +24,10 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
 
         <Route path="/my-elections" element={<MyElection />} />
-
         <Route path="/ballots" element={<Ballot />} />
-
         <Route path="/candidate" element={<Candidate />} />
+
+        <Route path="/document" element={<Document />} />
 
         <Route path="/ticketAdd" element={<TicketAdd />} />
         <Route path="/ticketList" element={<TicketList />} />

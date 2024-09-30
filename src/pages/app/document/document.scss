@@ -1,0 +1,74 @@
+@import "../../../scss/box.scss";
+
+.document-page {
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+
+  &_top {
+    button {
+      @include button(white, $primary, $primary, 1rem);
+      width: 9rem;
+      padding: 0.5rem 1rem;
+      margin-top: -0.5rem;
+      font-size: 0.8rem;
+    }
+    .icon-logo {
+      color: $primary;
+      font-size: 1.3rem;
+    }
+    .download {
+      margin-left: 10px;
+      font-size: 1.2rem;
+    }
+    h2 {
+      font-weight: bold;
+      color: $primary;
+    }
+  }
+
+  &_mid {
+    h6 {
+      color: $primary;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    p {
+      font-size: 13px;
+      font-weight: bold;
+    }
+  }
+
+  &_bottom {
+    h4 {
+      color: $primary;
+    }
+    // $color: white,
+    //   $border-color: $primary,
+    //   $bg-color: $primary,
+    //   $border-radius: 1rem
+    .btn-accept {
+      @include button($accept, $accept, transparent, 2rem);
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        @include button(white, $accept, $accept, 1rem);
+      }
+    }
+    .btn-danger {
+      @include button($danger, $danger, transparent, 2rem);
+      padding: 0.5rem 1rem;
+      margin-right: 2rem;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        @include button(white, $danger, $danger, 1rem);
+      }
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .col-none {
+      display: none;
+    }
+  }
+}
