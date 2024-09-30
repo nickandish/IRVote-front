@@ -5,12 +5,13 @@ import { FaPen } from "react-icons/fa";
 import { RiBodyScanFill } from "react-icons/ri";
 import { MdOutlineInsertChartOutlined } from "react-icons/md";
 import { PiEyeglasses } from "react-icons/pi";
-import { CiFileOn } from "react-icons/ci";
+import { MdOutlineFolderCopy } from "react-icons/md";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { LuFolderPlus } from "react-icons/lu";
 import img from "../../../assets/download.jpg";
-import "./profile.scss";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
+import "./profile.scss";
 
 function Profile() {
   return (
@@ -63,11 +64,11 @@ function Profile() {
           </Col>
           <Col className="col-12 profile-page_field_btn">
             <button>مدیریت درخواست های من</button>
-            <CiFileOn className="profile-page_field_btn_icon" />
+            <MdOutlineFolderCopy className="profile-page_field_btn_icon" />
           </Col>
           <Col className="col-12 profile-page_field_btn">
             <button>ثبت درخواست جدید</button>
-            <CiFileOn className="profile-page_field_btn_icon" />
+            <LuFolderPlus className="profile-page_field_btn_icon" />
           </Col>
           <Col className="col-12 profile-page_field_btn">
             <button>ارتباط با پشتیبانی</button>
