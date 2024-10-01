@@ -1,0 +1,38 @@
+@import "../../../../scss//box.scss";
+
+.toggle-container {
+  width: 70%;
+  padding: 1rem 2rem;
+  margin: auto;
+  background: $primary;
+  border-radius: 1.5rem;
+  border: 2px solid white;
+  box-shadow: 0 4px 2px rgba($color: #000000, $alpha: 0.1);
+  transition: all 0.3s ease-in;
+
+  label {
+    padding-left: 1rem !important;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  input {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.348);
+    transition: all 0.3s ease-in;
+
+    &:active,
+    &:focus {
+      border: none;
+      outline: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.647);
+    }
+
+    &::placeholder {
+      color: white;
+    }
+  }
+}
