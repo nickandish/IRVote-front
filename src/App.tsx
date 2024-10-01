@@ -11,8 +11,9 @@ import TicketList from "./pages/app/ticket/ticketList/TicketList";
 import TicketEdit from "./pages/app/ticket/ticketEdit/TicketEdit";
 import TicketAdd from "./pages/app/ticket/ticketAdd/TicketAdd";
 import Comment from "./pages/app/ticket/comment/Comment";
-import Profile from "./pages/app/profile/Profile";
+import Profile from "./pages/app/profile-group/profile/Profile";
 import Document from "./pages/app/document/Document";
+import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/ticketComment" element={<Comment />} />
 
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile-edit" element={<ProfileEdit />} />
 
         <Route path="/" element={<Main />} />
       </Routes>

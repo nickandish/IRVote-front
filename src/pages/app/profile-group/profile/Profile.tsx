@@ -8,10 +8,11 @@ import { PiEyeglasses } from "react-icons/pi";
 import { MdOutlineFolderCopy } from "react-icons/md";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { LuFolderPlus } from "react-icons/lu";
-import img from "../../../assets/download.jpg";
-import Header from "../../navbar/Header";
-import Navbar from "../../navbar/Navbar";
+import img from "../../../../assets/download.jpg";
+import Header from "../../../navbar/Header";
+import Navbar from "../../../navbar/Navbar";
 import "./profile.scss";
+import { Link } from "react-router-dom";
 
 function Profile() {
   return (
@@ -44,8 +45,12 @@ function Profile() {
               </div>
             </Col>
           </Col>
-          <Col className="col-4 m-auto icon">
-            <FaPen className="i" />
+          <Col className="col-4  m-auto">
+            <Link to="/profile-edit">
+              <div className=" m-auto icon">
+                <FaPen className="i" />
+              </div>
+            </Link>
           </Col>
         </Row>
 

@@ -1,4 +1,4 @@
-@import "../../../scss/box.scss";
+@import "../../../../scss/box.scss";
 
 .profile-page {
   width: 100%;
@@ -17,11 +17,11 @@
   }
 
   img {
-    width: 80px;
-    height: 80px;
+    width: 87px;
+    height: 87px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid $primary;
+    border: 3px solid $primary;
   }
 
   .text-container {
@@ -48,6 +48,12 @@
     background-color: $primary;
     border-radius: 50%;
     padding: 0.6rem;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
 
     .i {
       color: white;
@@ -62,8 +68,18 @@
     text-align: center;
     padding-top: 1rem;
     &_btn {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.06);
+        button {
+          font-weight: bold;
+        }
+      }
       button {
         @include button($primary, $primary, transparent, 3rem);
+        transition: all 0.3s ease-in-out;
 
         width: 334px;
         height: 50px;
