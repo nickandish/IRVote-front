@@ -7,12 +7,14 @@ import { LuImagePlus } from "react-icons/lu";
 import img from "../../../../assets/download.jpg";
 import Toggle from "./Toggle";
 import "./profileEdit.scss";
+import PasswordPopUp from "./PasswordPopUp";
 
 const ProfileEdit: React.FC = () => {
   const [toggle, setToggle] = useState<string | null>(null);
   const [name, setName] = useState<string>("سارا سادات کریمی");
   const [email, setEmail] = useState<string>("email@email.com");
   const [phone, setPhone] = useState<string>("09938023855");
+  const [password, setPassword] = useState<string>("1234");
 
   const handleToggle = (field: string) => {
     setToggle(toggle === field ? null : field);
@@ -69,7 +71,7 @@ const ProfileEdit: React.FC = () => {
               <FaChevronLeft className="icon" />
             </button>
             {toggle === "phone" && (
-              <Toggle title="شماره تماس" value={phone} onChange={setPhone} />
+              <Toggle title="تماس" value={phone} onChange={setPhone} />
             )}
           </Col>
           <Col className="col-12">
@@ -81,7 +83,11 @@ const ProfileEdit: React.FC = () => {
               <FaChevronLeft className="icon" />
             </button>
             {toggle === "password" && (
-              <Toggle title="رمز عبور" value="" onChange={() => {}} />
+              <PasswordPopUp
+                title=" رمز عبور فعلی"
+                value="*******"
+                onChange={setPassword}
+              />
             )}
           </Col>
         </Row>
