@@ -16,7 +16,7 @@ const LoginInputs: React.FC<LoginProp> = ({ setEmailInput }) => {
 
   useEffect(() => {
     const removeToken = () => {
-      cookies.remove("token"); // This removes the 'token' cookie
+      cookies.remove("accessToken", { path: "/" });
       console.log("Token removed from cookies");
     };
 

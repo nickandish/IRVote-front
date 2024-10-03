@@ -9,7 +9,7 @@ const CountDownTimer: React.FC = () => {
       setTimeRemaining((prevTime) => {
         if (prevTime <= 1000) {
           clearInterval(timer);
-          window.location.reload();
+          window.location.href = "/login";
           return 0;
         } else {
           return prevTime - 1000;

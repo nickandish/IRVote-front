@@ -1,16 +1,21 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import Cookies from "universal-cookie";
 
-// Create an Axios instance
+const cookies = new Cookies();
+
 const apiClient = axios.create({
   baseURL: "http://172.16.17.35:8000",
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
-apiClient.interceptors.response.use(
-  (response: AxiosResponse) => response,
-  (error: any) => {
+apiClient.interceptors.request.use(
+  (config) => {
+    const accessToken = cookies.get("accessToken");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
     return Promise.reject(error);
   }
 );

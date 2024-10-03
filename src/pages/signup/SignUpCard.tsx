@@ -1,49 +1,35 @@
 import { Card } from "react-bootstrap";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useReducer } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
+import apiClient from "../../api/axios";
+import { API_URLS } from "../../api/urls";
+import Cookies from "universal-cookie";
 import "./signUp.scss";
+
+const cookies = new Cookies();
 
 type State = {
   email: string;
   firstName: string;
   lastName: string;
-  pwd: string;
-  confirmPwd: string;
   emailClass: string;
   firstNameClass: string;
   lastNameClass: string;
-  pwdClass: string;
-  pwdConfirmClass: string;
-  pwdType: string;
-  confirmPwdType: string;
-  pwdIcon: JSX.Element;
-  confirmPwdIcon: JSX.Element;
 };
 
 type Action =
   | { type: "SET_EMAIL"; payload: string }
   | { type: "SET_FIRST_NAME"; payload: string }
-  | { type: "SET_LAST_NAME"; payload: string }
-  | { type: "SET_PWD"; payload: string }
-  | { type: "SET_CONFIRM_PWD"; payload: string }
-  | { type: "TOGGLE_PWD_VISIBILITY" }
-  | { type: "TOGGLE_CONFIRM_PWD_VISIBILITY" };
+  | { type: "SET_LAST_NAME"; payload: string };
 
 const initialState: State = {
   email: "",
   firstName: "",
   lastName: "",
-  pwd: "",
-  confirmPwd: "",
   emailClass: "",
   firstNameClass: "",
   lastNameClass: "",
-  pwdClass: "",
-  pwdConfirmClass: "",
-  pwdType: "password",
-  confirmPwdType: "password",
-  pwdIcon: <FaRegEyeSlash />,
-  confirmPwdIcon: <FaRegEyeSlash />,
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -61,35 +47,6 @@ const reducer = (state: State, action: Action): State => {
       const lastNameClass =
         action.payload.length > 5 ? "is-valid" : "is-invalid";
       return { ...state, lastName: action.payload, lastNameClass };
-    case "SET_PWD":
-      const pwdClass =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(
-          action.payload
-        )
-          ? "is-valid"
-          : "is-invalid";
-      return { ...state, pwd: action.payload, pwdClass };
-    case "SET_CONFIRM_PWD":
-      const pwdConfirmClass =
-        action.payload === state.pwd && action.payload.length >= 8
-          ? "is-valid"
-          : "is-invalid";
-      return { ...state, confirmPwd: action.payload, pwdConfirmClass };
-    case "TOGGLE_PWD_VISIBILITY":
-      const newPwdType = state.pwdType === "password" ? "text" : "password";
-      const newPwdIcon =
-        state.pwdType === "password" ? <FaRegEye /> : <FaRegEyeSlash />;
-      return { ...state, pwdType: newPwdType, pwdIcon: newPwdIcon };
-    case "TOGGLE_CONFIRM_PWD_VISIBILITY":
-      const newConfirmPwdType =
-        state.confirmPwdType === "password" ? "text" : "password";
-      const newConfirmPwdIcon =
-        state.confirmPwdType === "password" ? <FaRegEye /> : <FaRegEyeSlash />;
-      return {
-        ...state,
-        confirmPwdType: newConfirmPwdType,
-        confirmPwdIcon: newConfirmPwdIcon,
-      };
     default:
       return state;
   }
@@ -98,12 +55,38 @@ const reducer = (state: State, action: Action): State => {
 const SignUpCard: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const location = useLocation();
+  const { mobileNumber } = location.state || {};
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    try {
+      const payload = {
+        first_name: state.firstName,
+        last_name: state.lastName,
+        mobile: mobileNumber,
+        email: state.email,
+      };
+
+      const response = await apiClient.put(API_URLS.FILL_PROFILE, payload);
+      if (response.data.success) {
+        console.log("User updated successfully", response.data);
+
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
   return (
     <div className="login-card text-center row d-flex ltr">
       <h1 className="text-light fw-bold ">LOGO</h1>
       <h1 className="text-light fw-bold ">نیک آرا</h1>
       <Card className="text-center login-card_mew signUp_card">
         <p className="">اطلاعات خود را تکمیل کنید</p>
+
         <div className="">
           <input
             placeholder="نام"
@@ -151,52 +134,10 @@ const SignUpCard: React.FC = () => {
           )}
         </div>
 
-        <div className=" pwd">
-          <input
-            placeholder="رمز عبور"
-            id="password"
-            type={state.pwdType}
-            className={`input login-card_input ${state.pwdClass}`}
-            onChange={(e) =>
-              dispatch({ type: "SET_PWD", payload: e.target.value })
-            }
-          />
-          <div
-            className="icon-1"
-            onClick={() => dispatch({ type: "TOGGLE_PWD_VISIBILITY" })}
-          >
-            {state.pwdIcon}
-          </div>
-          {state.pwdClass === "is-invalid" && (
-            <p className="text-danger">
-              رمز عبور باید حداقل 8 کاراکتر و شامل یک حرف بزرگ، یک حرف کوچک، یک
-              شماره و یکی از % @ & ! باشد
-            </p>
-          )}
-        </div>
-
-        <div className=" pwd">
-          <input
-            placeholder="تکرار رمز عبور"
-            id="confirmPwd"
-            type={state.confirmPwdType}
-            className={`input login-card_input ${state.pwdConfirmClass}`}
-            onChange={(e) =>
-              dispatch({ type: "SET_CONFIRM_PWD", payload: e.target.value })
-            }
-          />
-          <div
-            className="icon-2"
-            onClick={() => dispatch({ type: "TOGGLE_CONFIRM_PWD_VISIBILITY" })}
-          >
-            {state.confirmPwdIcon}
-          </div>
-          {state.pwdConfirmClass === "is-invalid" && (
-            <p className="text-danger">لطفا رمز عبور خود را تایید کنید</p>
-          )}
-        </div>
-
-        <button className="m-5 mt-1 mb-1 fw-bold text-light">
+        <button
+          className="m-5 mt-1 mb-1 fw-bold text-light"
+          onClick={handleSubmit}
+        >
           ورود به سامانه
         </button>
       </Card>

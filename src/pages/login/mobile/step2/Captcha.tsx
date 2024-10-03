@@ -6,6 +6,7 @@ import CountDownTimer from "./CountDownTimer";
 import OTPInput from "./OTPInput";
 import { sendOtpVerification } from "../../../../api/userServices";
 import Cookies from "universal-cookie";
+import apiClient from "../../../../api/axios";
 import "../../loginScss/login.scss";
 
 const cookies = new Cookies();
@@ -23,9 +24,9 @@ const Captcha = () => {
       if (response.success) {
         console.log("OTP verified successfully");
 
-        const { access, refresh } = response.data.token;
+        const { access } = response.data.token;
         cookies.set("accessToken", access, { path: "/", secure: true });
-        // cookies.set("refreshToken", refresh, { path: "/", secure: true });
+        apiClient.defaults.headers.common["Authorization"] = `Bearer ${access}`;
         console.log("Tokens saved in cookies");
 
         navigate("/signup", { state: { mobileNumber } });

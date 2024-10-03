@@ -47,7 +47,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ length, onChange }) => {
   };
 
   return (
-    <div>
+    <div className="ltr">
       {otp.map((data, index) => (
         <input
           key={index}
