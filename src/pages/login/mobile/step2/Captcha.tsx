@@ -28,7 +28,7 @@ const Captcha = () => {
         // cookies.set("refreshToken", refresh, { path: "/", secure: true });
         console.log("Tokens saved in cookies");
 
-        navigate("/signup");
+        navigate("/signup", { state: { mobileNumber } });
       } else {
         console.error(response.message);
       }
