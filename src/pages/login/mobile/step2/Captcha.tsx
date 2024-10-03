@@ -27,6 +27,7 @@ const Captcha = () => {
         const { access } = response.data.token;
         cookies.set("accessToken", access, { path: "/", secure: true });
         apiClient.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+        localStorage.setItem("accessToken", access);
         console.log("Tokens saved in cookies");
 
         navigate("/signup", { state: { mobileNumber } });

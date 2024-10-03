@@ -1,13 +1,9 @@
 import { Card } from "react-bootstrap";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
 import apiClient from "../../api/axios";
 import { API_URLS } from "../../api/urls";
-import Cookies from "universal-cookie";
 import "./signUp.scss";
-
-const cookies = new Cookies();
 
 type State = {
   email: string;
@@ -54,14 +50,41 @@ const reducer = (state: State, action: Action): State => {
 
 const SignUpCard: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const location = useLocation();
   const { mobileNumber } = location.state || {};
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+
+        const response = await apiClient.get(API_URLS.GET_USER, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add token to Authorization header
+          },
+        });
+
+        if (response.data.success) {
+          const userData = response.data.data;
+
+          // Populate form inputs with the user data
+          dispatch({ type: "SET_FIRST_NAME", payload: userData.first_name });
+          dispatch({ type: "SET_LAST_NAME", payload: userData.last_name });
+          dispatch({ type: "SET_EMAIL", payload: userData.email });
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleSubmit = async () => {
     try {
+      const token = localStorage.getItem("accessToken");
+
       const payload = {
         first_name: state.firstName,
         last_name: state.lastName,
@@ -69,10 +92,14 @@ const SignUpCard: React.FC = () => {
         email: state.email,
       };
 
-      const response = await apiClient.put(API_URLS.FILL_PROFILE, payload);
+      const response = await apiClient.put(API_URLS.FILL_PROFILE, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add token to Authorization header
+        },
+      });
+
       if (response.data.success) {
         console.log("User updated successfully", response.data);
-
         navigate("/profile");
       }
     } catch (error) {
@@ -93,6 +120,7 @@ const SignUpCard: React.FC = () => {
             id="firstName"
             type="text"
             className={`input login-card_input ${state.firstNameClass}`}
+            value={state.firstName}
             onChange={(e) =>
               dispatch({ type: "SET_FIRST_NAME", payload: e.target.value })
             }
@@ -108,6 +136,7 @@ const SignUpCard: React.FC = () => {
             id="lastName"
             type="text"
             className={`input login-card_input ${state.lastNameClass}`}
+            value={state.lastName}
             onChange={(e) =>
               dispatch({ type: "SET_LAST_NAME", payload: e.target.value })
             }
@@ -125,6 +154,7 @@ const SignUpCard: React.FC = () => {
             id="email"
             type="email"
             className={`input login-card_input ${state.emailClass}`}
+            value={state.email}
             onChange={(e) =>
               dispatch({ type: "SET_EMAIL", payload: e.target.value })
             }
