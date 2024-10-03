@@ -58,32 +58,32 @@ const SignUpCard: React.FC = () => {
   const { mobileNumber } = location.state || {};
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const access = localStorage.getItem("accessToken");
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const access = localStorage.getItem("accessToken");
 
-        const response = await axios.get(API_URLS.GET_USER, {
-          headers: {
-            Authorization: `Bearer ${access}`,
-          },
-        });
+  //       const response = await axios.get(API_URLS.GET_USER, {
+  //         headers: {
+  //           Authorization: `bearer ${access}`,
+  //         },
+  //       });
 
-        if (response.data.success) {
-          const userData = response.data.data;
+  //       if (response.data.success) {
+  //         const userData = response.data.data;
 
-          // Populate form inputs with the user data
-          dispatch({ type: "SET_FIRST_NAME", payload: userData.first_name });
-          dispatch({ type: "SET_LAST_NAME", payload: userData.last_name });
-          dispatch({ type: "SET_EMAIL", payload: userData.email });
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+  //         // Populate form inputs with the user data
+  //         dispatch({ type: "SET_FIRST_NAME", payload: userData.first_name });
+  //         dispatch({ type: "SET_LAST_NAME", payload: userData.last_name });
+  //         dispatch({ type: "SET_EMAIL", payload: userData.email });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, []);
+  //   fetchUserData();
+  // }, []);
 
   const handleSubmit = async () => {
     try {
@@ -99,11 +99,15 @@ const SignUpCard: React.FC = () => {
         email: state.email,
       };
 
-      const response = await axios.put(API_URLS.FILL_PROFILE, payload, {
-        // headers: {
-        //   Authorization: `Bearer ${access}`, // Add access to Authorization header
-        // },
-      });
+      const response = await axios.put(
+        "http://172.16.17.35:8000/users/fill_profile",
+        payload,
+        {
+          // headers: {
+          //   Authorization: `bearer ${access}`, // Add access to Authorization header
+          // },
+        }
+      );
 
       if (response.data.success) {
         console.log("User updated successfully", response.data);

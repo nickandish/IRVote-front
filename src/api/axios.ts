@@ -12,7 +12,7 @@ axios.interceptors.request.use(
     const token = localStorage.getItem("accessToken");
     console.log(token);
     if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers["Authorization"] = `bearer ${token}`;
       axios.defaults.withCredentials = true;
     }
     return config;
