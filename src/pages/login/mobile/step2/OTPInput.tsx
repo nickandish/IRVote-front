@@ -8,9 +8,10 @@ import "../../loginScss/step2.scss";
 
 interface OTPInputProps {
   length: number;
+  onChange: (otp: string) => void; // Add onChange prop
 }
 
-const OTPInput: React.FC<OTPInputProps> = ({ length }) => {
+const OTPInput: React.FC<OTPInputProps> = ({ length, onChange }) => {
   const [otp, setOtp] = useState<string[]>(Array(length).fill(""));
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -20,6 +21,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ length }) => {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
+      onChange(newOtp.join("")); // Call onChange to pass the OTP up
       if (index < length - 1) {
         inputs.current[index + 1]?.focus();
       }
@@ -39,6 +41,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ length }) => {
       } else {
         newOtp[index] = "";
         setOtp(newOtp);
+        onChange(newOtp.join("")); // Call onChange to pass the OTP up
       }
     }
   };
