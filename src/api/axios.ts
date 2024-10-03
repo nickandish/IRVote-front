@@ -7,11 +7,13 @@ const apiClient = axios.create({
   baseURL: "http://172.16.17.35:8000",
 });
 
-apiClient.interceptors.request.use(
+axios.interceptors.request.use(
   (config) => {
-    const accessToken = cookies.get("accessToken");
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+    const token = localStorage.getItem("accessToken");
+    console.log(token);
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+      axios.defaults.withCredentials = true;
     }
     return config;
   },

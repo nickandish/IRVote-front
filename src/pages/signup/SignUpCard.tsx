@@ -4,6 +4,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import apiClient from "../../api/axios";
 import { API_URLS } from "../../api/urls";
 import "./signUp.scss";
+import Cookies from "universal-cookie";
+import axios from "axios";
+
+const cookies = new Cookies();
 
 type State = {
   email: string;
@@ -57,11 +61,11 @@ const SignUpCard: React.FC = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem("accessToken");
+        const access = localStorage.getItem("accessToken");
 
-        const response = await apiClient.get(API_URLS.GET_USER, {
+        const response = await axios.get(API_URLS.GET_USER, {
           headers: {
-            Authorization: `Bearer ${token}`, // Add token to Authorization header
+            Authorization: `Bearer ${access}`,
           },
         });
 
@@ -83,7 +87,10 @@ const SignUpCard: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const token = localStorage.getItem("accessToken");
+      const tokenFromLocalStorage = localStorage.getItem("accessToken");
+      const tokenFromCookies = cookies.get("accessToken");
+      console.log("LocalStorage Token:", tokenFromLocalStorage);
+      console.log("Cookie Token:", tokenFromCookies);
 
       const payload = {
         first_name: state.firstName,
@@ -92,10 +99,10 @@ const SignUpCard: React.FC = () => {
         email: state.email,
       };
 
-      const response = await apiClient.put(API_URLS.FILL_PROFILE, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Add token to Authorization header
-        },
+      const response = await axios.put(API_URLS.FILL_PROFILE, payload, {
+        // headers: {
+        //   Authorization: `Bearer ${access}`, // Add access to Authorization header
+        // },
       });
 
       if (response.data.success) {
