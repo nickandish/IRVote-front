@@ -30,25 +30,24 @@ const LoginInputs: React.FC<LoginProp> = ({ setEmailInput }) => {
 
   const handleSendOtp = async () => {
     if (!mobileNumber || !isValidMobileNumber(mobileNumber)) {
-      setStatusMessage("Enter a valid mobile number"); // Ensure user is prompted with the right message
+      setStatusMessage("Enter a valid mobile number");
       console.log(statusMessage);
       return;
     }
 
-    console.log("Sending OTP for mobile number:", mobileNumber); // Log the mobile number for debugging
+    console.log("Sending OTP for mobile number:", mobileNumber);
 
     try {
-      const response = await sendOtp(mobileNumber); // Make the actual API call here
+      const response = await sendOtp(mobileNumber);
       if (response.success) {
         setStatusMessage("OTP has been sent");
-        navigate("/otp");
         navigate("/otp", { state: { mobileNumber } });
       } else {
-        setStatusMessage(response.message); // Display message from the response
+        setStatusMessage(response.message);
       }
     } catch (error) {
       setStatusMessage("Failed to send OTP");
-      console.error("Error sending OTP:", error); // Log error details for debugging
+      console.error("Error sending OTP:", error);
     }
   };
 

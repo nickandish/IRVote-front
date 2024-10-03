@@ -1,23 +1,34 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Card } from "react-bootstrap";
-import "../../loginScss/login.scss";
 import Bg from "../../Bg";
 import CountDownTimer from "./CountDownTimer";
 import OTPInput from "./OTPInput";
 import { sendOtpVerification } from "../../../../api/userServices";
+import Cookies from "universal-cookie";
+import "../../loginScss/login.scss";
+
+const cookies = new Cookies();
 
 const Captcha = () => {
   const location = useLocation();
   const { mobileNumber } = location.state || {};
   const [otp, setOtp] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = async () => {
     try {
-      const response = await sendOtpVerification(mobileNumber, otp); // Use mobile number from location state
+      const response = await sendOtpVerification(mobileNumber, otp);
       if (response.success) {
         console.log("OTP verified successfully");
-        // Navigate to the next step or handle success
+
+        const { access, refresh } = response.data.token;
+        cookies.set("accessToken", access, { path: "/", secure: true });
+        // cookies.set("refreshToken", refresh, { path: "/", secure: true });
+        console.log("Tokens saved in cookies");
+
+        navigate("/signup");
       } else {
         console.error(response.message);
       }
