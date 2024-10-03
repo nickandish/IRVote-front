@@ -1,8 +1,6 @@
 import { Card } from "react-bootstrap";
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import apiClient from "../../api/axios";
-import { API_URLS } from "../../api/urls";
 import "./signUp.scss";
 import Cookies from "universal-cookie";
 import axios from "axios";
