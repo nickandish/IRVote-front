@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { sendOtp } from "../../../../api/userServices";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import "./loginInputs.scss";
 
 const cookies = new Cookies();
 
@@ -16,15 +17,27 @@ const LoginInputs: React.FC<LoginProp> = ({ setEmailInput }) => {
 
   useEffect(() => {
     const removeToken = () => {
-      cookies.remove("token"); // This removes the 'token' cookie
+      cookies.remove("token");
       console.log("Token removed from cookies");
     };
 
-    removeToken(); // Call the function
-  }, []);
+    removeToken();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        handleSendOtp();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileNumber]);
 
   const isValidMobileNumber = (number: string): boolean => {
-    const regex = /^(0|\+98)?9\d{9}$/; // Match mobile numbers starting with 0 or +98 followed by 9 digits
+    const regex = /^(0|\+98)?9\d{9}$/;
     return regex.test(number);
   };
 
@@ -68,9 +81,7 @@ const LoginInputs: React.FC<LoginProp> = ({ setEmailInput }) => {
         ورود به سامانه
       </button>
       <div className="link_email">
-        <p className="p_email fw-bold" onClick={() => setEmailInput(true)}>
-          ورود با ایمیل
-        </p>
+        <p className="p_email fw-bold disabled">ورود با ایمیل</p>
       </div>
     </>
   );
