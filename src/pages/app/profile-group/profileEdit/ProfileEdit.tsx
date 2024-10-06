@@ -1,47 +1,51 @@
 import React, { useState } from "react";
-import Header from "../../../navbar/Header";
-import Navbar from "../../../navbar/Navbar";
-import { Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col, Navbar } from "react-bootstrap";
 import { FaChevronLeft } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
 import img from "../../../../assets/download.jpg";
 import Toggle from "./Toggle";
 import "./profileEdit.scss";
 // import PasswordPopUp from "./PasswordPopUp";
-import { API_URLS } from "../../../../api/urls";
+import { useUser } from "../../../../api/contextApi/UserContext";
 import apiClient from "../../../../api/axios";
+import { API_URLS } from "../../../../api/urls";
+import { useNavigate } from "react-router-dom";
+import Header from "../../../navbar/Header";
 
 const ProfileEdit: React.FC = () => {
   const [toggle, setToggle] = useState<string | null>(null);
-  const [name, setName] = useState<string>("سارا سادات");
-  const [lastName, setLastName] = useState<string>("کریمی");
-  const [email, setEmail] = useState<string>("email@email.com");
-  const [phone, setPhone] = useState<string>("09938023855");
-  // const [password, setPassword] = useState<string>("1234");
+  const { user, setUser } = useUser();
+  const navigate = useNavigate();
 
   const handleToggle = (field: string) => {
     setToggle(toggle === field ? null : field);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission behavior
-
-    const userData = {
-      first_name: name,
-      last_name: lastName,
-      mobile: phone,
-      email: email,
-    };
-
+    e.preventDefault();
     try {
-      const token = localStorage.getItem("accessToken");
-      const response = await apiClient.put(API_URLS.FILL_PROFILE, userData, {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      });
+      const payload = {
+        first_name: user.firstName,
+        last_name: user.lastName,
+        mobile: user.mobileNumber,
+        email: user.email,
+      };
 
-      console.log("User updated successfully:", response.data);
+      const response = await apiClient.put(API_URLS.FILL_PROFILE, payload);
+
+      if (response.data.success) {
+        console.log("User updated successfully", response.data);
+
+        // Optionally update the global user state if backend returns updated data
+        setUser({
+          firstName: payload.first_name,
+          lastName: payload.last_name,
+          email: payload.email,
+          mobileNumber: payload.mobile,
+        });
+
+        navigate("/profile");
+      }
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -68,11 +72,15 @@ const ProfileEdit: React.FC = () => {
               className={toggle === "name" ? "active" : ""}
             >
               <p>نام:</p>
-              <p>{name}</p>
+              <p>{user.firstName}</p>
               <FaChevronLeft className="icon" />
             </button>
             {toggle === "name" && (
-              <Toggle title="نام" value={name} onChange={setName} />
+              <Toggle
+                title="نام"
+                value={user.firstName}
+                onChange={(value) => setUser({ ...user, firstName: value })}
+              />
             )}
           </Col>
           <Col className="col-12">
@@ -81,14 +89,14 @@ const ProfileEdit: React.FC = () => {
               className={toggle === "lastName" ? "active" : ""}
             >
               <p>نام خانوادگی:</p>
-              <p>{lastName}</p>
+              <p>{user.lastName}</p>
               <FaChevronLeft className="icon" />
             </button>
             {toggle === "lastName" && (
               <Toggle
                 title="نام خانوادگی"
-                value={lastName}
-                onChange={setLastName}
+                value={user.lastName}
+                onChange={(value) => setUser({ ...user, lastName: value })}
               />
             )}
           </Col>
@@ -98,11 +106,15 @@ const ProfileEdit: React.FC = () => {
               className={toggle === "email" ? "active" : ""}
             >
               <p>ایمیل:</p>
-              <p>{email}</p>
+              <p>{user.email}</p>
               <FaChevronLeft className="icon" />
             </button>
             {toggle === "email" && (
-              <Toggle title="ایمیل" value={email} onChange={setEmail} />
+              <Toggle
+                title="ایمیل"
+                value={user.email}
+                onChange={(value) => setUser({ ...user, email: value })}
+              />
             )}
           </Col>
           <Col className="col-12">
@@ -111,13 +123,18 @@ const ProfileEdit: React.FC = () => {
               className={toggle === "phone" ? "active" : ""}
             >
               <p>شماره تماس:</p>
-              <p>{phone}</p>
+              <p>{user.mobileNumber}</p>
               <FaChevronLeft className="icon" />
             </button>
             {toggle === "phone" && (
-              <Toggle title="تماس" value={phone} onChange={setPhone} />
+              <Toggle
+                title="تماس"
+                value={user.mobileNumber}
+                onChange={(value) => setUser({ ...user, mobileNumber: value })}
+              />
             )}
           </Col>
+          {/* Uncomment and implement if password change is needed */}
           {/* <Col className="col-12">
             <button
               onClick={() => handleToggle("password")}

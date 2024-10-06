@@ -11,10 +11,13 @@ import { LuFolderPlus } from "react-icons/lu";
 import img from "../../../../assets/download.jpg";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
-import "./profile.scss";
 import { Link } from "react-router-dom";
+import { useUser } from "../../../../api/contextApi/UserContext";
+import "./profile.scss";
 
 function Profile() {
+  const { user } = useUser();
+
   return (
     <>
       <Header title="پروفایل" />
@@ -26,14 +29,16 @@ function Profile() {
           </Col>
           <Col className="col-4 text-end text-container">
             <Col className="col-12">
-              <h2>سارا سادات کریمی</h2>
+              <h2>
+                {user.firstName} {user.lastName}
+              </h2>
             </Col>
             <Col className="col-12 prfl">
               <div>
                 <MdEmail />
               </div>
               <div>
-                <p>info@gmail.com</p>
+                <p>{user.email}</p>
               </div>
             </Col>
             <Col className="col-12 prfl">
@@ -41,7 +46,7 @@ function Profile() {
                 <FaPhone className="phone" />
               </div>
               <div>
-                <p>0993535353</p>
+                <p>{user.mobileNumber}</p>
               </div>
             </Col>
           </Col>

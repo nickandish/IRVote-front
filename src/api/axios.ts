@@ -1,16 +1,25 @@
-import axios from "axios";
+// src/api/axios.ts
 
+import axios from "axios";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+
+// Create an Axios instance
 const apiClient = axios.create({
   baseURL: "http://192.168.70.169:8000",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-axios.interceptors.request.use(
+// Add a request interceptor to include the token
+apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
-    console.log(token);
+    const token =
+      localStorage.getItem("accessToken") || cookies.get("accessToken");
     if (token) {
-      config.headers["Authorization"] = `bearer ${token}`;
-      axios.defaults.withCredentials = true;
+      config.headers.Authorization = `bearer ${token}`;
     }
     return config;
   },

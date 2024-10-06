@@ -1,9 +1,11 @@
+import React, { useReducer, useEffect } from "react";
 import { Card } from "react-bootstrap";
-import { useReducer } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./signUp.scss";
 import Cookies from "universal-cookie";
-import axios from "axios";
+import apiClient from "../../api/axios";
+import { API_URLS } from "../../api/urls";
+import { useUser } from "../../api/contextApi/UserContext";
+import "./signUp.scss";
 
 const cookies = new Cookies();
 
@@ -43,7 +45,7 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, firstName: action.payload, firstNameClass };
     case "SET_LAST_NAME":
       const lastNameClass =
-        action.payload.length > 5 ? "is-valid" : "is-invalid";
+        action.payload.length > 4 ? "is-valid" : "is-invalid";
       return { ...state, lastName: action.payload, lastNameClass };
     default:
       return state;
@@ -55,35 +57,38 @@ const SignUpCard: React.FC = () => {
   const location = useLocation();
   const { mobileNumber } = location.state || {};
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const access = localStorage.getItem("accessToken");
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await apiClient.get(API_URLS.GET_USER);
+        if (response.data.success) {
+          const userData = response.data.data;
 
-  //       const response = await axios.get(API_URLS.GET_USER, {
-  //         headers: {
-  //           Authorization: `bearer ${access}`,
-  //         },
-  //       });
+          // Populate form inputs with the user data
+          dispatch({ type: "SET_FIRST_NAME", payload: userData.first_name });
+          dispatch({ type: "SET_LAST_NAME", payload: userData.last_name });
+          dispatch({ type: "SET_EMAIL", payload: userData.email });
 
-  //       if (response.data.success) {
-  //         const userData = response.data.data;
+          // Update global user state
+          setUser({
+            firstName: userData.first_name,
+            lastName: userData.last_name,
+            email: userData.email,
+            mobileNumber: userData.mobile,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
 
-  //         // Populate form inputs with the user data
-  //         dispatch({ type: "SET_FIRST_NAME", payload: userData.first_name });
-  //         dispatch({ type: "SET_LAST_NAME", payload: userData.last_name });
-  //         dispatch({ type: "SET_EMAIL", payload: userData.email });
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
+    fetchUserData();
+  }, [setUser]);
 
-  //   fetchUserData();
-  // }, []);
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
       const tokenFromLocalStorage = localStorage.getItem("accessToken");
       const tokenFromCookies = cookies.get("accessToken");
@@ -97,18 +102,19 @@ const SignUpCard: React.FC = () => {
         email: state.email,
       };
 
-      const response = await axios.put(
-        "http://192.168.70.169:8000/users/fill_profile",
-        payload,
-        {
-          // headers: {
-          //   Authorization: `bearer ${access}`, // Add access to Authorization header
-          // },
-        }
-      );
+      const response = await apiClient.put(API_URLS.FILL_PROFILE, payload);
 
       if (response.data.success) {
         console.log("User updated successfully", response.data);
+
+        // Update global user state
+        setUser({
+          firstName: state.firstName,
+          lastName: state.lastName,
+          email: state.email,
+          mobileNumber: mobileNumber || "",
+        });
+
         navigate("/profile");
       }
     } catch (error) {
@@ -152,7 +158,7 @@ const SignUpCard: React.FC = () => {
           />
           {state.lastNameClass === "is-invalid" && (
             <p className="text-danger">
-              نام خانوادگی حداقل باید شامل 5 حرف باشد
+              نام خانوادگی حداقل باید شامل 4 حرف باشد
             </p>
           )}
         </div>
