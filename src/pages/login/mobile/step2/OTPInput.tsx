@@ -50,7 +50,7 @@ const OTPInput: React.FC<OTPInputProps> = ({ length, onChange, onSubmit }) => {
   };
 
   return (
-    <div className="ltr-button">
+    <div className="ltr">
       {otp.map((data, index) => (
         <input
           key={index}

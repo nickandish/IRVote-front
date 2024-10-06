@@ -98,7 +98,7 @@ const SignUpCard: React.FC = () => {
       };
 
       const response = await axios.put(
-        "http://172.16.17.35:8000/users/fill_profile",
+        "http://192.168.70.169:8000/users/fill_profile",
         payload,
         {
           // headers: {
