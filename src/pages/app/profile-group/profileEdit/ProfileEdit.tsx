@@ -71,7 +71,7 @@ const ProfileEdit: React.FC = () => {
       // Update profile image if selected
       if (selectedImage) {
         const formData = new FormData();
-        formData.append("profile_image", selectedImage);
+        formData.append("photo", selectedImage);
 
         const imgResponse = await apiClient.put(API_URLS.CHANGE_IMG, formData, {
           headers: {
