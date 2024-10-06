@@ -3,4 +3,5 @@ export const API_URLS = {
   LOGIN_BY_OTP: "/users/login_by_otp",
   GET_USER: "/users/user_detail",
   FILL_PROFILE: "/users/fill_profile",
+  CHANGE_IMG: "/users/change_photo",
 };

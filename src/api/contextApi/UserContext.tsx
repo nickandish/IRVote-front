@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import imgPlaceholder from "../../../../assets/femaileAvatar.svg"; // Adjust the path as needed
 
 // Define the shape of the user data
 interface User {
@@ -6,6 +7,7 @@ interface User {
   lastName: string;
   email: string;
   mobileNumber: string;
+  img: string;
 }
 
 // Define the shape of the context
@@ -26,6 +28,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     lastName: "",
     email: "",
     mobileNumber: "",
+    img: imgPlaceholder, // Use imported image
   });
 
   return (

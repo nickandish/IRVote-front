@@ -1,3 +1,4 @@
+// Profile.tsx
 import { Col, Container, Row } from "react-bootstrap";
 import { FaPhone } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -8,15 +9,39 @@ import { PiEyeglasses } from "react-icons/pi";
 import { MdOutlineFolderCopy } from "react-icons/md";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { LuFolderPlus } from "react-icons/lu";
-import img from "../../../../assets/download.jpg";
+import imgPlaceholder from "../../../../assets/femaileAvatar.svg"; // Use the placeholder image
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
 import { Link } from "react-router-dom";
 import { useUser } from "../../../../api/contextApi/UserContext";
+import { useEffect } from "react";
+import apiClient from "../../../../api/axios";
+import { API_URLS } from "../../../../api/urls";
 import "./profile.scss";
 
 function Profile() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await apiClient.get(API_URLS.GET_USER);
+        const userData = response.data.data;
+
+        setUser({
+          firstName: userData.first_name,
+          lastName: userData.last_name,
+          email: userData.email,
+          mobileNumber: userData.mobile,
+          img: userData.avatar || imgPlaceholder, // Use 'avatar' or placeholder
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [setUser]);
 
   return (
     <>
@@ -25,7 +50,11 @@ function Profile() {
       <Container className="profile-page fw-bold">
         <Row className="warper">
           <Col className="col-4">
-            <img src={img} alt="profile" />
+            <img
+              src={user.img || imgPlaceholder}
+              alt="profile"
+              className="profile-image"
+            />
           </Col>
           <Col className="col-4 text-end text-container">
             <Col className="col-12">

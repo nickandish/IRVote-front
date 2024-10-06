@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Card, Container, Row, Col, Navbar } from "react-bootstrap";
+// ProfileEdit.tsx
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Navbar } from "react-bootstrap";
 import { FaChevronLeft } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
-import img from "../../../../assets/download.jpg";
+import imgPlaceholder from "../../../../assets/femaileAvatar.svg"; // Default placeholder image
 import Toggle from "./Toggle";
 import "./profileEdit.scss";
-// import PasswordPopUp from "./PasswordPopUp";
 import { useUser } from "../../../../api/contextApi/UserContext";
 import apiClient from "../../../../api/axios";
 import { API_URLS } from "../../../../api/urls";
@@ -14,6 +14,7 @@ import Header from "../../../navbar/Header";
 
 const ProfileEdit: React.FC = () => {
   const [toggle, setToggle] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 
@@ -21,33 +22,83 @@ const ProfileEdit: React.FC = () => {
     setToggle(toggle === field ? null : field);
   };
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await apiClient.get(API_URLS.GET_USER);
+        const userData = response.data.data;
+
+        setUser({
+          firstName: userData.first_name,
+          lastName: userData.last_name,
+          email: userData.email,
+          mobileNumber: userData.mobile,
+          img: userData.img || imgPlaceholder, // Set img from API, use placeholder if empty
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [setUser]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const payload = {
+      // Update profile data
+      const profileData = {
         first_name: user.firstName,
         last_name: user.lastName,
         mobile: user.mobileNumber,
         email: user.email,
       };
+      const profileResponse = await apiClient.put(
+        API_URLS.FILL_PROFILE,
+        profileData
+      );
 
-      const response = await apiClient.put(API_URLS.FILL_PROFILE, payload);
+      if (profileResponse.data.success) {
+        console.log("Profile updated successfully");
+      }
 
-      if (response.data.success) {
-        console.log("User updated successfully", response.data);
+      // Update profile image if selected
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append("profile_image", selectedImage);
 
-        // Optionally update the global user state if backend returns updated data
-        setUser({
-          firstName: payload.first_name,
-          lastName: payload.last_name,
-          email: payload.email,
-          mobileNumber: payload.mobile,
+        const imgResponse = await apiClient.put(API_URLS.CHANGE_IMG, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
 
-        navigate("/profile");
+        if (imgResponse.data.success) {
+          console.log("Profile image updated successfully");
+          // Fetch updated user data to get the new image URL
+          const updatedUserResponse = await apiClient.get(API_URLS.GET_USER);
+          const updatedUserData = updatedUserResponse.data.data;
+
+          setUser({
+            firstName: updatedUserData.first_name,
+            lastName: updatedUserData.last_name,
+            email: updatedUserData.email,
+            mobileNumber: updatedUserData.mobile,
+            img: updatedUserData.img || imgPlaceholder, // Updated image URL
+          });
+        }
       }
+
+      navigate("/profile");
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error("Error updating profile:", error);
+      // Optionally, set error state to display to the user
     }
   };
 
@@ -61,96 +112,77 @@ const ProfileEdit: React.FC = () => {
       <Container className="profile-edit">
         <Row className="text-center">
           <div className="rounded-circle profile-edit_img">
-            <img src={img} className="rounded-circle" alt="Profile" />
-            <LuImagePlus className="icon" />
+            <img
+              src={user.img || imgPlaceholder}
+              className="rounded-circle"
+              alt="Profile"
+            />
+            <label htmlFor="file-upload" className="custom-file-upload">
+              <LuImagePlus className="icon" />
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
           </div>
         </Row>
         <Row className="text-center profile-edit_field">
-          <Col className="col-12">
-            <button
-              onClick={() => handleToggle("name")}
-              className={toggle === "name" ? "active" : ""}
-            >
-              <p>نام:</p>
-              <p>{user.firstName}</p>
-              <FaChevronLeft className="icon" />
-            </button>
-            {toggle === "name" && (
-              <Toggle
-                title="نام"
-                value={user.firstName}
-                onChange={(value) => setUser({ ...user, firstName: value })}
-              />
-            )}
-          </Col>
-          <Col className="col-12">
-            <button
-              onClick={() => handleToggle("lastName")}
-              className={toggle === "lastName" ? "active" : ""}
-            >
-              <p>نام خانوادگی:</p>
-              <p>{user.lastName}</p>
-              <FaChevronLeft className="icon" />
-            </button>
-            {toggle === "lastName" && (
-              <Toggle
-                title="نام خانوادگی"
-                value={user.lastName}
-                onChange={(value) => setUser({ ...user, lastName: value })}
-              />
-            )}
-          </Col>
-          <Col className="col-12">
-            <button
-              onClick={() => handleToggle("email")}
-              className={toggle === "email" ? "active" : ""}
-            >
-              <p>ایمیل:</p>
-              <p>{user.email}</p>
-              <FaChevronLeft className="icon" />
-            </button>
-            {toggle === "email" && (
-              <Toggle
-                title="ایمیل"
-                value={user.email}
-                onChange={(value) => setUser({ ...user, email: value })}
-              />
-            )}
-          </Col>
-          <Col className="col-12">
-            <button
-              onClick={() => handleToggle("phone")}
-              className={toggle === "phone" ? "active" : ""}
-            >
-              <p>شماره تماس:</p>
-              <p>{user.mobileNumber}</p>
-              <FaChevronLeft className="icon" />
-            </button>
-            {toggle === "phone" && (
-              <Toggle
-                title="تماس"
-                value={user.mobileNumber}
-                onChange={(value) => setUser({ ...user, mobileNumber: value })}
-              />
-            )}
-          </Col>
-          {/* Uncomment and implement if password change is needed */}
-          {/* <Col className="col-12">
-            <button
-              onClick={() => handleToggle("password")}
-              className={toggle === "password" ? "active" : ""}
-            >
-              <p>تغییر رمز عبور</p>
-              <FaChevronLeft className="icon" />
-            </button>
-            {toggle === "password" && (
-              <PasswordPopUp
-                title=" رمز عبور فعلی"
-                value="*******"
-                onChange={setPassword}
-              />
-            )}
-          </Col> */}
+          {["name", "lastName", "email", "phone"].map((field) => (
+            <Col className="col-12" key={field}>
+              <button
+                onClick={() => handleToggle(field)}
+                className={toggle === field ? "active" : ""}
+              >
+                <p>
+                  {field === "name" && "نام:"}
+                  {field === "lastName" && "نام خانوادگی:"}
+                  {field === "email" && "ایمیل:"}
+                  {field === "phone" && "شماره تماس:"}
+                </p>
+                <p>
+                  {field === "name" && user.firstName}
+                  {field === "lastName" && user.lastName}
+                  {field === "email" && user.email}
+                  {field === "phone" && user.mobileNumber}
+                </p>
+                <FaChevronLeft className="icon" />
+              </button>
+              {toggle === field && (
+                <Toggle
+                  title={
+                    field === "name"
+                      ? "نام"
+                      : field === "lastName"
+                      ? "نام خانوادگی"
+                      : field === "email"
+                      ? "ایمیل"
+                      : "تماس"
+                  }
+                  value={
+                    field === "name"
+                      ? user.firstName
+                      : field === "lastName"
+                      ? user.lastName
+                      : field === "email"
+                      ? user.email
+                      : user.mobileNumber
+                  }
+                  onChange={(value) =>
+                    setUser({
+                      ...user,
+                      ...(field === "name" && { firstName: value }),
+                      ...(field === "lastName" && { lastName: value }),
+                      ...(field === "email" && { email: value }),
+                      ...(field === "phone" && { mobileNumber: value }),
+                    })
+                  }
+                />
+              )}
+            </Col>
+          ))}
         </Row>
         <Row className="profile-edit_btn">
           <button onClick={handleSubmit}>ثبت تغییرات</button>
