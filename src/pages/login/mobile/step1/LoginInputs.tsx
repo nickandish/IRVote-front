@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { sendOtp } from "../../../../api/userServices";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import "./loginInputs.scss";
 
 const cookies = new Cookies();
 
