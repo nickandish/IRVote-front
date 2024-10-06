@@ -1,5 +1,3 @@
-// src/api/axios.ts
-
 import axios from "axios";
 import Cookies from "universal-cookie";
 

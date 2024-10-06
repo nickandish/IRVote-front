@@ -1,7 +1,6 @@
-// src/pages/profile/Toggle.tsx
-
 import React from "react";
 import "./toggle.scss";
+import { Col, Row } from "react-bootstrap";
 
 interface ToggleProps {
   title: string;
@@ -11,15 +10,19 @@ interface ToggleProps {
 
 const Toggle: React.FC<ToggleProps> = ({ title, value, onChange }) => {
   return (
-    <div className="toggle-input">
-      <label htmlFor={title}>{title}:</label>
-      <input
-        id={title}
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </div>
+    <Row className="toggle-container m-auto">
+      <Col className="col-2 text-left">
+        <label htmlFor={title}>{title}:</label>
+      </Col>
+      <Col className="col-10">
+        <input
+          id={title}
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+      </Col>
+    </Row>
   );
 };
 
