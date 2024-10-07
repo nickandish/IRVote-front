@@ -1,9 +1,8 @@
-// ProfileEdit.tsx
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Navbar } from "react-bootstrap";
 import { FaChevronLeft } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
-import imgPlaceholder from "../../../../assets/femaileAvatar.svg"; // Default placeholder image
+import imgPlaceholder from "../../../../assets/femaileAvatar.svg";
 import Toggle from "./Toggle";
 import "./profileEdit.scss";
 import { useUser } from "../../../../api/contextApi/UserContext";
@@ -28,12 +27,17 @@ const ProfileEdit: React.FC = () => {
         const response = await apiClient.get(API_URLS.GET_USER);
         const userData = response.data.data;
 
+        // ساختن آدرس کامل تصویر
+        const imgURL = userData.avatar
+          ? `${import.meta.env.VITE_APP_BASE_URL}${userData.avatar}`
+          : imgPlaceholder;
+
         setUser({
           firstName: userData.first_name,
           lastName: userData.last_name,
           email: userData.email,
           mobileNumber: userData.mobile,
-          img: userData.img || imgPlaceholder, // Set img from API, use placeholder if empty
+          img: imgURL, // تنظیم آدرس کامل تصویر
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -71,7 +75,7 @@ const ProfileEdit: React.FC = () => {
       // Update profile image if selected
       if (selectedImage) {
         const formData = new FormData();
-        formData.append("photo", selectedImage);
+        formData.append("photo", selectedImage); // Ensure 'photo' is correct
 
         const imgResponse = await apiClient.put(API_URLS.CHANGE_IMG, formData, {
           headers: {
@@ -85,20 +89,26 @@ const ProfileEdit: React.FC = () => {
           const updatedUserResponse = await apiClient.get(API_URLS.GET_USER);
           const updatedUserData = updatedUserResponse.data.data;
 
+          const imgURL = updatedUserData.avatar
+            ? `${import.meta.env.VITE_APP_BASE_URL}${updatedUserData.avatar}`
+            : imgPlaceholder;
+
           setUser({
             firstName: updatedUserData.first_name,
             lastName: updatedUserData.last_name,
             email: updatedUserData.email,
             mobileNumber: updatedUserData.mobile,
-            img: updatedUserData.img || imgPlaceholder, // Updated image URL
+            img: imgURL, // تنظیم آدرس کامل تصویر
           });
+
+          console.log("Updated user data:", updatedUserData);
         }
       }
 
       navigate("/profile");
     } catch (error) {
       console.error("Error updating profile:", error);
-      // Optionally, set error state to display to the user
+      alert("There was an error updating your profile. Please try again.");
     }
   };
 
@@ -113,7 +123,7 @@ const ProfileEdit: React.FC = () => {
         <Row className="text-center">
           <div className="rounded-circle profile-edit_img">
             <img
-              src={user.img || imgPlaceholder}
+              src={user.img || imgPlaceholder} // استفاده مستقیم از user.img
               className="rounded-circle"
               alt="Profile"
             />

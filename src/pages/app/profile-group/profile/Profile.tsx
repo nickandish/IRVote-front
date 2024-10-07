@@ -1,4 +1,3 @@
-// Profile.tsx
 import { Col, Container, Row } from "react-bootstrap";
 import { FaPhone } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -28,12 +27,17 @@ function Profile() {
         const response = await apiClient.get(API_URLS.GET_USER);
         const userData = response.data.data;
 
+        // ساختن آدرس کامل تصویر
+        const imgURL = userData.avatar
+          ? `${import.meta.env.VITE_APP_BASE_URL}${userData.avatar}`
+          : imgPlaceholder;
+
         setUser({
           firstName: userData.first_name,
           lastName: userData.last_name,
           email: userData.email,
           mobileNumber: userData.mobile,
-          img: userData.avatar || imgPlaceholder, // Use 'avatar' or placeholder
+          img: imgURL, // تنظیم آدرس کامل تصویر
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -51,7 +55,7 @@ function Profile() {
         <Row className="warper">
           <Col className="col-4">
             <img
-              src={user.img || imgPlaceholder}
+              src={user.img || imgPlaceholder} // استفاده مستقیم از user.img
               alt="profile"
               className="profile-image"
             />
