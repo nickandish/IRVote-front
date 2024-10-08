@@ -7,6 +7,7 @@ import { API_URLS } from "../../../../api/urls";
 import "../ticketEdit/ticketEdit.scss";
 import "./ticketAdd.scss";
 import apiClient from "../../../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 interface Option {
   value: string;
@@ -34,6 +35,8 @@ const TicketAdd: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [header, setHeader] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -72,6 +75,7 @@ const TicketAdd: React.FC = () => {
         },
       });
       console.log(response.data);
+      navigate("/ticketList");
     } catch (error) {
       console.error("Error submitting the ticket:", error);
     }
