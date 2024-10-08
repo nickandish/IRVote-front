@@ -7,28 +7,13 @@ import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
 import apiClient from "../../../../api/axios";
 import { API_URLS } from "../../../../api/urls";
+import { TicketDetail, TicketDetailResponse } from "../ticket";
 import "./comment.scss";
 
 interface Comment {
   id: number;
   text: string;
   type: "client" | "help";
-}
-
-interface TicketDetail {
-  id: number;
-  header: string;
-  desc: string;
-  status: number;
-  start_at: string | null;
-  end_at: string | null;
-}
-
-interface TicketDetailResponse {
-  success: boolean;
-  message: string;
-  dev_message: string;
-  data: TicketDetail; // Ticket details are inside the 'data' field
 }
 
 const fetchComments = async (): Promise<Comment[]> => {
@@ -49,6 +34,17 @@ const CommentComponent = () => {
   const [file, setFile] = useState<File | null>(null);
   const [ticketDetail, setTicketDetail] = useState<TicketDetail | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const statusMap: { [key: number]: { text: string; className: string } } = {
+    0: { text: "در حال بررسی", className: "blue" },
+    1: { text: "تایید شده", className: "accept" },
+    2: { text: "تایید نشده", className: "danger" },
+  };
+
+  const status =
+    ticketDetail?.status !== undefined
+      ? statusMap[ticketDetail.status] || { text: "نامشخص", className: "" }
+      : { text: "نامشخص", className: "" };
 
   useEffect(() => {
     const loadCommentsAndDetails = async () => {
@@ -139,7 +135,8 @@ const CommentComponent = () => {
           <Row className="service">
             <Col className="col-6">
               <p>
-                وضعیت تیکت : <span>{ticketDetail?.status}</span>
+                وضعیت تیکت :
+                <span className={status.className}>{status.text}</span>
               </p>
             </Col>
             <Col className="col-6">

@@ -11,8 +11,19 @@
   display: flex;
   flex-direction: column;
   max-width: 70rem !important;
+
+  .blue {
+    color: $blue;
+  }
+  .danger {
+    color: $danger;
+  }
+  .accept {
+    color: $accept;
+  }
+
   h2 {
-    color: $accept !important;
+    color: $primary !important;
     margin-bottom: 1.2rem;
     font-weight: 700;
     font-size: 1.2rem;

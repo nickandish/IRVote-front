@@ -26,3 +26,19 @@ export interface TicketListResponse {
     items: Ticket[];
   };
 }
+
+export interface TicketDetail {
+  id: number;
+  header: string;
+  desc: string;
+  status: number;
+  start_at: string | null;
+  end_at: string | null;
+}
+
+export interface TicketDetailResponse {
+  success: boolean;
+  message: string;
+  dev_message: string;
+  data: TicketDetail; // Ticket details are inside the 'data' field
+}
