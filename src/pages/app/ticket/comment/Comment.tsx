@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Form } from "react-bootstrap";
 import { IoSend } from "react-icons/io5";
 import { GrAttachment } from "react-icons/gr";
+import { useParams } from "react-router-dom";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
+import apiClient from "../../../../api/axios";
+import { API_URLS } from "../../../../api/urls";
 import "./comment.scss";
 
 interface Comment {
@@ -13,9 +15,23 @@ interface Comment {
   type: "client" | "help";
 }
 
-// Placeholder functions for API calls
+interface TicketDetail {
+  id: number;
+  header: string;
+  desc: string;
+  status: number;
+  start_at: string | null;
+  end_at: string | null;
+}
+
+interface TicketDetailResponse {
+  success: boolean;
+  message: string;
+  dev_message: string;
+  data: TicketDetail; // Ticket details are inside the 'data' field
+}
+
 const fetchComments = async (): Promise<Comment[]> => {
-  // Simulate fetching comments
   return [
     { id: 1, text: "Initial comment from client", type: "client" },
     { id: 2, text: "Initial comment from help", type: "help" },
@@ -23,27 +39,45 @@ const fetchComments = async (): Promise<Comment[]> => {
 };
 
 const postComment = async (comment: Comment): Promise<void> => {
-  // Simulate posting a comment
   console.log("Posted comment:", comment);
 };
 
 const CommentComponent = () => {
+  const { id } = useParams<{ id: string | undefined }>(); // Get the ticket ID from the URL
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
+  const [ticketDetail, setTicketDetail] = useState<TicketDetail | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const loadComments = async () => {
+    const loadCommentsAndDetails = async () => {
+      if (!id) {
+        console.error("No ticket ID provided in the URL");
+        return;
+      }
+
       try {
+        // Fetch ticket details using the correct API URL and response type
+        const ticketResponse = await apiClient.get<TicketDetailResponse>(
+          API_URLS.TICKET_DETAIL.replace(":id", id)
+        );
+
+        // Set the ticket details from the response's 'data' field
+        setTicketDetail(ticketResponse.data.data); // Accessing the correct 'data' field
+
+        // Fetch comments (dummy or real implementation here)
         const data = await fetchComments();
         setComments(data);
       } catch (error) {
-        console.error("Error fetching comments:", error);
+        console.error("Error fetching comments or ticket details:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    loadComments();
-  }, []);
+    loadCommentsAndDetails();
+  }, [id]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewComment(e.target.value);
@@ -80,6 +114,10 @@ const CommentComponent = () => {
     }
   };
 
+  if (loading) {
+    return <p>در حال بارگذاری...</p>;
+  }
+
   return (
     <>
       <div className="nav">
@@ -90,28 +128,23 @@ const CommentComponent = () => {
       <Container className="fw-bold comment-container">
         <Row className="box">
           <Col className="col-12">
-            <h2>انجام شده</h2>
+            <h2>{ticketDetail?.header || "بدون عنوان"}</h2>
           </Col>
           <Col className="col-12">
             <p>
-              شماره تیکت : <span> T321QWE </span>
-            </p>
-          </Col>
-          <Col className="col-12">
-            <p>
-              نوع سرویس : <span> دیتاسنتر ابری </span>
+              توضیحات تیکت : <span>{ticketDetail?.desc || "-"}</span>
             </p>
           </Col>
 
           <Row className="service">
             <Col className="col-6">
               <p>
-                نام سرویس : <span> - </span>
+                وضعیت تیکت : <span>{ticketDetail?.status}</span>
               </p>
             </Col>
             <Col className="col-6">
               <p>
-                تاریخ سرویس : <span> 03/07/01 </span>{" "}
+                شماره تیکت : <span> {id} </span>
               </p>
             </Col>
           </Row>

@@ -33,7 +33,7 @@ function App() {
         <Route path="/ticketAdd" element={<TicketAdd />} />
         <Route path="/ticketList" element={<TicketList />} />
         <Route path="/ticketEdit" element={<TicketEdit />} />
-        <Route path="/ticketComment" element={<Comment />} />
+        <Route path="/ticketComment/:id" element={<Comment />} />
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-edit" element={<ProfileEdit />} />

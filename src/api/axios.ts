@@ -5,7 +5,7 @@ const cookies = new Cookies();
 
 // Create an Axios instance
 const apiClient = axios.create({
-  baseURL: "http://172.16.17.46:8000",
+  baseURL: "http://172.16.17.22:8000",
   headers: {
     "Content-Type": "application/json",
   },
