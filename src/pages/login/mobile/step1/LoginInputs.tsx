@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { sendOtp } from "../../../../api/userServices";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import apiClient from "../../../../api/axios";
 
 const cookies = new Cookies();
 
@@ -16,8 +17,14 @@ const LoginInputs: React.FC<LoginProp> = ({ setEmailInput }) => {
 
   useEffect(() => {
     const removeToken = () => {
-      cookies.remove("token");
+      cookies.remove("accessToken");
       console.log("Token removed from cookies");
+
+      localStorage.removeItem("accessToken");
+      console.log("Token removed from local storage");
+
+      delete apiClient.defaults.headers.common["Authorization"];
+      console.log("Authorization header removed");
     };
 
     removeToken();
