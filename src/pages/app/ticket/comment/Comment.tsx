@@ -36,7 +36,7 @@ const CommentComponent = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const statusMap: { [key: number]: { text: string; className: string } } = {
-    0: { text: "در حال بررسی", className: "blue" },
+    0: { text: "درحال بررسی", className: "blue" },
     1: { text: "تایید شده", className: "accept" },
     2: { text: "تایید نشده", className: "danger" },
   };
@@ -135,7 +135,7 @@ const CommentComponent = () => {
           <Row className="service">
             <Col className="col-6">
               <p>
-                وضعیت تیکت :
+                وضعیت تیکت:
                 <span className={status.className}>{status.text}</span>
               </p>
             </Col>

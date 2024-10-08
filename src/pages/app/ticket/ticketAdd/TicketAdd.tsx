@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Col, Container } from "react-bootstrap";
 import Select, { SingleValue } from "react-select";
-import axios from "axios";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
+import { API_URLS } from "../../../../api/urls";
 import "../ticketEdit/ticketEdit.scss";
 import "./ticketAdd.scss";
+import apiClient from "../../../../api/axios";
 
 interface Option {
   value: string;
@@ -31,6 +32,8 @@ const TicketAdd: React.FC = () => {
     null
   );
   const [file, setFile] = useState<File | null>(null);
+  const [header, setHeader] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -45,33 +48,32 @@ const TicketAdd: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!file) {
-      alert("Please select a file to upload.");
-      return;
-    }
-
     const formData = new FormData();
-    formData.append("file", file);
 
     const data = {
-      team: selectedTeam,
-      serviceType: selectedServiceType,
-      serviceName: selectedServiceName,
+      header: (document.getElementById("form1") as HTMLInputElement).value,
       comments: (document.getElementById("comments") as HTMLTextAreaElement)
         .value,
+      // team: selectedTeam?.value || "",
+      // serviceType: selectedServiceType?.value || "",
+      // serviceName: selectedServiceName?.value || "",
     };
 
     formData.append("data", JSON.stringify(data));
 
+    if (file) {
+      formData.append("file", file);
+    }
+
     try {
-      const response = await axios.post("/upload", formData, {
+      const response = await apiClient.post(API_URLS.TICKET_CREATE, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       console.log(response.data);
     } catch (error) {
-      console.error(error);
+      console.error("Error submitting the ticket:", error);
     }
   };
 
@@ -84,12 +86,15 @@ const TicketAdd: React.FC = () => {
       <Container>
         <div className="ticket-edit ticketAdd">
           <p className="text-center">02/03/01</p>
+
           <div className="mb-4">
             <input
               placeholder="موضوع درخواست"
               id="form1"
               type="text"
               className="input login-card_input"
+              value={header}
+              onChange={(e) => setHeader(e.target.value)}
             />
           </div>
 
@@ -139,8 +144,10 @@ const TicketAdd: React.FC = () => {
             id="comments"
             name="comments"
             placeholder="درخواست خود را وارد کنید"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
           />
-          <Col className="btn-container ">
+          <Col className="btn-container">
             <button className="submit" onClick={handleSubmit}>
               ارسال درخواست
             </button>
