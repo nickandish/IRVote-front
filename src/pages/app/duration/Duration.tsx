@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import { Row } from "react-bootstrap";
 import Header from "../../navbar/Header";
-import { Navbar, Row } from "react-bootstrap";
-import Box from "./Box";
+import Navbar from "../../navbar/Navbar";
 import apiClient from "../../../api/axios";
 import { API_URLS } from "../../../api/urls";
-import { DurationItem } from "../../../api/userServices";
+import { useParams } from "react-router-dom";
+import { ApiResponse, DurationItem } from "../type";
+import DurationBox from "./Box";
 
 const Duration: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const [durations, setDurations] = useState<DurationItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +17,18 @@ const Duration: React.FC = () => {
   useEffect(() => {
     const fetchDurations = async () => {
       try {
-        const response = await apiClient.get(API_URLS.DURATION_LIST);
+        if (!id) {
+          setError("No election ID provided");
+          setLoading(false);
+          return;
+        }
+
+        // Replace ':id' with the actual election ID
+        const url = API_URLS.DURATION_LIST.replace(":id", id);
+        const response = await apiClient.get<
+          ApiResponse<{ items: DurationItem[] }>
+        >(url);
+
         if (response.data.success) {
           setDurations(response.data.data.items);
         } else {
@@ -29,17 +43,17 @@ const Duration: React.FC = () => {
     };
 
     fetchDurations();
-  }, []);
+  }, [id]);
 
-  if (loading) return <div className="loader">Loading durations...</div>;
-  if (error) return <div className="error-message">Error: {error}</div>;
+  if (loading) return <div className="loader">درحال بارگیری...</div>;
+  if (error) return <div className="error-message">ارور: {error}</div>;
 
   return (
     <>
       <Header title={"دوره‌های من"} />
       <Row className="my-elections">
         {durations.map((duration) => (
-          <Box key={duration.id} duration={duration} />
+          <DurationBox key={duration.id} duration={duration} />
         ))}
       </Row>
       <Navbar />

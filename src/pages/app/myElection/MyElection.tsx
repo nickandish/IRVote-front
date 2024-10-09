@@ -2,20 +2,12 @@ import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
-import Box from "./Box";
 import apiClient from "../../../api/axios";
 import { API_URLS } from "../../../api/urls";
+import { ApiResponse, Election } from "../type";
+import ElectionBox from "./Box";
 
-interface Election {
-  id: number;
-  fa_title: string;
-  en_title: string;
-  start_at: string;
-  end_at: string;
-  status: number;
-}
-
-const MyElection = () => {
+const MyElection: React.FC = () => {
   const [elections, setElections] = useState<Election[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +15,9 @@ const MyElection = () => {
   useEffect(() => {
     const fetchElections = async () => {
       try {
-        const response = await apiClient.get(API_URLS.ELECTION_LIST);
+        const response = await apiClient.get<
+          ApiResponse<{ items: Election[] }>
+        >(API_URLS.ELECTION_LIST);
         if (response.data.success) {
           setElections(response.data.data.items);
         } else {
@@ -40,7 +34,7 @@ const MyElection = () => {
     fetchElections();
   }, []);
 
-  if (loading) return <p>درحال بارگیری</p>;
+  if (loading) return <p>درحال بارگیری...</p>;
   if (error) return <p>ارور: {error}</p>;
 
   return (
@@ -48,7 +42,7 @@ const MyElection = () => {
       <Header title={"انتخابات من"} />
       <Row className="my-elections">
         {elections.map((election) => (
-          <Box key={election.id} election={election} />
+          <ElectionBox key={election.id} election={election} />
         ))}
       </Row>
       <Navbar />

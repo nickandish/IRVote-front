@@ -5,17 +5,18 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import "../../../scss/myElection.tsx/myElection.scss";
 
-interface BoxProps {
+interface ElectionBoxProps {
   election: {
     id: number;
     fa_title: string;
     start_at: string;
     end_at: string;
     status: number;
+    logo: string;
   };
 }
 
-const Box: React.FC<BoxProps> = ({ election }) => {
+const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -41,6 +42,8 @@ const Box: React.FC<BoxProps> = ({ election }) => {
     election.status
   );
 
+  const imageUrl = `${import.meta.env.VITE_API_BASE_URL}${election.logo}`;
+
   return (
     <Col className="col-md-6 col-12 mb-3" onClick={handleClick}>
       <Row
@@ -49,6 +52,17 @@ const Box: React.FC<BoxProps> = ({ election }) => {
         <Row className="top d-flex pt-3">
           <Col className="col-1">
             <LiaBoxOpenSolid className="icon icon-box" />
+            {/* Display the logo image */}
+            {/* <img
+              src={imageUrl}
+              alt={`${election.fa_title} logo`}
+              className="election-logo"
+              loading="lazy"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src =
+                  "/images/default-image.png"; // Ensure this path is correct
+              }}
+            /> */}
           </Col>
           <Col className="col-10">
             <h6 className="fw-bold pt-1">{election.fa_title}</h6>
@@ -84,4 +98,4 @@ const Box: React.FC<BoxProps> = ({ election }) => {
   );
 };
 
-export default Box;
+export default ElectionBox;
