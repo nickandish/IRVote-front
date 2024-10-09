@@ -15,14 +15,9 @@ const PasswordPopUp: React.FC<PasswordPopUpProps> = ({
   onChange,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
