@@ -9,6 +9,8 @@ const Candidate = () => {
   const [candidateList, setCandidateList] = useState<boolean>(true);
   const [voteList, setVoteList] = useState<boolean>(false);
 
+  const durationId = "5"; // Replace with the actual logic to get election ID
+
   return (
     <>
       <div className="candidate_header">
@@ -49,6 +51,7 @@ const Candidate = () => {
           <CandidateList
             setVoteList={setVoteList}
             setCandidateList={setCandidateList}
+            durationId={durationId}
           />
         )}
       </div>

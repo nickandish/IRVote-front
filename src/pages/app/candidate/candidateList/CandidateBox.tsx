@@ -4,31 +4,35 @@ import { useState } from "react";
 import CandidateDetail from "./candidateDetail/CandidateDetail";
 import { Modal } from "react-bootstrap";
 import "./candidateBox.scss";
+import { Candidate } from "../../type";
 
-const CandidateBox = () => {
+interface CandidateBoxProps {
+  candidate: Candidate;
+}
+
+const CandidateBox: React.FC<CandidateBoxProps> = ({ candidate }) => {
   const [modal, setModal] = useState(false);
   const [vote, setVote] = useState(false);
 
   return (
     <>
       <Col
-        className={`candidateBox col-6 col-md-4 col-lg-3 d-flex flex-column ${
-          vote ? "active" : ""
-        }`}
+        className={`candidateBox col-6 col-md-4 col-lg-3 d-flex flex-column`}
       >
         <Col className="ballot candidateBox_box">
           <div className="rounded-circle img bg-primary">
             <img
               className="rounded-circle"
-              src={img}
+              src={candidate.ImagePath || img} // Use candidate's ImagePath if available
               onClick={() => {
                 setModal(true);
               }}
+              alt={candidate.name}
             />
           </div>
 
           <div className="text-center">
-            <p className="p">سارا سادات کریمی</p>
+            <p className="p">{candidate.name}</p>
           </div>
 
           <div className="ballot_button text-center">
