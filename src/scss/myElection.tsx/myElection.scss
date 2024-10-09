@@ -6,8 +6,22 @@
   max-width: 1000px;
   align-items: center !important;
 
-  .box {
+  .status-not-started {
+    @include box-color($secondary);
+  }
+  .status-in-progress {
+    @include box-color($accept);
+  }
+  .status-expired {
+    @include box-color(gray);
+  }
+  .status-ended {
+    @include box-color($danger);
+  }
+  .status-unknown {
     @include box-color($primary);
+  }
+  .box {
     max-width: 540px;
     margin: auto;
 
@@ -16,13 +30,6 @@
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
       transform: scale(0.95);
       cursor: pointer;
-    }
-
-    .my-line {
-      background-color: $primary;
-      height: 2px;
-      margin: 0.4rem 1rem;
-      width: 80%;
     }
 
     .bottom {

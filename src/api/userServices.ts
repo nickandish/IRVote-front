@@ -30,3 +30,24 @@ export const sendOtpVerification = async (
     throw error;
   }
 };
+
+export interface DurationItem {
+  id: number;
+  fa_title: string;
+  en_title: string;
+  disabled: boolean;
+  start_at: string;
+  end_at: string;
+  duration_order_code: number;
+  logo: string;
+  background: string;
+  status: number;
+  license: any; // Adjust type based on actual data
+  license_desc: string;
+  election: number;
+  duration_manager: number;
+  duration_observer: number;
+  duration_operators: number[];
+  allowed_voters: number[];
+  candidate: number[];
+}

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../../../scss/myElection.tsx/myElection.scss";
 
 interface BoxProps {
-  election: {
+  duration: {
     id: number;
     fa_title: string;
     start_at: string;
@@ -15,11 +15,11 @@ interface BoxProps {
   };
 }
 
-const Box: React.FC<BoxProps> = ({ election }) => {
+const Box: React.FC<BoxProps> = ({ duration }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/duration/${election.id}`);
+    navigate(`/ballots/${duration.id}`);
   };
 
   const getStatusInfo = (status: number) => {
@@ -38,7 +38,7 @@ const Box: React.FC<BoxProps> = ({ election }) => {
   };
 
   const { text: statusText, className: statusClass } = getStatusInfo(
-    election.status
+    duration.status
   );
 
   return (
@@ -51,7 +51,7 @@ const Box: React.FC<BoxProps> = ({ election }) => {
             <LiaBoxOpenSolid className="icon icon-box" />
           </Col>
           <Col className="col-10">
-            <h6 className="fw-bold pt-1">{election.fa_title}</h6>
+            <h6 className="fw-bold pt-1">{duration.fa_title}</h6>
           </Col>
           <Col className="col-1 visiblee">
             <FaAngleLeft className="icon-left" />
@@ -64,12 +64,12 @@ const Box: React.FC<BoxProps> = ({ election }) => {
           <Col className="col-1"></Col>
           <Col>
             <p>
-              شروع: {new Date(election.start_at).toLocaleDateString("fa-IR")}
+              شروع: {new Date(duration.start_at).toLocaleDateString("fa-IR")}
             </p>
           </Col>
           <Col>
             <p>
-              پایان: {new Date(election.end_at).toLocaleDateString("fa-IR")}
+              پایان: {new Date(duration.end_at).toLocaleDateString("fa-IR")}
             </p>
           </Col>
           <Col className="col-1"></Col>

@@ -14,6 +14,7 @@ import Comment from "./pages/app/ticket/comment/Comment";
 import Profile from "./pages/app/profile-group/profile/Profile";
 import Document from "./pages/app/document/Document";
 import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
+import Duration from "./pages/app/duration/Duration";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
 
         <Route path="/my-elections" element={<MyElection />} />
+        <Route path="/durations" element={<Duration />} />
         <Route path="/ballots" element={<Ballot />} />
         <Route path="/candidate" element={<Candidate />} />
 

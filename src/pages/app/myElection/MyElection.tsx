@@ -1,37 +1,55 @@
+import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
 import Box from "./Box";
+import apiClient from "../../../api/axios";
+import { API_URLS } from "../../../api/urls";
+
+interface Election {
+  id: number;
+  fa_title: string;
+  en_title: string;
+  start_at: string;
+  end_at: string;
+  status: number;
+}
 
 const MyElection = () => {
-  // const [boxes, setBoxes] = useState([]);
+  const [elections, setElections] = useState<Election[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   // Fetch data from API
-  //   fetch("/api/boxes")
-  //     .then((response) => response.json())
-  //     .then((data) => setBoxes(data));
-  // }, []);
+  useEffect(() => {
+    const fetchElections = async () => {
+      try {
+        const response = await apiClient.get(API_URLS.ELECTION_LIST);
+        if (response.data.success) {
+          setElections(response.data.data.items);
+        } else {
+          setError(response.data.message || "Failed to fetch elections");
+        }
+      } catch (err) {
+        setError("Error fetching elections");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchElections();
+  }, []);
+
+  if (loading) return <p>درحال بارگیری</p>;
+  if (error) return <p>ارور: {error}</p>;
 
   return (
     <>
       <Header title={"انتخابات من"} />
-      {/* <div>
-        {boxes.map((box, index) => (
-          <BoxComponent
-            key={index}
-            borderColor={box.borderColor}
-            titleColor={box.titleColor}
-            title={box.title}
-            details={box.details}
-          />
-        ))}
-      </div> */}
       <Row className="my-elections">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+        {elections.map((election) => (
+          <Box key={election.id} election={election} />
+        ))}
       </Row>
       <Navbar />
     </>

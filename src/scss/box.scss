@@ -26,11 +26,17 @@ $gray-light: #f5f5f5;
     color: $color;
   }
   .icon-left {
-    color: $primary;
+    color: $color;
   }
   h6 {
-    color: $color;
+    color: $primary;
     padding-right: 10px;
+  }
+  .my-line {
+    background-color: $color;
+    height: 2px;
+    margin: 0.4rem 1rem;
+    width: 80%;
   }
 }
 
