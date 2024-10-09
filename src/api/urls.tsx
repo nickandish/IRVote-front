@@ -5,7 +5,7 @@ export const API_URLS = {
   FILL_PROFILE: "/users/fill_profile",
   CHANGE_IMG: "/users/change_photo",
   CAPTCHA_GET: "/users/get_captcha",
-  CAPTCHA_POST: "/users/get_captcha",
+  CAPTCHA_POST: "/users/check_captcha",
 
   TICKET_LIST: "/ticket/ticket_list",
   TICKET_CREATE: "/ticket/create_ticket",

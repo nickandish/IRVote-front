@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 import apiClient from "../../api/axios";
 import { API_URLS } from "../../api/urls";
 import { useUser } from "../../api/contextApi/UserContext";
+import imgPlaceholder from "../../assets/femaileAvatar.svg";
 import "./signUp.scss";
 
 const cookies = new Cookies();
@@ -66,17 +67,16 @@ const SignUpCard: React.FC = () => {
         if (response.data.success) {
           const userData = response.data.data;
 
-          // Populate form inputs with the user data
           dispatch({ type: "SET_FIRST_NAME", payload: userData.first_name });
           dispatch({ type: "SET_LAST_NAME", payload: userData.last_name });
           dispatch({ type: "SET_EMAIL", payload: userData.email });
 
-          // Update global user state
           setUser({
             firstName: userData.first_name,
             lastName: userData.last_name,
             email: userData.email,
             mobileNumber: userData.mobile,
+            img: imgPlaceholder,
           });
         }
       } catch (error) {
@@ -107,12 +107,12 @@ const SignUpCard: React.FC = () => {
       if (response.data.success) {
         console.log("User updated successfully", response.data);
 
-        // Update global user state
         setUser({
           firstName: state.firstName,
           lastName: state.lastName,
           email: state.email,
           mobileNumber: mobileNumber || "",
+          img: imgPlaceholder,
         });
 
         navigate("/profile");

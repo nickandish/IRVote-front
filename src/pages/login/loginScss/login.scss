@@ -87,6 +87,40 @@
   }
 }
 
+.captcha {
+  width: 85% !important;
+  margin: auto !important;
+  input {
+    border: none;
+    border-bottom: 1px solid $primary;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    outline: none;
+    padding: 0.5rem;
+    &::placeholder {
+      font-size: 12px;
+    }
+  }
+  div {
+    border: none;
+    box-shadow: none;
+    margin: auto;
+  }
+  .btn {
+    box-shadow: none !important;
+    color: $primary;
+    font-weight: bold;
+    text-align: left;
+    &:hover {
+      cursor: auto;
+    }
+  }
+}
+
+.cap-btn {
+  width: 70%;
+}
+
 /* screen  */
 
 // .mobile {
