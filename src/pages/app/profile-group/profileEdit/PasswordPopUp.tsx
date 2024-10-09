@@ -15,15 +15,10 @@ const PasswordPopUp: React.FC<PasswordPopUpProps> = ({
   onChange,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  };
-
-  const toggleNewPasswordVisibility = () => {
-    setShowNewPassword(!showNewPassword);
   };
 
   const toggleConfirmPasswordVisibility = () => {
@@ -43,35 +38,9 @@ const PasswordPopUp: React.FC<PasswordPopUpProps> = ({
             />
             <span onClick={togglePasswordVisibility}>
               {showPassword ? (
-                <FaEyeSlash className="text-light" />
-              ) : (
                 <FaEye className="text-light" />
-              )}
-            </span>
-          </div>
-        </Col>
-        <Col className="col-12">
-          <label>رمز عبور جدید</label>
-          <div className="password-input">
-            <input type={showNewPassword ? "text" : "password"} />
-            <span onClick={toggleNewPasswordVisibility}>
-              {showNewPassword ? (
-                <FaEyeSlash className="text-light" />
               ) : (
-                <FaEye className="text-light" />
-              )}
-            </span>
-          </div>
-        </Col>
-        <Col className="col-12">
-          <label> تکرار رمز عبور جدید</label>
-          <div className="password-input">
-            <input type={showConfirmPassword ? "text" : "password"} />
-            <span onClick={toggleConfirmPasswordVisibility}>
-              {showConfirmPassword ? (
                 <FaEyeSlash className="text-light" />
-              ) : (
-                <FaEye className="text-light" />
               )}
             </span>
           </div>

@@ -4,6 +4,7 @@ export const API_URLS = {
   GET_USER: "/users/user_detail",
   FILL_PROFILE: "/users/fill_profile",
   CHANGE_IMG: "/users/change_photo",
+  CHANGE_PASSWORD: "/users/change_password",
   CAPTCHA_GET: "/users/get_captcha",
   CAPTCHA_POST: "/users/check_captcha",
 

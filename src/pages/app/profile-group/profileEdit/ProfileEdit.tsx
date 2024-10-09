@@ -4,6 +4,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
 import imgPlaceholder from "../../../../assets/femaileAvatar.svg";
 import Toggle from "./Toggle";
+import PasswordPopUp from "./PasswordPopUp"; // Import PasswordPopUp
 import "./profileEdit.scss";
 import { useUser } from "../../../../api/contextApi/UserContext";
 import apiClient from "../../../../api/axios";
@@ -17,6 +18,10 @@ const ProfileEdit: React.FC = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 
+  // State for password change
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const handleToggle = (field: string) => {
     setToggle(toggle === field ? null : field);
   };
@@ -27,7 +32,6 @@ const ProfileEdit: React.FC = () => {
         const response = await apiClient.get(API_URLS.GET_USER);
         const userData = response.data.data;
 
-        // ساختن آدرس کامل تصویر
         const imgURL = userData.avatar
           ? `${import.meta.env.VITE_APP_BASE_URL}${userData.avatar}`
           : imgPlaceholder;
@@ -37,7 +41,7 @@ const ProfileEdit: React.FC = () => {
           lastName: userData.last_name,
           email: userData.email,
           mobileNumber: userData.mobile,
-          img: imgURL, // تنظیم آدرس کامل تصویر
+          img: imgURL,
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -56,7 +60,7 @@ const ProfileEdit: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Update profile data
+      // Update user profile data
       const profileData = {
         first_name: user.firstName,
         last_name: user.lastName,
@@ -72,10 +76,10 @@ const ProfileEdit: React.FC = () => {
         console.log("Profile updated successfully");
       }
 
-      // Update profile image if selected
+      // Handle profile image update
       if (selectedImage) {
         const formData = new FormData();
-        formData.append("photo", selectedImage); // Ensure 'photo' is correct
+        formData.append("photo", selectedImage);
 
         const imgResponse = await apiClient.put(API_URLS.CHANGE_IMG, formData, {
           headers: {
@@ -85,7 +89,6 @@ const ProfileEdit: React.FC = () => {
 
         if (imgResponse.data.success) {
           console.log("Profile image updated successfully");
-          // Fetch updated user data to get the new image URL
           const updatedUserResponse = await apiClient.get(API_URLS.GET_USER);
           const updatedUserData = updatedUserResponse.data.data;
 
@@ -98,11 +101,31 @@ const ProfileEdit: React.FC = () => {
             lastName: updatedUserData.last_name,
             email: updatedUserData.email,
             mobileNumber: updatedUserData.mobile,
-            img: imgURL, // تنظیم آدرس کامل تصویر
+            img: imgURL,
           });
 
           console.log("Updated user data:", updatedUserData);
         }
+      }
+
+      // Handle password change
+      if (newPassword && newPassword === confirmPassword) {
+        const passwordData = {
+          password: newPassword,
+          confirm_password: confirmPassword,
+        };
+        const passwordResponse = await apiClient.put(
+          API_URLS.CHANGE_PASSWORD,
+          passwordData
+        );
+
+        if (passwordResponse.data.success) {
+          console.log("Password updated successfully");
+        } else {
+          alert("There was an error updating your password. Please try again.");
+        }
+      } else if (newPassword || confirmPassword) {
+        alert("Passwords do not match. Please try again.");
       }
 
       navigate("/profile");
@@ -194,6 +217,28 @@ const ProfileEdit: React.FC = () => {
             </Col>
           ))}
         </Row>
+
+        {/* Password Change Section */}
+        <Row className="text-center profile-edit_field">
+          <Col className="col-12">
+            <h5>تغییر رمز عبور</h5>
+          </Col>
+          <Col className="col-12">
+            <PasswordPopUp
+              title="رمز عبور جدید"
+              value={newPassword}
+              onChange={setNewPassword}
+            />
+          </Col>
+          <Col className="col-12">
+            <PasswordPopUp
+              title="تکرار رمز عبور جدید"
+              value={confirmPassword}
+              onChange={setConfirmPassword}
+            />
+          </Col>
+        </Row>
+
         <Row className="profile-edit_btn">
           <button onClick={handleSubmit}>ثبت تغییرات</button>
         </Row>
