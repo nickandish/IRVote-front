@@ -1,9 +1,10 @@
 @import "../../../scss/box.scss";
 
 .ballots {
+  @include ballot($secondary, $primary, white);
   top: 6rem;
   position: absolute;
-  @include ballot($secondary, $primary, white);
+  width: 100%;
   margin: 0 !important;
   z-index: -1;
   padding: 48px;

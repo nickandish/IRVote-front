@@ -36,3 +36,18 @@ export interface Candidate {
   background: string;
   user: number;
 }
+
+export interface BallotItem {
+  id: number;
+  start_at: string;
+  end_at: string;
+  ballot_title: string;
+  logo: string | null;
+  type: number;
+  fa_title: string;
+  en_title: string | null;
+  min_vote: number;
+  max_vote: number;
+  duration: number;
+  status: number | null;
+}

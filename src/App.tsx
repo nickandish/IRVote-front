@@ -28,7 +28,7 @@ function App() {
         <Route path="/my-elections" element={<MyElection />} />
         <Route path="/duration/:id" element={<Duration />} />
         <Route path="/ballots/:id" element={<Ballot />} />
-        <Route path="/candidate" element={<Candidate />} />
+        <Route path="/candidate/:id" element={<Candidate />} />
 
         <Route path="/document" element={<Document />} />
 

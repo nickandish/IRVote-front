@@ -42,7 +42,6 @@ const DurationBox: React.FC<DurationBoxProps> = ({ duration }) => {
     duration.status
   );
 
-  // Construct the full image URL using Vite's environment variables
   const imageUrl = `${import.meta.env.VITE_API_BASE_URL}${duration.logo}`;
 
   return (

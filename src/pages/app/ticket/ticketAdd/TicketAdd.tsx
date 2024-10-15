@@ -53,16 +53,8 @@ const TicketAdd: React.FC = () => {
   const handleSubmit = async () => {
     const formData = new FormData();
 
-    const data = {
-      header: (document.getElementById("form1") as HTMLInputElement).value,
-      comments: (document.getElementById("comments") as HTMLTextAreaElement)
-        .value,
-      // team: selectedTeam?.value || "",
-      // serviceType: selectedServiceType?.value || "",
-      // serviceName: selectedServiceName?.value || "",
-    };
-
-    formData.append("data", JSON.stringify(data));
+    formData.append("header", header);
+    formData.append("desc", desc);
 
     if (file) {
       formData.append("file", file);

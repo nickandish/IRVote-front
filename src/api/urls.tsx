@@ -14,6 +14,7 @@ export const API_URLS = {
 
   ELECTION_LIST: "/election/user_elections_list",
   DURATION_LIST: "/election/user_duration_list/:id",
+  BALLOT_LIST: "/election/user_ballot_list/:id",
   CANDIDATE_LIST: "/election/duration_candidates_list/:id",
   VOTE_LIST: "/election/duration_candidates_votes/:id",
   CONFIRM_VOTE: "/election/confirm_vote/:id",

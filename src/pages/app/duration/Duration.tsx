@@ -23,7 +23,6 @@ const Duration: React.FC = () => {
           return;
         }
 
-        // Replace ':id' with the actual election ID
         const url = API_URLS.DURATION_LIST.replace(":id", id);
         const response = await apiClient.get<
           ApiResponse<{ items: DurationItem[] }>
