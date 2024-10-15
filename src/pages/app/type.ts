@@ -51,3 +51,17 @@ export interface BallotItem {
   duration: number;
   status: number | null;
 }
+
+export interface Candidate {
+  id: number;
+  name: string;
+  candidate_code: number;
+  qualified: boolean;
+  data: string;
+  cv: string | null;
+  video: string | null;
+  ImagePath: string | null;
+  background: string;
+  user: number;
+  ballot: number;
+}

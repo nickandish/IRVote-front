@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 import CandidateBox from "./CandidateBox";
-import "./candidateBox.scss";
 import { Candidate } from "../../type";
 import apiClient from "../../../../api/axios";
 import { API_URLS } from "../../../../api/urls";
+import "./candidateBox.scss";
 
 interface CandidateListProps {
   setVoteList: (value: boolean) => void;
@@ -60,7 +60,7 @@ const CandidateList: React.FC<CandidateListProps> = ({
       <div className="ballots candidate-list fw-bold">
         <Row className="g-3">
           {candidates.map((candidate) => (
-            <CandidateBox key={candidate.id} candidate={candidate} /> // Ensure candidate is typed correctly
+            <CandidateBox key={candidate.id} candidate={candidate} />
           ))}
         </Row>
         <button className="candidate-list_btn fw-bold" onClick={handleClick}>

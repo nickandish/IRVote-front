@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
@@ -6,10 +7,9 @@ import CandidateList from "./candidateList/CandidateList";
 import "./candidate.scss";
 
 const Candidate = () => {
+  const { id } = useParams<{ id: string }>();
   const [candidateList, setCandidateList] = useState<boolean>(true);
   const [voteList, setVoteList] = useState<boolean>(false);
-
-  const durationId = "5"; // Replace with the actual logic to get election ID
 
   return (
     <>
@@ -51,7 +51,7 @@ const Candidate = () => {
           <CandidateList
             setVoteList={setVoteList}
             setCandidateList={setCandidateList}
-            durationId={durationId}
+            durationId={id || ""}
           />
         )}
       </div>
