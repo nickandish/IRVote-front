@@ -4,10 +4,20 @@
   @include ballot($secondary, $primary, white);
   top: 6rem;
   position: absolute;
-  width: 100%;
   margin: 0 !important;
   z-index: -1;
   padding: 48px;
+
+  .expired {
+    @include ballot($secondary, $primary, white);
+    opacity: 0.8;
+    button {
+      background-color: $disable !important;
+    }
+    .ballot_vote {
+      background-color: $disable !important;
+    }
+  }
 
   @media screen and (max-width: 600px) {
     padding: 0.5rem;

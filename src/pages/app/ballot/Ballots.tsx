@@ -20,11 +20,11 @@ const Ballots = ({ ballot }: { ballot: any }) => {
       case 2:
         return { text: "درحال برگزاری", className: "voted" };
       case 3:
-        return { text: "خاتمه یافته", className: "status-expired" };
+        return { text: "خاتمه یافته", className: "expired" };
       case 4:
-        return { text: "منقضی شده", className: "status-expired" };
+        return { text: "منقضی شده", className: "expired" };
       case 5:
-        return { text: "متوقف شده", className: "status-expired" };
+        return { text: "متوقف شده", className: "expired" };
       default:
         return { text: "نامشخص", className: "unknown" };
     }
