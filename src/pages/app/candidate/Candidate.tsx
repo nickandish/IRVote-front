@@ -51,7 +51,7 @@ const Candidate = () => {
           </div>
         </div>
 
-        {voteList && <VoteList />}
+        {voteList && <VoteList userID={userID} />}
         {candidateList && (
           <CandidateList
             setVoteList={setVoteList}
