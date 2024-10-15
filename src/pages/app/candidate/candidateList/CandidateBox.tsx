@@ -5,14 +5,38 @@ import CandidateDetail from "./candidateDetail/CandidateDetail";
 import { Modal } from "react-bootstrap";
 import "./candidateBox.scss";
 import { Candidate } from "../../type";
+import apiClient from "../../../../api/axios";
+import { API_URLS } from "../../../../api/urls";
 
 interface CandidateBoxProps {
   candidate: Candidate;
+  userID: number;
 }
 
-const CandidateBox: React.FC<CandidateBoxProps> = ({ candidate }) => {
+const CandidateBox: React.FC<CandidateBoxProps> = ({ candidate, userID }) => {
   const [modal, setModal] = useState(false);
   const [vote, setVote] = useState(false);
+
+  const handleVote = async () => {
+    try {
+      console.log("Candidate ballot:", candidate.ballot);
+
+      const response = await apiClient.post(
+        API_URLS.CONFIRM_VOTE.replace(":id", String(candidate.ballot)),
+        {
+          votes: [userID, candidate.user],
+        }
+      );
+
+      if (response.data.success) {
+        setVote(true);
+      } else {
+        console.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error during voting:", error);
+    }
+  };
 
   return (
     <>
@@ -23,7 +47,7 @@ const CandidateBox: React.FC<CandidateBoxProps> = ({ candidate }) => {
           <div className="rounded-circle img bg-primary">
             <img
               className="rounded-circle"
-              src={candidate.ImagePath || img} // Use candidate's ImagePath if available
+              src={candidate.ImagePath || img}
               onClick={() => {
                 setModal(true);
               }}
@@ -36,13 +60,8 @@ const CandidateBox: React.FC<CandidateBoxProps> = ({ candidate }) => {
           </div>
 
           <div className="ballot_button text-center">
-            <button
-              className="text-light fw-bold"
-              onClick={() => {
-                setVote(!vote);
-              }}
-            >
-              {!vote ? <> رای دادن به نامزد </> : <>رای داده شد</>}
+            <button className="text-light fw-bold" onClick={handleVote}>
+              {!vote ? <>رای دادن به نامزد</> : <>رای داده شد</>}
             </button>
           </div>
         </Col>

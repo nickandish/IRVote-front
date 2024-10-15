@@ -6,10 +6,15 @@ import VoteList from "./voteList/VoteList";
 import CandidateList from "./candidateList/CandidateList";
 import "./candidate.scss";
 
+const getUserID = () => {
+  return 1;
+};
+
 const Candidate = () => {
   const { id } = useParams<{ id: string }>();
   const [candidateList, setCandidateList] = useState<boolean>(true);
   const [voteList, setVoteList] = useState<boolean>(false);
+  const userID = getUserID();
 
   return (
     <>
@@ -52,6 +57,7 @@ const Candidate = () => {
             setVoteList={setVoteList}
             setCandidateList={setCandidateList}
             durationId={id || ""}
+            userID={userID}
           />
         )}
       </div>

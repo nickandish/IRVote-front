@@ -10,12 +10,14 @@ interface CandidateListProps {
   setVoteList: (value: boolean) => void;
   setCandidateList: (value: boolean) => void;
   durationId: string;
+  userID: number;
 }
 
 const CandidateList: React.FC<CandidateListProps> = ({
   setVoteList,
   setCandidateList,
   durationId,
+  userID,
 }) => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -60,7 +62,11 @@ const CandidateList: React.FC<CandidateListProps> = ({
       <div className="ballots candidate-list fw-bold">
         <Row className="g-3">
           {candidates.map((candidate) => (
-            <CandidateBox key={candidate.id} candidate={candidate} />
+            <CandidateBox
+              key={candidate.id}
+              candidate={candidate}
+              userID={userID}
+            />
           ))}
         </Row>
         <button className="candidate-list_btn fw-bold" onClick={handleClick}>
