@@ -1,4 +1,3 @@
-// src/components/Ballot/Ballot.tsx
 import { useEffect, useState } from "react";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";

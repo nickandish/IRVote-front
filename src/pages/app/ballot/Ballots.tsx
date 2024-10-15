@@ -7,7 +7,13 @@ const Ballots = ({ ballot }: { ballot: any }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/candidate/${ballot.id}`);
+    if (ballot.type === 0) {
+      navigate(`/document/${ballot.id}`);
+    } else if (ballot.type === 1) {
+      navigate(`/candidate/${ballot.id}`);
+    } else {
+      console.warn("Unknown ballot type:", ballot.type);
+    }
   };
 
   const getStatusInfo = (status: number | null) => {
@@ -29,7 +35,7 @@ const Ballots = ({ ballot }: { ballot: any }) => {
         return { text: "نامشخص", className: "unknown" };
     }
   };
-  //type navigate document
+
   const { text: statusText, className: statusClass } = getStatusInfo(
     ballot.status
   );
