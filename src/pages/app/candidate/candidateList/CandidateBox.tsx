@@ -59,7 +59,7 @@ const CandidateBox: React.FC<CandidateBoxProps> = ({
         onHide={() => setModal(false)}
         dialogClassName="custom-modal"
       >
-        <CandidateDetail setModal={setModal} />
+        <CandidateDetail candidate={candidate} setModal={setModal} />
       </Modal>
     </>
   );
