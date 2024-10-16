@@ -11,6 +11,8 @@ export const API_URLS = {
   TICKET_LIST: "/ticket/ticket_list",
   TICKET_CREATE: "/ticket/create_ticket",
   TICKET_DETAIL: "/ticket/ticket_detail/:id",
+  COMMENT_GET: "/ticket/ticket_comment_list/:id",
+  COMMENT_POST: "/ticket/create_comment/:id",
 
   ELECTION_LIST: "/election/user_elections_list",
   DURATION_LIST: "/election/user_duration_list/:id",
@@ -18,5 +20,4 @@ export const API_URLS = {
   CANDIDATE_LIST: "/election/candidate_list",
   VOTE_LIST: "/election/duration_candidates_votes",
   CONFIRM_VOTE: "/election/confirm_vote/:id",
-  PARTICIPATE: "/election/participate_in_election/:id",
 };

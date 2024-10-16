@@ -12,19 +12,27 @@ import "./comment.scss";
 
 interface Comment {
   id: number;
+  user: string;
+  is_staff: boolean;
   text: string;
-  type: "client" | "help";
+  file?: string | null;
+  created_at?: string | null;
+  ticket: number;
 }
 
-const fetchComments = async (): Promise<Comment[]> => {
-  return [
-    { id: 1, text: "Initial comment from client", type: "client" },
-    { id: 2, text: "Initial comment from help", type: "help" },
-  ];
+const fetchComments = async (id: string): Promise<Comment[]> => {
+  const response = await apiClient.get<{
+    data: { items: Comment[] };
+  }>(API_URLS.COMMENT_GET.replace(":id", id));
+
+  return response.data.data.items;
 };
 
-const postComment = async (comment: Comment): Promise<void> => {
-  console.log("Posted comment:", comment);
+const postComment = async (
+  id: string,
+  comment: { text: string }
+): Promise<void> => {
+  await apiClient.post(API_URLS.COMMENT_POST.replace(":id", id), comment);
 };
 
 const CommentComponent = () => {
@@ -52,18 +60,12 @@ const CommentComponent = () => {
         console.error("No ticket ID provided in the URL");
         return;
       }
-
       try {
-        // Fetch ticket details using the correct API URL and response type
         const ticketResponse = await apiClient.get<TicketDetailResponse>(
           API_URLS.TICKET_DETAIL.replace(":id", id)
         );
-
-        // Set the ticket details from the response's 'data' field
-        setTicketDetail(ticketResponse.data.data); // Accessing the correct 'data' field
-
-        // Fetch comments (dummy or real implementation here)
-        const data = await fetchComments();
+        setTicketDetail(ticketResponse.data.data);
+        const data = await fetchComments(id);
         setComments(data);
       } catch (error) {
         console.error("Error fetching comments or ticket details:", error);
@@ -71,7 +73,6 @@ const CommentComponent = () => {
         setLoading(false);
       }
     };
-
     loadCommentsAndDetails();
   }, [id]);
 
@@ -94,16 +95,19 @@ const CommentComponent = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newComment.trim() === "") return;
-
-    const newCommentObject: Comment = {
-      id: comments.length + 1,
-      text: newComment,
-      type: "client",
-    };
-
+    const newCommentObject = { text: newComment };
     try {
-      await postComment(newCommentObject);
-      setComments([...comments, newCommentObject]);
+      await postComment(id || "", newCommentObject);
+      const newCommentFromServer: Comment = {
+        id: comments.length + 1,
+        user: "current_user",
+        is_staff: false,
+        text: newComment,
+        file: null,
+        created_at: new Date().toISOString(),
+        ticket: parseInt(id || "0", 10),
+      };
+      setComments([...comments, newCommentFromServer]);
       setNewComment("");
     } catch (error) {
       console.error("Error posting comment:", error);
@@ -120,7 +124,6 @@ const CommentComponent = () => {
         <Header title={"کامنت"} />
         <Navbar />
       </div>
-
       <Container className="fw-bold comment-container">
         <Row className="box">
           <Col className="col-12">
@@ -131,7 +134,6 @@ const CommentComponent = () => {
               توضیحات تیکت : <span>{ticketDetail?.desc || "-"}</span>
             </p>
           </Col>
-
           <Row className="service">
             <Col className="col-6">
               <p>
@@ -146,18 +148,15 @@ const CommentComponent = () => {
             </Col>
           </Row>
         </Row>
-
         <div className="comment">
           <div className="comment_box">
             <div className="texts">
               {comments.map((comment) => (
                 <div
                   key={comment.id}
-                  className={comment.type === "client" ? "client" : "help"}
+                  className={comment.is_staff ? "help" : "client"}
                 >
-                  <div
-                    className={comment.type === "client" ? "" : "postibaani"}
-                  >
+                  <div className={comment.is_staff ? "postibaani" : ""}>
                     <p>{comment.text}</p>
                   </div>
                 </div>
@@ -175,7 +174,6 @@ const CommentComponent = () => {
                   className="input-send"
                 />
               </Form.Group>
-
               <input
                 type="file"
                 id="fileInput"
