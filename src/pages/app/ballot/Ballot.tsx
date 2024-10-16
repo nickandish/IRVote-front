@@ -52,7 +52,7 @@ const Ballot = () => {
       <Navbar />
 
       <div className="ballots row fw-bold">
-        <Row className="g-3">
+        <Row className="g-3 wd100">
           {ballot.map((item) => (
             <Ballots key={item.id} ballot={item} />
           ))}
