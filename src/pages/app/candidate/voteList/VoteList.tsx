@@ -12,13 +12,12 @@ interface Vote {
 }
 
 interface VoteListProps {
-  userID: number;
+  selectedCandidates: number[];
 }
 
-const VoteList: React.FC<VoteListProps> = ({ userID }) => {
+const VoteList: React.FC<VoteListProps> = ({ selectedCandidates }) => {
   const [votes, setVotes] = useState<Vote[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -34,12 +33,27 @@ const VoteList: React.FC<VoteListProps> = ({ userID }) => {
         setLoading(false);
       }
     };
-
     fetchVotes();
   }, [id]);
 
   const getTotalVotes = (): number => {
     return votes.reduce((acc, vote) => acc + vote.total, 0);
+  };
+
+  const handleSubmitVotes = async () => {
+    try {
+      const response = await apiClient.post(API_URLS.ADD_LIST, {
+        votes: selectedCandidates,
+        ballot_id: 3,
+      });
+      if (response.data.success) {
+        console.log("Votes submitted successfully.");
+      } else {
+        console.error("Failed to submit votes:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error submitting votes:", error);
+    }
   };
 
   const totalVotes = getTotalVotes();
@@ -75,14 +89,20 @@ const VoteList: React.FC<VoteListProps> = ({ userID }) => {
                     : 0}
                   %
                 </td>
-                <td>{userID === vote.candidate ? <FaCircleCheck /> : null}</td>
+                <td>
+                  <FaCircleCheck />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-
-      <button className="candidate-list_btn fw-bold mt-5">ثبت نهایی رای</button>
+      <button
+        className="candidate-list_btn fw-bold mt-5"
+        onClick={handleSubmitVotes}
+      >
+        ثبت نهایی رای
+      </button>
     </div>
   );
 };

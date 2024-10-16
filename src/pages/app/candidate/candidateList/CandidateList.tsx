@@ -10,14 +10,16 @@ interface CandidateListProps {
   setVoteList: (value: boolean) => void;
   setCandidateList: (value: boolean) => void;
   durationId: string;
-  userID: number;
+  selectedCandidates: number[];
+  setSelectedCandidates: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const CandidateList: React.FC<CandidateListProps> = ({
   setVoteList,
   setCandidateList,
   durationId,
-  userID,
+  selectedCandidates,
+  setSelectedCandidates,
 }) => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -41,7 +43,6 @@ const CandidateList: React.FC<CandidateListProps> = ({
         setLoading(false);
       }
     };
-
     fetchCandidates();
   }, [durationId]);
 
@@ -58,14 +59,14 @@ const CandidateList: React.FC<CandidateListProps> = ({
       <p className="fw-bold pp p-4">
         با کلیک بر روی عکس نامزدها توضیحات بیشتر را مشاهده کنید
       </p>
-
       <div className="ballots candidate-list fw-bold">
         <Row className="g-3">
           {candidates.map((candidate) => (
             <CandidateBox
               key={candidate.id}
               candidate={candidate}
-              userID={userID}
+              selectedCandidates={selectedCandidates}
+              setSelectedCandidates={setSelectedCandidates}
             />
           ))}
         </Row>
