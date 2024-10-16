@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import { IoClose } from "react-icons/io5";
 import { RxDownload } from "react-icons/rx";
 import { HiOutlinePlayPause } from "react-icons/hi2";
-import img from "../../../../../assets/download.jpg";
+import img from "../../../../../assets/femaileAvatar.svg";
 import "./candidateDetail.scss";
 
 interface CandidateProp {
