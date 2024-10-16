@@ -54,6 +54,10 @@
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
   }
 
+  .img {
+    background-color: $purple-light;
+  }
+
   .img,
   img {
     width: 6.5rem !important;

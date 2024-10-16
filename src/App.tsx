@@ -30,7 +30,7 @@ function App() {
         <Route path="/ballots/:id" element={<Ballot />} />
         <Route path="/candidate/:id" element={<Candidate />} />
 
-        <Route path="/document" element={<Document />} />
+        <Route path="/document/:id" element={<Document />} />
 
         <Route path="/ticketAdd" element={<TicketAdd />} />
         <Route path="/ticketList" element={<TicketList />} />

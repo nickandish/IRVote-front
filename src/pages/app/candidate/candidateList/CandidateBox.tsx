@@ -1,12 +1,12 @@
 import { Col } from "react-bootstrap";
-import img from "../../../../assets/download.jpg";
+import img from "../../../../assets/femaileAvatar.svg";
 import { useState } from "react";
 import CandidateDetail from "./candidateDetail/CandidateDetail";
 import { Modal } from "react-bootstrap";
-import "./candidateBox.scss";
 import { Candidate } from "../../type";
 import apiClient from "../../../../api/axios";
 import { API_URLS } from "../../../../api/urls";
+import "./candidateBox.scss";
 
 interface CandidateBoxProps {
   candidate: Candidate;
@@ -44,7 +44,7 @@ const CandidateBox: React.FC<CandidateBoxProps> = ({ candidate, userID }) => {
         className={`candidateBox col-6 col-md-4 col-lg-3 d-flex flex-column`}
       >
         <Col className="ballot candidateBox_box">
-          <div className="rounded-circle img bg-primary">
+          <div className="rounded-circle img ">
             <img
               className="rounded-circle"
               src={candidate.ImagePath || img}
