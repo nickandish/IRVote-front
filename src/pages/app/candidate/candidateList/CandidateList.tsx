@@ -12,6 +12,8 @@ interface CandidateListProps {
   durationId: string;
   selectedCandidates: number[];
   setSelectedCandidates: React.Dispatch<React.SetStateAction<number[]>>;
+  minVote: number;
+  maxVote: number;
 }
 
 const CandidateList: React.FC<CandidateListProps> = ({
@@ -20,6 +22,8 @@ const CandidateList: React.FC<CandidateListProps> = ({
   durationId,
   selectedCandidates,
   setSelectedCandidates,
+  minVote,
+  maxVote,
 }) => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -51,6 +55,9 @@ const CandidateList: React.FC<CandidateListProps> = ({
     setVoteList(true);
   };
 
+  const isSubmitDisabled =
+    selectedCandidates.length < minVote || selectedCandidates.length > maxVote;
+
   if (loading) return <div className="loader">درحال بارگیری...</div>;
   if (error) return <div className="error-message">Error: {error}</div>;
 
@@ -70,7 +77,16 @@ const CandidateList: React.FC<CandidateListProps> = ({
             />
           ))}
         </Row>
-        <button className="candidate-list_btn fw-bold" onClick={handleClick}>
+        <p className="fw-bold danger">
+          {isSubmitDisabled
+            ? `انتخاب باید بین ${minVote} و ${maxVote} باشد`
+            : ""}
+        </p>
+        <button
+          className="candidate-list_btn fw-bold"
+          onClick={handleClick}
+          disabled={isSubmitDisabled}
+        >
           مشاهده رای‌های من
         </button>
       </div>

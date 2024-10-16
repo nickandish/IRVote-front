@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useState } from "react";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
@@ -11,6 +11,9 @@ const Candidate = () => {
   const [candidateList, setCandidateList] = useState<boolean>(true);
   const [voteList, setVoteList] = useState<boolean>(false);
   const [selectedCandidates, setSelectedCandidates] = useState<number[]>([]);
+
+  const { state } = useLocation();
+  const { minVote = 0, maxVote = 0 } = state || {}; // Default values if state is undefined
 
   return (
     <>
@@ -53,6 +56,8 @@ const Candidate = () => {
             durationId={id || ""}
             selectedCandidates={selectedCandidates}
             setSelectedCandidates={setSelectedCandidates}
+            minVote={minVote}
+            maxVote={maxVote}
           />
         )}
       </div>

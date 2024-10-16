@@ -34,6 +34,12 @@
   }
 }
 
+.danger {
+  color: $danger;
+  // position: absolute;
+  // top: 20%;
+}
+
 .candidateBox {
   @include ballot($secondary, $primary, white);
   position: relative;

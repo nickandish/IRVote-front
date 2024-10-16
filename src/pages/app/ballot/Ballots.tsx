@@ -8,9 +8,13 @@ const Ballots = ({ ballot }: { ballot: any }) => {
 
   const handleClick = () => {
     if (ballot.type === 0) {
-      navigate(`/document/${ballot.id}`);
+      navigate(`/document/${ballot.id}`, {
+        state: { minVote: ballot.min_vote, maxVote: ballot.max_vote },
+      });
     } else if (ballot.type === 1) {
-      navigate(`/candidate/${ballot.id}`);
+      navigate(`/candidate/${ballot.id}`, {
+        state: { minVote: ballot.min_vote, maxVote: ballot.max_vote },
+      });
     } else {
       console.warn("Unknown ballot type:", ballot.type);
     }
@@ -41,50 +45,48 @@ const Ballots = ({ ballot }: { ballot: any }) => {
   );
 
   return (
-    <>
-      <Col className="col-6 col-md-4 col-lg-3 d-flex flex-column">
-        <Col className={`ballot ${statusClass}`}>
-          <div className="ballot_vote text-center">
-            <p className="text-light">{statusText}</p>
+    <Col className="col-6 col-md-4 col-lg-3 d-flex flex-column">
+      <Col className={`ballot ${statusClass}`}>
+        <div className="ballot_vote text-center">
+          <p className="text-light">{statusText}</p>
+        </div>
+
+        <div className="ballot_box">
+          <div className="text-center">
+            <LiaBoxOpenSolid className="ballot_icon" />
+            <p className="ballot_title">{ballot.fa_title || "اعضا"}</p>
+            <div className="my-line" />
           </div>
 
-          <div className="ballot_box">
-            <div className="text-center">
-              <LiaBoxOpenSolid className="ballot_icon" />
-              <p className="ballot_title">{ballot.fa_title || "اعضا"}</p>
-              <div className="my-line" />
-            </div>
+          <div className="detail p-1">
+            <Row>
+              <Col className="detail_p">کاندیدها:</Col>
+              <Col className="text-start detail_p">123</Col>
+            </Row>
 
-            <div className="detail p-1">
-              <Row>
-                <Col className="detail_p">کاندیدها:</Col>
-                <Col className="text-start detail_p">123</Col>
-              </Row>
+            <Row>
+              <Col className="detail_p">رای‌ها:</Col>
+              <Col className="text-start detail_p">125</Col>
+            </Row>
 
-              <Row>
-                <Col className="detail_p">رای‌ها:</Col>
-                <Col className="text-start detail_p">125</Col>
-              </Row>
-
-              <Row>
-                <Col className="detail_p">باقی‌مانده:</Col>
-                <Col className="text-start detail_p">11:23:10</Col>
-              </Row>
-            </div>
-            <p className="ballot_view text-center">مشاهده کاندید</p>
+            <Row>
+              <Col className="detail_p">باقی‌مانده:</Col>
+              <Col className="text-start detail_p">11:23:10</Col>
+            </Row>
           </div>
+          <p className="ballot_view text-center">مشاهده کاندید</p>
+        </div>
 
-          <div className="ballot_button text-center">
-            <button
-              className="text-light ballot-button fw-bold"
-              onClick={handleClick}
-            >
-              مشاهده صندوق
-            </button>
-          </div>
-        </Col>
+        <div className="ballot_button text-center">
+          <button
+            className="text-light ballot-button fw-bold"
+            onClick={handleClick}
+          >
+            مشاهده صندوق
+          </button>
+        </div>
       </Col>
-    </>
+    </Col>
   );
 };
 
