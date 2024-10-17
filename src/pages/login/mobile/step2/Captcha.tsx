@@ -132,8 +132,15 @@ const Captcha: React.FC = () => {
             cookies.get("accessToken") &&
             localStorage.getItem("accessToken")
           ) {
-            console.log("Navigating to signup");
-            navigate("/signup", { state: { mobileNumber } });
+            // Navigate based on is_first_login value
+            const isFirstLogin = otpResponse.data.data.is_first_login;
+            if (isFirstLogin) {
+              console.log("Navigating to signup");
+              navigate("/signup", { state: { mobileNumber } });
+            } else {
+              console.log("Navigating to profile");
+              navigate("/profile", { state: { mobileNumber } });
+            }
           } else {
             setError("Failed to save token. Please try again.");
           }
