@@ -25,7 +25,7 @@ const fetchComments = async (id: string): Promise<Comment[]> => {
     data: { items: Comment[] };
   }>(API_URLS.COMMENT_GET.replace(":id", id));
 
-  return response.data.data.items;
+  return response.data.data.items.sort((a, b) => a.id - b.id);
 };
 
 const postComment = async (
@@ -36,7 +36,7 @@ const postComment = async (
 };
 
 const CommentComponent = () => {
-  const { id } = useParams<{ id: string | undefined }>(); // Get the ticket ID from the URL
+  const { id } = useParams<{ id: string | undefined }>();
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
@@ -143,7 +143,7 @@ const CommentComponent = () => {
             </Col>
             <Col className="col-6">
               <p>
-                شماره تیکت : <span> {id} </span>
+                شماره تیکت : <span>{id}</span>
               </p>
             </Col>
           </Row>
