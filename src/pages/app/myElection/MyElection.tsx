@@ -6,6 +6,7 @@ import apiClient from "../../../api/axios";
 import { API_URLS } from "../../../api/urls";
 import { ApiResponse, Election } from "../type";
 import ElectionBox from "./Box";
+import Loading from "../../../component/loading/Loading";
 
 const MyElection: React.FC = () => {
   const [elections, setElections] = useState<Election[]>([]);
@@ -34,7 +35,13 @@ const MyElection: React.FC = () => {
     fetchElections();
   }, []);
 
-  if (loading) return <p>درحال بارگیری...</p>;
+  if (loading)
+    return (
+      <>
+        <Header title={"انتخابات من"} />
+        <Loading />
+      </>
+    );
   if (error) return <p>ارور: {error}</p>;
 
   return (

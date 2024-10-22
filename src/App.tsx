@@ -15,6 +15,7 @@ import Profile from "./pages/app/profile-group/profile/Profile";
 import Document from "./pages/app/document/Document";
 import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
 import Duration from "./pages/app/duration/Duration";
+import Loading from "./component/loading/Loading";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/profile-edit" element={<ProfileEdit />} />
 
         <Route path="/" element={<Main />} />
+        <Route path="/loading" element={<Loading />} />
       </Routes>
     </BrowserRouter>
   );

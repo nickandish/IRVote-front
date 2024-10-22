@@ -20,7 +20,7 @@ const DurationBox: React.FC<DurationBoxProps> = ({ duration }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/ballots/${duration.id}`);
+    navigate(`/ballots/${duration.id}`, { state: { durationId: duration.id } });
   };
 
   const getStatusInfo = (status: number) => {
