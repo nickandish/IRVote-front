@@ -6,7 +6,7 @@ import Captcha from "./pages/login/mobile/step2/Captcha";
 import MyElection from "./pages/app/myElection/MyElection";
 import Ballot from "./pages/app/ballot/Ballot";
 import Candidate from "./pages/app/candidate/Candidate";
-import SignUp from "./pages/signup/SignUp";
+import FillProfile from "./pages/fillProfile/FillProfile";
 import TicketList from "./pages/app/ticket/ticketList/TicketList";
 import TicketEdit from "./pages/app/ticket/ticketEdit/TicketEdit";
 import TicketAdd from "./pages/app/ticket/ticketAdd/TicketAdd";
@@ -16,16 +16,16 @@ import Document from "./pages/app/document/Document";
 import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
 import Duration from "./pages/app/duration/Duration";
 import Loading from "./component/loading/Loading";
-import MemberShip from "./pages/login/memberShip/MemberShip";
+import SignUp from "./pages/signUp/SignUp";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/OTP" element={<Captcha />} />
-
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/fillProfile" element={<FillProfile />} />
+        <Route path="/OTP" element={<Captcha />} />
 
         <Route path="/my-elections" element={<MyElection />} />
         <Route path="/duration/:id" element={<Duration />} />
@@ -42,7 +42,6 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-edit" element={<ProfileEdit />} />
 
-        <Route path="/" element={<MemberShip />} />
         <Route path="/choose" element={<Main />} />
         <Route path="/loading" element={<Loading />} />
       </Routes>

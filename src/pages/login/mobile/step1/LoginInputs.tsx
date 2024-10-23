@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { sendOtp } from "../../../../api/userServices";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import apiClient from "../../../../api/axios";
 
@@ -8,9 +8,21 @@ const cookies = new Cookies();
 
 interface LoginProp {
   setEmailInput: (value: boolean) => void;
+  pText: string;
+  btnText: string;
+  questionText: string;
+  link: string;
+  linkText: string;
 }
 
-const LoginInputs: React.FC<LoginProp> = ({ setEmailInput }) => {
+const LoginInputs: React.FC<LoginProp> = ({
+  setEmailInput,
+  pText,
+  btnText,
+  questionText,
+  linkText,
+  link,
+}) => {
   const [mobileNumber, setMobileNumber] = useState<string>("");
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -72,7 +84,7 @@ const LoginInputs: React.FC<LoginProp> = ({ setEmailInput }) => {
 
   return (
     <>
-      <p className="mb-4">جهت ورود به سامانه شماره همراه خود را وارد کنید</p>
+      <p className="mb-4">{pText}</p>
       <input
         type="text"
         className="m-5 mt-1 mb-3 login-card_input"
@@ -84,11 +96,14 @@ const LoginInputs: React.FC<LoginProp> = ({ setEmailInput }) => {
         className="m-5 mt-1 mb-1 fw-bold text-light"
         onClick={handleSendOtp}
       >
-        ورود به سامانه
+        {btnText}
       </button>
-      <div className="link_email">
+      <p className="pt-4 mb-2 fw-bold">
+        {questionText} <Link to={link}>{linkText}</Link>
+      </p>
+      {/* <div className="link_email">
         <p className="p_email fw-bold disabled">ورود با ایمیل</p>
-      </div>
+      </div> */}
     </>
   );
 };

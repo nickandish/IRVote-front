@@ -13,7 +13,14 @@ const LoginCard = () => {
       <h1 className="text-light fw-bold mb-4">نیک آرا</h1>
       <Card className="text-center login-card_mew">
         {!emailInput ? (
-          <LoginInputs setEmailInput={setEmailInput} />
+          <LoginInputs
+            setEmailInput={setEmailInput}
+            pText="جهت ورود به سامانه شماره همراه خود را وارد کنید"
+            btnText="ورود به سامانه"
+            questionText="کاربر جدید"
+            linkText="(ثبت نام کنید)"
+            link="/signup"
+          />
         ) : (
           <EmailCard setEmailInput={setEmailInput} />
         )}
