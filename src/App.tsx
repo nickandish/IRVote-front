@@ -16,6 +16,7 @@ import Document from "./pages/app/document/Document";
 import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
 import Duration from "./pages/app/duration/Duration";
 import Loading from "./component/loading/Loading";
+import MemberShip from "./pages/login/memberShip/MemberShip";
 
 function App() {
   return (
@@ -41,7 +42,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-edit" element={<ProfileEdit />} />
 
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<MemberShip />} />
+        <Route path="/choose" element={<Main />} />
         <Route path="/loading" element={<Loading />} />
       </Routes>
     </BrowserRouter>
