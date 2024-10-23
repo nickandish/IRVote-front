@@ -24,6 +24,7 @@ const SignUp = () => {
                 questionText="از قبل اکانت دارید؟"
                 linkText="وارد شوید"
                 link="/login"
+                isSignup={false}
               />
             ) : (
               <EmailCard setEmailInput={setEmailInput} />

@@ -13,6 +13,7 @@ interface LoginProp {
   questionText: string;
   link: string;
   linkText: string;
+  isSignup: boolean;
 }
 
 const LoginInputs: React.FC<LoginProp> = ({
@@ -22,6 +23,7 @@ const LoginInputs: React.FC<LoginProp> = ({
   questionText,
   linkText,
   link,
+  isSignup,
 }) => {
   const [mobileNumber, setMobileNumber] = useState<string>("");
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -62,17 +64,14 @@ const LoginInputs: React.FC<LoginProp> = ({
   const handleSendOtp = async () => {
     if (!mobileNumber || !isValidMobileNumber(mobileNumber)) {
       setStatusMessage("Enter a valid mobile number");
-      console.log(statusMessage);
       return;
     }
-
-    console.log("Sending OTP for mobile number:", mobileNumber);
 
     try {
       const response = await sendOtp(mobileNumber);
       if (response.success) {
         setStatusMessage("OTP has been sent");
-        navigate("/otp", { state: { mobileNumber } });
+        navigate("/otp", { state: { mobileNumber, isSignup } });
       } else {
         setStatusMessage(response.message);
       }

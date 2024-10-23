@@ -20,6 +20,7 @@ const LoginCard = () => {
             questionText="کاربر جدید"
             linkText="(ثبت نام کنید)"
             link="/signup"
+            isSignup={true}
           />
         ) : (
           <EmailCard setEmailInput={setEmailInput} />
