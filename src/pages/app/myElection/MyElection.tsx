@@ -7,6 +7,7 @@ import { API_URLS } from "../../../api/urls";
 import { ApiResponse, Election } from "../type";
 import ElectionBox from "./Box";
 import Loading from "../../../component/loading/Loading";
+import ErrorPage from "../../../component/error/ErrorPage";
 
 const MyElection: React.FC = () => {
   const [elections, setElections] = useState<Election[]>([]);
@@ -39,10 +40,18 @@ const MyElection: React.FC = () => {
     return (
       <>
         <Header title={"انتخابات من"} />
+        <Navbar />
         <Loading />
       </>
     );
-  if (error) return <p>ارور: {error}</p>;
+  if (error)
+    return (
+      <>
+        <Header title="انتخابات من" />
+        <Navbar />
+        <ErrorPage />
+      </>
+    );
 
   return (
     <>

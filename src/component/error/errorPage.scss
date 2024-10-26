@@ -1,0 +1,46 @@
+@import "../../scss/box.scss";
+
+.error-page {
+  margin: 9rem auto;
+
+  img {
+    width: 100%;
+  }
+
+  .error-text {
+    padding-right: 4rem;
+    .error-404 {
+      color: $primary;
+      font-weight: bolder;
+      font-size: 60px;
+      text-align: end;
+      direction: ltr;
+    }
+    .error-title {
+      font-weight: bold;
+      font-size: 30px;
+      text-align: start;
+    }
+    .error-p {
+      font-size: 20px;
+      text-align: start;
+      max-width: 500px;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    img {
+      padding-right: 3rem;
+      padding-left: 3rem;
+    }
+    .error-404 {
+      font-size: 40px !important;
+    }
+    .error-title {
+      font-size: 25px !important;
+    }
+    .error-p {
+      font-size: 15px !important;
+    }
+  }
+}
