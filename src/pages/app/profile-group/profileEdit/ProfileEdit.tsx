@@ -4,7 +4,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
 import imgPlaceholder from "../../../../assets/femaileAvatar.svg";
 import Toggle from "./Toggle";
-import PasswordPopUp from "./PasswordPopUp"; // Import PasswordPopUp
+// import PasswordPopUp from "./PasswordPopUp";
 import "./profileEdit.scss";
 import { useUser } from "../../../../api/contextApi/UserContext";
 import apiClient from "../../../../api/axios";
@@ -18,9 +18,8 @@ const ProfileEdit: React.FC = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 
-  // State for password change
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [newPassword, setNewPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleToggle = (field: string) => {
     setToggle(toggle === field ? null : field);
@@ -109,24 +108,24 @@ const ProfileEdit: React.FC = () => {
       }
 
       // Handle password change
-      if (newPassword && newPassword === confirmPassword) {
-        const passwordData = {
-          password: newPassword,
-          confirm_password: confirmPassword,
-        };
-        const passwordResponse = await apiClient.put(
-          API_URLS.CHANGE_PASSWORD,
-          passwordData
-        );
+      // if (newPassword && newPassword === confirmPassword) {
+      //   const passwordData = {
+      //     password: newPassword,
+      //     confirm_password: confirmPassword,
+      //   };
+      //   const passwordResponse = await apiClient.put(
+      //     API_URLS.CHANGE_PASSWORD,
+      //     passwordData
+      //   );
 
-        if (passwordResponse.data.success) {
-          console.log("Password updated successfully");
-        } else {
-          alert("There was an error updating your password. Please try again.");
-        }
-      } else if (newPassword || confirmPassword) {
-        alert("Passwords do not match. Please try again.");
-      }
+      //   if (passwordResponse.data.success) {
+      //     console.log("Password updated successfully");
+      //   } else {
+      //     alert("There was an error updating your password. Please try again.");
+      //   }
+      // } else if (newPassword || confirmPassword) {
+      //   alert("Passwords do not match. Please try again.");
+      // }
 
       navigate("/profile");
     } catch (error) {
@@ -219,7 +218,7 @@ const ProfileEdit: React.FC = () => {
         </Row>
 
         {/* Password Change Section */}
-        <Row className="text-center profile-edit_field">
+        {/* <Row className="text-center profile-edit_field">
           <Col className="col-12">
             <h5>تغییر رمز عبور</h5>
           </Col>
@@ -237,7 +236,7 @@ const ProfileEdit: React.FC = () => {
               onChange={setConfirmPassword}
             />
           </Col>
-        </Row>
+        </Row> */}
 
         <Row className="profile-edit_btn">
           <button onClick={handleSubmit}>ثبت تغییرات</button>
