@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container } from "react-bootstrap";
-import Select, { SingleValue } from "react-select";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
 import { API_URLS } from "../../../../api/urls";
@@ -9,40 +8,31 @@ import { useNavigate } from "react-router-dom";
 import "../ticketEdit/ticketEdit.scss";
 import "./ticketAdd.scss";
 
-interface Option {
-  value: string;
-  label: string;
-}
-
-const teamOptions: Option[] = [
-  { value: "team1", label: "Team 1" },
-  { value: "team2", label: "Team 2" },
-];
-
-const serviceOptions: Option[] = [
-  { value: "service1", label: "Service 1" },
-  { value: "service2", label: "Service 2" },
-];
-
 const TicketAdd: React.FC = () => {
-  const [selectedTeam, setSelectedTeam] = useState<Option | null>(null);
-  const [selectedServiceType, setSelectedServiceType] = useState<Option | null>(
-    null
-  );
-  const [selectedServiceName, setSelectedServiceName] = useState<Option | null>(
-    null
-  );
   const [file, setFile] = useState<File | null>(null);
   const [header, setHeader] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
+  const [dateFormat, setDateFormat] = useState<string>("");
+  const [displayDate, setDisplayDate] = useState<string>("");
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const date = new Date();
+    const iranDate = new Intl.DateTimeFormat("fa-IR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "Asia/Tehran",
+    }).format(date);
+    setDateFormat(date.toISOString().replace(/\.\d{3}Z$/, "Z"));
+    setDisplayDate(iranDate);
+  }, []);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedFile = e.target.files[0];
-      setFile(selectedFile);
-      console.log("Selected-file:", selectedFile);
+      setFile(e.target.files[0]);
+      console.log("Selected-file:", e.target.files[0]);
     }
   };
 
@@ -52,11 +42,9 @@ const TicketAdd: React.FC = () => {
 
   const handleSubmit = async () => {
     const formData = new FormData();
-
     formData.append("header", header);
-    formData.append("description", desc);
-    // formData.append("status", "in_progress");
-
+    formData.append("desc", desc);
+    formData.append("start_at", dateFormat);
     if (file) {
       formData.append("file", file);
     }
@@ -82,7 +70,7 @@ const TicketAdd: React.FC = () => {
       </div>
       <Container>
         <div className="ticket-edit ticketAdd">
-          <p className="text-center">02/03/01</p>
+          <p className="text-center">{displayDate}</p>
 
           <div className="mb-4">
             <input
@@ -93,48 +81,6 @@ const TicketAdd: React.FC = () => {
               value={header}
               onChange={(e) => setHeader(e.target.value)}
             />
-          </div>
-
-          <div className="select-container">
-            <div className="mb-4">
-              <Select
-                placeholder="تیم مربوط"
-                options={teamOptions}
-                value={selectedTeam}
-                onChange={(newValue: SingleValue<Option>) =>
-                  setSelectedTeam(newValue)
-                }
-                className="select login-card_select"
-                menuPortalTarget={document.body}
-                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-              />
-            </div>
-            <div className="mb-4">
-              <Select
-                placeholder="نوع سرویس"
-                options={serviceOptions}
-                value={selectedServiceType}
-                onChange={(newValue: SingleValue<Option>) =>
-                  setSelectedServiceType(newValue)
-                }
-                className="select login-card_select"
-                menuPortalTarget={document.body}
-                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-              />
-            </div>
-            <div className="mb-4">
-              <Select
-                placeholder="نام سرویس"
-                options={serviceOptions}
-                value={selectedServiceName}
-                onChange={(newValue: SingleValue<Option>) =>
-                  setSelectedServiceName(newValue)
-                }
-                className="select login-card_select"
-                menuPortalTarget={document.body}
-                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-              />
-            </div>
           </div>
 
           <textarea
