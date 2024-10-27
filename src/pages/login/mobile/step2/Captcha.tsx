@@ -28,25 +28,12 @@ interface CaptchaResponse {
 
 interface VerifyCaptchaResponse {
   success: boolean;
-  message: string;
-  data?: {
-    token?: {
-      access: string;
-      refresh: string;
-    };
-    new_user?: boolean;
-    user_info?: {
-      id: number;
-      username: string;
-      first_name: string;
-      last_name: string;
-      mobile: string;
-      email: string;
-      coefficient: number;
-      avatar: string | null;
-    };
-    is_first_login?: boolean;
+  token?: {
+    access: string;
+    refresh: string;
   };
+  message: string;
+  dev_message: string;
 }
 
 const Captcha: React.FC = () => {
@@ -97,8 +84,8 @@ const Captcha: React.FC = () => {
 
       if (captchaResponse.data.success) {
         const otpVerificationUrl = isSignup
-          ? API_URLS.SIGNUP_BY_OTP
-          : API_URLS.LOGIN_BY_OTP;
+          ? API_URLS.LOGIN_BY_OTP
+          : API_URLS.SIGNUP_BY_OTP;
 
         // Verify OTP
         const otpResponse = await apiClient.post<VerifyCaptchaResponse>(
@@ -109,18 +96,24 @@ const Captcha: React.FC = () => {
           }
         );
 
-        if (otpResponse.data.success && otpResponse.data.data?.token) {
-          const { access } = otpResponse.data.data.token;
+        if (otpResponse.data.success && otpResponse.data.token) {
+          const { access } = otpResponse.data.token;
+
+          // Save token
           cookies.set("accessToken", access, { path: "/", secure: true });
           localStorage.setItem("accessToken", access);
           apiClient.defaults.headers.common[
             "Authorization"
           ] = `bearer ${access}`;
+          console.log(
+            "Authorization header after OTP verification:",
+            apiClient.defaults.headers.common["Authorization"]
+          );
 
           if (isSignup) {
-            navigate("/fillProfile", { state: { mobileNumber } });
-          } else {
             navigate("/profile", { state: { mobileNumber } });
+          } else {
+            navigate("/fillProfile", { state: { mobileNumber } });
           }
         } else {
           setError(otpResponse.data.message || "OTP verification failed.");
@@ -150,7 +143,6 @@ const Captcha: React.FC = () => {
 
   useEffect(() => {
     fetchCaptcha();
-    console.log(isSignup);
   }, []);
 
   return (

@@ -2,7 +2,7 @@ export const API_URLS = {
   SEND_OTP: "/users/send_otp",
   LOGIN_BY_OTP: "/users/login",
   SIGNUP_BY_OTP: "/users/singup",
-  GET_USER: "/users/user_detail",
+  GET_USER: "/users/UserDetail",
   FILL_PROFILE: "/users/fill_profile",
   CHANGE_IMG: "/users/change_photo",
   CHANGE_PASSWORD: "/users/change_password",
