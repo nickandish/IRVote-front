@@ -4,10 +4,10 @@ import Select, { SingleValue } from "react-select";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
 import { API_URLS } from "../../../../api/urls";
-import "../ticketEdit/ticketEdit.scss";
-import "./ticketAdd.scss";
 import apiClient from "../../../../api/axios";
 import { useNavigate } from "react-router-dom";
+import "../ticketEdit/ticketEdit.scss";
+import "./ticketAdd.scss";
 
 interface Option {
   value: string;
@@ -54,7 +54,8 @@ const TicketAdd: React.FC = () => {
     const formData = new FormData();
 
     formData.append("header", header);
-    formData.append("desc", desc);
+    formData.append("description", desc);
+    // formData.append("status", "in_progress");
 
     if (file) {
       formData.append("file", file);

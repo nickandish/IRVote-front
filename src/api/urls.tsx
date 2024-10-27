@@ -10,7 +10,7 @@ export const API_URLS = {
   CAPTCHA_POST: "/users/check_captcha",
 
   TICKET_LIST: "/ticket/ticket_list",
-  TICKET_CREATE: "/ticket/create_ticket",
+  TICKET_CREATE: "/Ticket/create_ticket",
   TICKET_DETAIL: "/ticket/ticket_detail/:id",
   COMMENT_GET: "/ticket/ticket_comment_list/:id",
   COMMENT_POST: "/ticket/create_comment/:id",

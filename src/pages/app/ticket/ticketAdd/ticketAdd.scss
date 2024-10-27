@@ -3,9 +3,9 @@
   position: absolute;
   z-index: 1000;
 }
+
 .ticketAdd {
   margin-top: 8rem;
-  height: 100svh;
 
   textarea {
     border: 2px solid $primary;
@@ -45,6 +45,7 @@
     display: flex;
     justify-content: space-between;
     width: 90%;
+    margin: auto;
 
     .submit,
     .upload {
