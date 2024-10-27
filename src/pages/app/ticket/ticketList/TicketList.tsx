@@ -7,6 +7,8 @@ import TicketRow from "./TicketRow";
 import { Ticket, TicketListResponse } from "../ticket";
 import "../../candidate/voteList/VoteList.scss";
 import "./ticketList.scss";
+import Loading from "../../../../component/loading/Loading";
+import ErrorPage from "../../../../component/error/ErrorPage";
 
 const TicketList: React.FC = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -40,9 +42,7 @@ const TicketList: React.FC = () => {
       <>
         <Header title="لیست درخواست‌ها" />
         <Navbar />
-        <div className="ticket-list">
-          <p>در حال بارگذاری...</p>
-        </div>
+        <Loading />
       </>
     );
   }
@@ -52,9 +52,7 @@ const TicketList: React.FC = () => {
       <>
         <Header title="لیست درخواست‌ها" />
         <Navbar />
-        <div className="ticket-list">
-          <p>{error}</p>
-        </div>
+        <ErrorPage />
       </>
     );
   }

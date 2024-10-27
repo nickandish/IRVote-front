@@ -9,6 +9,7 @@ import apiClient from "../../../../api/axios";
 import { API_URLS } from "../../../../api/urls";
 import { TicketDetail, TicketDetailResponse } from "../ticket";
 import "./comment.scss";
+import Loading from "../../../../component/loading/Loading";
 
 interface Comment {
   id: number;
@@ -115,7 +116,13 @@ const CommentComponent = () => {
   };
 
   if (loading) {
-    return <p>در حال بارگذاری...</p>;
+    return (
+      <>
+        <Header title="لیست درخواست‌ها" />
+        <Navbar />
+        <Loading />
+      </>
+    );
   }
 
   return (
