@@ -42,7 +42,12 @@ const Ballots: React.FC<BallotProps> = ({ ballot }) => {
     if (ballot.Ballot_Type === 0) {
       navigate(`/document/${ballot.id}`);
     } else if (ballot.Ballot_Type === 1) {
-      navigate(`/candidate/${ballot.id}`);
+      navigate(`/candidate/${ballot.id}`, {
+        state: {
+          ballotId: ballot.id,
+          ballotTitle: ballot.Ballot_Farsi_Title,
+        },
+      });
     }
   };
 

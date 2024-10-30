@@ -1,24 +1,41 @@
-import { useParams, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
 import VoteList from "./voteList/VoteList";
 import CandidateList from "./candidateList/CandidateList";
+import { API_URLS } from "../../../api/urls";
+import apiClient from "../../../api/axios";
 import "./candidate.scss";
 
 const Candidate = () => {
-  const { id } = useParams<{ id: string }>();
-  const [candidateList, setCandidateList] = useState<boolean>(true);
-  const [voteList, setVoteList] = useState<boolean>(false);
+  const [candidateListVisible, setCandidateListVisible] = useState(true);
+  const [voteListVisible, setVoteListVisible] = useState(false);
   const [selectedCandidates, setSelectedCandidates] = useState<number[]>([]);
 
-  const { state } = useLocation();
-  const { minVote = 0, maxVote = 0 } = state || {}; // Default values if state is undefined
+  const location = useLocation();
+  const ballotId = location.state?.ballotId as number;
+  const ballotTitle = location.state?.ballotTitle as string;
+
+  useEffect(() => {
+    if (ballotId) {
+      const fetchBallots = async () => {
+        try {
+          await apiClient.get(
+            API_URLS.BALLOT_DETAIL.replace(":id", ballotId.toString())
+          );
+        } catch (error) {
+          console.error("Failed to fetch ballot details:", error);
+        }
+      };
+      fetchBallots();
+    }
+  }, [ballotId]);
 
   return (
     <>
       <div className="candidate_header">
-        <Header title="انتخابات انجمن اسلامی دانشگاه تهران-غرب" />
+        <Header title={ballotTitle || "Ballot"} />
       </div>
       <Navbar />
       <div className="candidate">
@@ -26,38 +43,40 @@ const Candidate = () => {
           <div className="div-6 btnn">
             <button
               className={`candidate_btn fw-bold ${
-                candidateList ? "active" : ""
+                candidateListVisible ? "active" : ""
               }`}
               onClick={() => {
-                setVoteList(false);
-                setCandidateList(true);
+                setVoteListVisible(false);
+                setCandidateListVisible(true);
               }}
             >
               کاندیدها
             </button>
           </div>
-          <div className="div-6 btnn">
+          <div className="btnn div-6">
             <button
-              className={`vote_btn fw-bold ${voteList ? "active" : ""}`}
+              className={`vote_btn fw-bold ${voteListVisible ? "active" : ""}`}
               onClick={() => {
-                setVoteList(true);
-                setCandidateList(false);
+                setVoteListVisible(true);
+                setCandidateListVisible(false);
               }}
             >
               رای‌های من
             </button>
           </div>
         </div>
-        {voteList && <VoteList selectedCandidates={selectedCandidates} />}
-        {candidateList && (
+        {voteListVisible && (
+          <VoteList selectedCandidates={selectedCandidates} />
+        )}
+        {candidateListVisible && (
           <CandidateList
-            setVoteList={setVoteList}
-            setCandidateList={setCandidateList}
-            durationId={id || ""}
+            setVoteListVisible={setVoteListVisible}
+            setCandidateListVisible={setCandidateListVisible}
+            ballotId={ballotId}
             selectedCandidates={selectedCandidates}
             setSelectedCandidates={setSelectedCandidates}
-            minVote={minVote}
-            maxVote={maxVote}
+            minVote={1}
+            maxVote={2}
           />
         )}
       </div>
