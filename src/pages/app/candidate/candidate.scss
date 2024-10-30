@@ -15,6 +15,7 @@
       background-color: transparent;
       border: none;
       position: relative;
+      z-index: 1;
       transition: color 0.3s;
       font-size: 18px;
       &:hover {
