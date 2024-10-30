@@ -11,7 +11,7 @@ import ElectionBox from "./Box";
 
 const MyElection: React.FC = () => {
   const [elections, setElections] = useState<Election[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -23,39 +23,23 @@ const MyElection: React.FC = () => {
         if (response.data.success) {
           setElections(response.data.data);
         } else {
-          setError(response.data.message || "Failed to fetch elections");
+          setError("Failed to load elections.");
         }
       } catch (err) {
-        setError("Error fetching elections");
-        console.error(err);
+        setError("An error occurred while fetching data.");
       } finally {
         setLoading(false);
       }
     };
-
     fetchElections();
   }, []);
 
-  if (loading)
-    return (
-      <>
-        <Header title={"انتخابات من"} />
-        <Navbar />
-        <Loading />
-      </>
-    );
-  if (error)
-    return (
-      <>
-        <Header title="انتخابات من" />
-        <Navbar />
-        <ErrorPage />
-      </>
-    );
+  if (loading) return <LoadingScreen />;
+  if (error) return <ErrorScreen error={error} />;
 
   return (
     <>
-      <Header title={"انتخابات من"} />
+      <Header title="انتخابات من" />
       <Row className="my-elections">
         {elections.map((election) => (
           <ElectionBox key={election.id} election={election} />
@@ -65,5 +49,21 @@ const MyElection: React.FC = () => {
     </>
   );
 };
+
+const LoadingScreen = () => (
+  <>
+    <Header title="انتخابات من" />
+    <Navbar />
+    <Loading />
+  </>
+);
+
+const ErrorScreen = ({ error }: { error: string }) => (
+  <>
+    <Header title="انتخابات من" />
+    <Navbar />
+    <ErrorPage />
+  </>
+);
 
 export default MyElection;

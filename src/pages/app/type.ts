@@ -39,17 +39,14 @@ export interface Candidate {
 
 export interface BallotItem {
   id: number;
-  start_at: string;
-  end_at: string;
-  ballot_title: string;
-  logo: string | null;
-  type: number;
-  fa_title: string;
-  en_title: string | null;
-  min_vote: number;
-  max_vote: number;
-  duration: number;
-  status: number | null;
+  Ballot_Farsi_Title: string;
+  Ballot_Type: number;
+  Start_at: string;
+  End_at: string;
+  Status: number;
+  remaining_time?: string;
+  // min_vote: number;
+  // max_vote: number;
 }
 
 export interface Candidate {

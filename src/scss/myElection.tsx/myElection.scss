@@ -21,6 +21,7 @@
   .status-unknown {
     @include box-color($primary);
   }
+
   .box {
     max-width: 540px;
     margin: auto;
@@ -30,6 +31,17 @@
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
       transform: scale(0.95);
       cursor: pointer;
+    }
+
+    img {
+      max-width: 2rem;
+      margin-right: 0.5rem;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        filter: none !important;
+        transform: scale(0.95);
+        cursor: pointer;
+      }
     }
 
     .bottom {

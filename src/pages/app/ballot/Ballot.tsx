@@ -9,53 +9,44 @@ import apiClient from "../../../api/axios";
 import { BallotItem } from "../type";
 import "./ballot.scss";
 
-// 0: document     1: person
-
 const Ballot = () => {
-  const { id } = useParams<{ id: string }>();
-  const [ballot, setBallot] = useState<BallotItem[]>([]);
+  const [ballots, setBallots] = useState<BallotItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { electionDurationId } = useParams<{ electionDurationId: string }>();
 
   useEffect(() => {
-    const fetchBallot = async () => {
+    const fetchBallots = async () => {
       try {
-        if (!id) {
-          setError("No election ID provided");
-          setLoading(false);
-          return;
-        }
-
-        const url = API_URLS.BALLOT_LIST.replace(":id", id);
-        const response = await apiClient.get(url);
-
+        const response = await apiClient.get(
+          `${API_URLS.BALLOT_LIST}/${electionDurationId}`
+        );
         if (response.data.success) {
-          setBallot(response.data.data.items);
+          setBallots(response.data.data);
+          setLoading(false);
         } else {
-          setError(response.data.message || "Failed to fetch Ballot");
+          setError(response.data.message || "Failed to retrieve ballots.");
         }
-      } catch (err) {
-        setError("Error fetching Ballot");
-        console.error(err);
-      } finally {
-        setLoading(false);
+      } catch (error) {
+        setError("An error occurred while fetching ballots.");
       }
+      setLoading(false);
     };
 
-    fetchBallot();
-  }, [id]);
+    fetchBallots();
+  }, [electionDurationId]);
 
   if (loading) return <div className="loader">درحال بارگیری...</div>;
   if (error) return <div className="error-message">ارور: {error}</div>;
 
   return (
     <>
-      <Header title={"انتخابات انجمن اسلامی دانشگاه تهران غرب"} />
+      <Header title="انتخابات انجمن اسلامی دانشگاه تهران غرب" />
       <Navbar />
 
       <div className="ballots row fw-bold">
         <Row className="g-3 wd100">
-          {ballot.map((item) => (
+          {ballots.map((item) => (
             <Ballots key={item.id} ballot={item} />
           ))}
         </Row>

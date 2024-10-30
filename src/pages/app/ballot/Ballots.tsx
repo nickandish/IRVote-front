@@ -3,46 +3,46 @@ import { LiaBoxOpenSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
 import "./ballot.scss";
 
-const Ballots = ({ ballot }: { ballot: any }) => {
+interface BallotProps {
+  ballot: {
+    id: number;
+    Ballot_Farsi_Title: string;
+    Ballot_Type: number;
+    Start_at: string;
+    End_at: string;
+    Status: number;
+    remaining_time?: string;
+  };
+}
+
+const Ballots: React.FC<BallotProps> = ({ ballot }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    if (ballot.type === 0) {
-      navigate(`/document/${ballot.id}`, {
-        state: { minVote: ballot.min_vote, maxVote: ballot.max_vote },
-      });
-    } else if (ballot.type === 1) {
-      navigate(`/candidate/${ballot.id}`, {
-        state: { minVote: ballot.min_vote, maxVote: ballot.max_vote },
-      });
-    } else {
-      console.warn("Unknown ballot type:", ballot.type);
-    }
-  };
-
+  // Function to determine status text and styling based on status code
   const getStatusInfo = (status: number | null) => {
-    if (status === null) {
-      return { text: "نامشخص", className: "unknown" };
-    }
+    if (status === null) return { text: "نامشخص", className: "unknown" };
     switch (status) {
+      case 0:
+        return { text: "غیر فعال", className: "status-not-started" };
       case 1:
-        return { text: "شروع نشده", className: "expired" };
+        return { text: "درحال برگزاری", className: "status-in-progress" };
       case 2:
-        return { text: "درحال برگزاری", className: "voted" };
       case 3:
-        return { text: "خاتمه یافته", className: "expired" };
       case 4:
-        return { text: "منقضی شده", className: "expired" };
-      case 5:
-        return { text: "متوقف شده", className: "expired" };
+        return { text: "خاتمه یافته", className: "status-expired" };
       default:
-        return { text: "نامشخص", className: "unknown" };
+        return { text: "نامشخص", className: "status-unknown" };
     }
   };
 
   const { text: statusText, className: statusClass } = getStatusInfo(
-    ballot.status
+    ballot.Status
   );
+
+  // Click handler to navigate to the specific ballot page
+  const handleClick = () => {
+    navigate(`/ballot/${ballot.id}`);
+  };
 
   return (
     <Col className="col-6 col-md-4 col-lg-3 d-flex flex-column">
@@ -54,7 +54,9 @@ const Ballots = ({ ballot }: { ballot: any }) => {
         <div className="ballot_box">
           <div className="text-center">
             <LiaBoxOpenSolid className="ballot_icon" />
-            <p className="ballot_title">{ballot.fa_title || "اعضا"}</p>
+            <p className="ballot_title">
+              {ballot.Ballot_Farsi_Title || "اعضا"}
+            </p>
             <div className="my-line" />
           </div>
 
@@ -71,7 +73,9 @@ const Ballots = ({ ballot }: { ballot: any }) => {
 
             <Row>
               <Col className="detail_p">باقی‌مانده:</Col>
-              <Col className="text-start detail_p">11:23:10</Col>
+              <Col className="text-start detail_p">
+                {ballot.remaining_time || "نامشخص"}
+              </Col>
             </Row>
           </div>
           <p className="ballot_view text-center">مشاهده کاندید</p>

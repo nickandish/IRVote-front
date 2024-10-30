@@ -20,28 +20,13 @@ interface ElectionBoxProps {
 const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/ballot/${election.id}`);
-  };
+  const handleClick = () => navigate(`/ballot/${election.id}`);
 
-  const getStatusInfo = (status: number) => {
-    switch (status) {
-      case 0:
-        return { text: "غیر فعال", className: "status-not-started" };
-      case 1:
-        return { text: "فعال", className: "status-in-progress" };
-      default:
-        return { text: "نامشخص", className: "status-unknown" };
-    }
-  };
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("fa-IR");
 
-  const { text: statusText, className: statusClass } = getStatusInfo(
-    election.Status
-  );
-
-  const imageUrl = election.logo
-    ? `${import.meta.env.VITE_API_BASE_URL}${election.logo}`
-    : "";
+  const statusClass = getStatusClass(election.Status);
+  const statusText = getStatusText(election.Status);
 
   return (
     <Col className="col-md-6 col-12 mb-3" onClick={handleClick}>
@@ -50,11 +35,10 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
       >
         <Row className="top d-flex pt-3">
           <Col className="col-1">
-            <LiaBoxOpenSolid className="icon icon-box" />
-            {imageUrl ? (
+            {election.logo ? (
               <img
-                src={imageUrl}
-                // alt={`${election.Election_Duration_farsi_title} logo`}
+                src={election.logo}
+                alt={`${election.Election_Duration_farsi_title} logo`}
                 className="election-logo"
                 loading="lazy"
                 onError={(e) => {
@@ -79,27 +63,47 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
         <div className="my-line" />
 
         <Row className="middle">
-          <Col className="col-1"></Col>
           <Col>
-            <p>
-              شروع: {new Date(election.Start_at).toLocaleDateString("fa-IR")}
-            </p>
+            <p>شروع: {formatDate(election.Start_at)}</p>
           </Col>
           <Col>
-            <p>
-              پایان: {new Date(election.End_at).toLocaleDateString("fa-IR")}
-            </p>
+            <p>پایان: {formatDate(election.End_at)}</p>
           </Col>
-          <Col className="col-1"></Col>
+        </Row>
 
-          <div className="bottom">
-            <PiInfoBold className="icon icon-info" />
-            <p className="info-p">{statusText}</p>
-          </div>
+        <Row className="bottom align-items-center">
+          <PiInfoBold className="icon icon-info col-1" />
+          <p className="info-p mb-0 col-10">{statusText}</p>
         </Row>
       </Row>
     </Col>
   );
+};
+
+const getStatusClass = (status: number) => {
+  switch (status) {
+    case 0:
+      return "status-not-started";
+    case 1:
+      return "status-ongoing";
+    case 2:
+      return "status-completed";
+    default:
+      return "status-unknown";
+  }
+};
+
+const getStatusText = (status: number) => {
+  switch (status) {
+    case 0:
+      return "شروع نشده";
+    case 1:
+      return "درحال برگزاری";
+    case 2:
+      return "خاتمه یافته";
+    default:
+      return "وضعیت نامشخص";
+  }
 };
 
 export default ElectionBox;
