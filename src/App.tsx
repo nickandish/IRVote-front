@@ -27,7 +27,7 @@ function App() {
         <Route path="/OTP" element={<Captcha />} />
 
         <Route path="/my-elections" element={<MyElection />} />
-        <Route path="/ballots/:id" element={<Ballot />} />
+        <Route path="/ballot/:id" element={<Ballot />} />
         <Route path="/candidate/:id" element={<Candidate />} />
 
         <Route path="/document/:id" element={<Document />} />

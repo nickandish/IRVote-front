@@ -18,7 +18,6 @@ interface BallotProps {
 const Ballots: React.FC<BallotProps> = ({ ballot }) => {
   const navigate = useNavigate();
 
-  // Function to determine status text and styling based on status code
   const getStatusInfo = (status: number | null) => {
     if (status === null) return { text: "نامشخص", className: "unknown" };
     switch (status) {
@@ -39,7 +38,6 @@ const Ballots: React.FC<BallotProps> = ({ ballot }) => {
     ballot.Status
   );
 
-  // Click handler to navigate to the specific ballot page
   const handleClick = () => {
     navigate(`/ballot/${ballot.id}`);
   };

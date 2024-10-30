@@ -3,45 +3,72 @@ import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
 import Ballots from "./Ballots";
 import { Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { API_URLS } from "../../../api/urls";
 import apiClient from "../../../api/axios";
 import { BallotItem } from "../type";
+import ErrorPage from "../../../component/error/ErrorPage";
+import Loading from "../../../component/loading/Loading";
 import "./ballot.scss";
 
 const Ballot = () => {
+  const location = useLocation();
+  const electionDurationTitle =
+    location.state?.electionDurationTitle || "انتخابات";
+
+  const electionDurationId = location.state?.electionDurationId;
+
   const [ballots, setBallots] = useState<BallotItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { electionDurationId } = useParams<{ electionDurationId: string }>();
 
   useEffect(() => {
+    if (!electionDurationId) {
+      setError("Election Duration ID is missing.");
+      setLoading(false);
+      return;
+    }
+
     const fetchBallots = async () => {
       try {
         const response = await apiClient.get(
-          `${API_URLS.BALLOT_LIST}/${electionDurationId}`
+          API_URLS.BALLOT_LIST.replace(":id", electionDurationId)
         );
         if (response.data.success) {
           setBallots(response.data.data);
-          setLoading(false);
         } else {
           setError(response.data.message || "Failed to retrieve ballots.");
         }
       } catch (error) {
         setError("An error occurred while fetching ballots.");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchBallots();
   }, [electionDurationId]);
 
-  if (loading) return <div className="loader">درحال بارگیری...</div>;
-  if (error) return <div className="error-message">ارور: {error}</div>;
+  if (loading)
+    return (
+      <>
+        <Header title={electionDurationTitle} />
+        <Navbar />
+        <Loading />
+      </>
+    );
+  if (error)
+    return (
+      <>
+        <Header title={electionDurationTitle} />
+        <Navbar />
+        <ErrorPage />
+      </>
+    );
 
   return (
     <>
-      <Header title="انتخابات انجمن اسلامی دانشگاه تهران غرب" />
+      <Header title={electionDurationTitle} />
       <Navbar />
 
       <div className="ballots row fw-bold">

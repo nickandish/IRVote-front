@@ -20,7 +20,13 @@ interface ElectionBoxProps {
 const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(`/ballot/${election.id}`);
+  const handleClick = () =>
+    navigate(`/ballot/${election.id}`, {
+      state: {
+        electionDurationId: election.id,
+        electionDurationTitle: election.Election_Duration_farsi_title,
+      },
+    });
 
   const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString("fa-IR");
