@@ -8,11 +8,12 @@ import "../../../scss/myElection.tsx/myElection.scss";
 interface ElectionBoxProps {
   election: {
     id: number;
-    fa_title: string;
-    start_at: string;
-    end_at: string;
-    status: number;
-    logo: string;
+    Election_Duration_farsi_title: string;
+    Start_at: string;
+    End_at: string;
+    Status: number;
+    logo: string | null;
+    Confirm_status: number;
   };
 }
 
@@ -20,29 +21,27 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/duration/${election.id}`);
+    navigate(`/ballot/${election.id}`);
   };
 
   const getStatusInfo = (status: number) => {
     switch (status) {
       case 0:
-        return { text: "شروع نشده", className: "status-not-started" };
+        return { text: "غیر فعال", className: "status-not-started" };
       case 1:
-        return { text: "در حال برگزاری", className: "status-in-progress" };
-      case 2:
-        return { text: "منقضی شده", className: "status-expired" };
-      case 3:
-        return { text: "به پایان رسیده", className: "status-ended" };
+        return { text: "فعال", className: "status-in-progress" };
       default:
         return { text: "نامشخص", className: "status-unknown" };
     }
   };
 
   const { text: statusText, className: statusClass } = getStatusInfo(
-    election.status
+    election.Status
   );
 
-  const imageUrl = `${import.meta.env.VITE_API_BASE_URL}${election.logo}`;
+  const imageUrl = election.logo
+    ? `${import.meta.env.VITE_API_BASE_URL}${election.logo}`
+    : "";
 
   return (
     <Col className="col-md-6 col-12 mb-3" onClick={handleClick}>
@@ -52,20 +51,25 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
         <Row className="top d-flex pt-3">
           <Col className="col-1">
             <LiaBoxOpenSolid className="icon icon-box" />
-            {/* Display the logo image */}
-            {/* <img
-              src={imageUrl}
-              alt={`${election.fa_title} logo`}
-              className="election-logo"
-              loading="lazy"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src =
-                  "/images/default-image.png"; // Ensure this path is correct
-              }}
-            /> */}
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                // alt={`${election.Election_Duration_farsi_title} logo`}
+                className="election-logo"
+                loading="lazy"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src =
+                    "/images/default-image.png";
+                }}
+              />
+            ) : (
+              <LiaBoxOpenSolid className="icon icon-box" />
+            )}
           </Col>
           <Col className="col-10">
-            <h6 className="fw-bold pt-1">{election.fa_title}</h6>
+            <h6 className="fw-bold pt-1">
+              {election.Election_Duration_farsi_title}
+            </h6>
           </Col>
           <Col className="col-1 visiblee">
             <FaAngleLeft className="icon-left" />
@@ -78,12 +82,12 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
           <Col className="col-1"></Col>
           <Col>
             <p>
-              شروع: {new Date(election.start_at).toLocaleDateString("fa-IR")}
+              شروع: {new Date(election.Start_at).toLocaleDateString("fa-IR")}
             </p>
           </Col>
           <Col>
             <p>
-              پایان: {new Date(election.end_at).toLocaleDateString("fa-IR")}
+              پایان: {new Date(election.End_at).toLocaleDateString("fa-IR")}
             </p>
           </Col>
           <Col className="col-1"></Col>

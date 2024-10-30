@@ -5,9 +5,9 @@ import Navbar from "../../navbar/Navbar";
 import apiClient from "../../../api/axios";
 import { API_URLS } from "../../../api/urls";
 import { ApiResponse, Election } from "../type";
-import ElectionBox from "./Box";
 import Loading from "../../../component/loading/Loading";
 import ErrorPage from "../../../component/error/ErrorPage";
+import ElectionBox from "./Box";
 
 const MyElection: React.FC = () => {
   const [elections, setElections] = useState<Election[]>([]);
@@ -17,11 +17,11 @@ const MyElection: React.FC = () => {
   useEffect(() => {
     const fetchElections = async () => {
       try {
-        const response = await apiClient.get<
-          ApiResponse<{ items: Election[] }>
-        >(API_URLS.ELECTION_LIST);
+        const response = await apiClient.get<ApiResponse<Election[]>>(
+          API_URLS.ELECTION_Duration
+        );
         if (response.data.success) {
-          setElections(response.data.data.items);
+          setElections(response.data.data);
         } else {
           setError(response.data.message || "Failed to fetch elections");
         }

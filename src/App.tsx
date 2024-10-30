@@ -14,7 +14,6 @@ import Comment from "./pages/app/ticket/comment/Comment";
 import Profile from "./pages/app/profile-group/profile/Profile";
 import Document from "./pages/app/document/Document";
 import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
-import Duration from "./pages/app/duration/Duration";
 import Loading from "./component/loading/Loading";
 import SignUp from "./pages/signUp/SignUp";
 
@@ -28,7 +27,6 @@ function App() {
         <Route path="/OTP" element={<Captcha />} />
 
         <Route path="/my-elections" element={<MyElection />} />
-        <Route path="/duration/:id" element={<Duration />} />
         <Route path="/ballots/:id" element={<Ballot />} />
         <Route path="/candidate/:id" element={<Candidate />} />
 

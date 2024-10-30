@@ -9,6 +9,8 @@ import apiClient from "../../../api/axios";
 import { BallotItem } from "../type";
 import "./ballot.scss";
 
+// 0: document     1: person
+
 const Ballot = () => {
   const { id } = useParams<{ id: string }>();
   const [ballot, setBallot] = useState<BallotItem[]>([]);

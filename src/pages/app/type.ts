@@ -1,11 +1,11 @@
 export interface Election {
   id: number;
-  fa_title: string;
-  en_title: string;
-  start_at: string;
-  end_at: string;
-  status: number;
-  logo: string;
+  Election_Duration_farsi_title: string;
+  Start_at: string;
+  End_at: string;
+  Status: number;
+  logo: string | null;
+  Confirm_status: number;
 }
 
 export interface DurationItem {
