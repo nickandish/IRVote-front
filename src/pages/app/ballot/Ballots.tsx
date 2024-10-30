@@ -39,7 +39,11 @@ const Ballots: React.FC<BallotProps> = ({ ballot }) => {
   );
 
   const handleClick = () => {
-    navigate(`/ballot/${ballot.id}`);
+    if (ballot.Ballot_Type === 0) {
+      navigate(`/document/${ballot.id}`);
+    } else if (ballot.Ballot_Type === 1) {
+      navigate(`/candidate/${ballot.id}`);
+    }
   };
 
   return (
