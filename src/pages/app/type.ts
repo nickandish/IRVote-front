@@ -26,15 +26,20 @@ export interface ApiResponse<T> {
 
 export interface Candidate {
   id: number;
-  name: string;
-  candidate_code: number;
-  qualified: boolean;
-  data: string;
-  cv: string | null;
-  video: string | null;
-  ImagePath: string | null;
+  Candidate_code: number;
+  Qualified: boolean;
+  Image: string | null;
+  Video: string | null;
+  CV: string | null;
   background: string;
-  user: number;
+  max_allowed_selection: number;
+  min_allowed_selection: number;
+  user: {
+    username: string;
+    first_name: string;
+    last_name: string;
+    status: number;
+  };
 }
 
 export interface BallotItem {
@@ -47,18 +52,4 @@ export interface BallotItem {
   remaining_time?: string;
   // min_vote: number;
   // max_vote: number;
-}
-
-export interface Candidate {
-  id: number;
-  name: string;
-  candidate_code: number;
-  qualified: boolean;
-  data: string;
-  cv: string | null;
-  video: string | null;
-  ImagePath: string | null;
-  background: string;
-  user: number;
-  ballot: number;
 }

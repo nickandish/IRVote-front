@@ -29,65 +29,44 @@ const CandidateBox: React.FC<CandidateBoxProps> = ({
 
   return (
     <>
-      {/* <Col
+      <Col
         className={`candidateBox col-6 col-md-4 col-lg-3 d-flex flex-column ${
           isSelected ? "selected" : ""
         }`}
       >
         <Col className="ballot candidateBox_box">
-          <div
-            className="rounded-circle img"
-            onClick={() => setModalVisible(true)}
-          >
-            <img src={candidate.ImagePath || img} alt={candidate.name} />
+          <div className="rounded-circle img">
+            <img
+              className="rounded-circle"
+              src={candidate.Image || img}
+              onClick={() => setModalVisible(true)}
+              alt={candidate.user.first_name}
+              loading="lazy"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = img;
+              }}
+            />
           </div>
           <div className="text-center">
-            <p className="p">{candidate.name}</p>
+            <p className="p">
+              {candidate.user.first_name}
+              <span> {candidate.user.last_name}</span>
+            </p>
           </div>
           <div className="ballot_button text-center">
             <button className="text-light fw-bold" onClick={toggleSelection}>
-              {isSelected ? "حذف کاندید" : "انتخاب کاندید"}
+              {isSelected ? <>حذف کاندید</> : <>انتخاب کاندید</>}
             </button>
           </div>
         </Col>
       </Col>
-      <Modal show={modalVisible} onHide={() => setModalVisible(false)}>
-        <CandidateDetail candidate={candidate} />
-      </Modal> */}
-
-      <>
-        <Col
-          className={`candidateBox col-6 col-md-4 col-lg-3 d-flex flex-column ${
-            isSelected ? "selected" : ""
-          }`}
-        >
-          <Col className="ballot candidateBox_box">
-            <div className="rounded-circle img">
-              <img
-                className="rounded-circle"
-                src={candidate.ImagePath || img}
-                onClick={() => setModalVisible(true)}
-                alt={candidate.name}
-              />
-            </div>
-            <div className="text-center">
-              <p className="p">{candidate.name}</p>
-            </div>
-            <div className="ballot_button text-center">
-              <button className="text-light fw-bold" onClick={toggleSelection}>
-                {isSelected ? <>حذف کاندید</> : <>انتخاب کاندید</>}
-              </button>
-            </div>
-          </Col>
-        </Col>
-        <Modal
-          show={modalVisible}
-          onHide={() => setModalVisible(false)}
-          dialogClassName="custom-modal"
-        >
-          <CandidateDetail candidate={candidate} setModal={setModalVisible} />
-        </Modal>
-      </>
+      <Modal
+        show={modalVisible}
+        onHide={() => setModalVisible(false)}
+        dialogClassName="custom-modal"
+      >
+        <CandidateDetail candidate={candidate} setModal={setModalVisible} />
+      </Modal>
     </>
   );
 };

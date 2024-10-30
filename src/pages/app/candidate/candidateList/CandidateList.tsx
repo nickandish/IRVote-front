@@ -14,8 +14,6 @@ interface CandidateListProps {
   ballotId: number;
   selectedCandidates: number[];
   setSelectedCandidates: React.Dispatch<React.SetStateAction<number[]>>;
-  minVote: number;
-  maxVote: number;
 }
 
 const CandidateList: React.FC<CandidateListProps> = ({
@@ -24,8 +22,6 @@ const CandidateList: React.FC<CandidateListProps> = ({
   ballotId,
   selectedCandidates,
   setSelectedCandidates,
-  minVote,
-  maxVote,
 }) => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,9 +33,9 @@ const CandidateList: React.FC<CandidateListProps> = ({
         const response = await apiClient.get(
           API_URLS.BALLOT_DETAIL.replace(":id", ballotId.toString())
         );
-        console.log("Fetched Data:", response.data); // Log response for debugging
+        console.log("Fetched Data:", response.data);
         if (response.data.success && Array.isArray(response.data.data)) {
-          setCandidates(response.data.data); // Set candidates directly from `data`
+          setCandidates(response.data.data);
         } else {
           setError(response.data.message || "Failed to fetch candidates");
         }
@@ -57,6 +53,11 @@ const CandidateList: React.FC<CandidateListProps> = ({
     setCandidateListVisible(false);
     setVoteListVisible(true);
   };
+
+  const minVote =
+    candidates.length > 0 ? candidates[0].min_allowed_selection : 0;
+  const maxVote =
+    candidates.length > 0 ? candidates[0].max_allowed_selection : 0;
 
   const isSubmitDisabled =
     selectedCandidates.length < minVote || selectedCandidates.length > maxVote;

@@ -75,8 +75,6 @@ const Candidate = () => {
             ballotId={ballotId}
             selectedCandidates={selectedCandidates}
             setSelectedCandidates={setSelectedCandidates}
-            minVote={1}
-            maxVote={2}
           />
         )}
       </div>
