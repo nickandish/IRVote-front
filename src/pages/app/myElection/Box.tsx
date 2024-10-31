@@ -1,9 +1,12 @@
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Modal, Button } from "react-bootstrap";
 import { LiaBoxOpenSolid } from "react-icons/lia";
 import { PiInfoBold } from "react-icons/pi";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import "../../../scss/myElection.tsx/myElection.scss";
+import { useState } from "react";
+import { API_URLS } from "../../../api/urls";
+import apiClient from "../../../api/axios";
 
 interface ElectionBoxProps {
   election: {
@@ -17,16 +20,74 @@ interface ElectionBoxProps {
   };
 }
 
+const getStatusClass = (status: number) => {
+  switch (status) {
+    case 0:
+      return "status-not-started";
+    case 1:
+      return "status-ongoing";
+    case 2:
+      return "status-completed";
+    default:
+      return "status-unknown";
+  }
+};
+
+const getStatusText = (status: number) => {
+  switch (status) {
+    case 0:
+      return "شروع نشده";
+    case 1:
+      return "درحال برگزاری";
+    case 2:
+      return "خاتمه یافته";
+    default:
+      return "وضعیت نامشخص";
+  }
+};
+
 const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  const handleClick = () =>
-    navigate(`/ballot/${election.id}`, {
-      state: {
-        electionDurationId: election.id,
-        electionDurationTitle: election.Election_Duration_farsi_title,
-      },
-    });
+  const handleClick = async () => {
+    if (election.Confirm_status === 1) {
+      setShowModal(true);
+    } else {
+      try {
+        await apiClient.post(
+          API_URLS.PARTICIPATE_POST.replace(":id", String(election.id)),
+          {}
+        );
+        navigate(`/ballot/${election.id}`, {
+          state: {
+            electionDurationId: election.id,
+            electionDurationTitle: election.Election_Duration_farsi_title,
+          },
+        });
+      } catch (error) {
+        console.error("Error posting participation:", error);
+      }
+    }
+  };
+
+  const handleModalConfirm = async () => {
+    try {
+      await apiClient.post(
+        API_URLS.PARTICIPATE_POST.replace(":id", String(election.id)),
+        {}
+      );
+      navigate(`/ballot/${election.id}`, {
+        state: {
+          electionDurationId: election.id,
+          electionDurationTitle: election.Election_Duration_farsi_title,
+        },
+      });
+    } catch (error) {
+      console.error("Error posting participation:", error);
+    }
+    setShowModal(false);
+  };
 
   const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString("fa-IR");
@@ -82,34 +143,25 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
           <p className="info-p mb-0 col-10">{statusText}</p>
         </Row>
       </Row>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>تایید مشارکت</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          شما قبلا در این انتخابات تایید شده‌اید. آیا می‌خواهید ادامه دهید؟
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            بستن
+          </Button>
+          <Button variant="primary" onClick={handleModalConfirm}>
+            ادامه
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Col>
   );
-};
-
-const getStatusClass = (status: number) => {
-  switch (status) {
-    case 0:
-      return "status-not-started";
-    case 1:
-      return "status-ongoing";
-    case 2:
-      return "status-completed";
-    default:
-      return "status-unknown";
-  }
-};
-
-const getStatusText = (status: number) => {
-  switch (status) {
-    case 0:
-      return "شروع نشده";
-    case 1:
-      return "درحال برگزاری";
-    case 2:
-      return "خاتمه یافته";
-    default:
-      return "وضعیت نامشخص";
-  }
 };
 
 export default ElectionBox;

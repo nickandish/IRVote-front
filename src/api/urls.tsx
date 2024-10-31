@@ -16,6 +16,8 @@ export const API_URLS = {
   COMMENT_POST: "/ticket/create_comment/:id",
 
   ELECTION_Duration: "/Election/VoterElectionDurationList",
+  PARTICIPATE_POST: "/Election/ParticipateInElection/:id/",
+  PARTICIPATE_GET: "/Election/confirmtext/:id",
   BALLOT_LIST: "/Election/BallotList/:id",
   BALLOT_DETAIL: "/Election/BallotDetail/:id",
   DOCUMENT_VOTE: "/Election/VoteDocument/:id/",
