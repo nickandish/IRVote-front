@@ -18,7 +18,7 @@ export const API_URLS = {
   ELECTION_Duration: "/Election/VoterElectionDurationList",
   BALLOT_LIST: "/Election/BallotList/:id",
   BALLOT_DETAIL: "/Election/BallotDetail/:id",
-  DOCUMENT_VOTE: "/Election/VoteDocument/:id",
+  DOCUMENT_VOTE: "/Election/VoteDocument/:id/",
   CANDIDATE_VOTE: "/Election/VoteCandidate/:id",
   EDIT_VOTE: "/Election/EditVote/:id",
   CONFIRM_VOTE: "/Election/confirmvote/:id",

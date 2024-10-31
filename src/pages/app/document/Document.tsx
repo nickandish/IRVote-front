@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useLocation } from "react-router-dom"; // Import useLocation
+import { useLocation } from "react-router-dom";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
 import { BsCake } from "react-icons/bs";
@@ -10,6 +10,7 @@ import apiClient from "../../../api/axios";
 import { API_URLS } from "../../../api/urls";
 import Loading from "../../../component/loading/Loading";
 import ErrorPage from "../../../component/error/ErrorPage";
+import { FaRegHand } from "react-icons/fa6";
 import "./document.scss";
 
 interface DocumentData {
@@ -28,6 +29,7 @@ const Document = () => {
 
   const [documentData, setDocumentData] = useState<DocumentData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [voteStatus, setVoteStatus] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -35,7 +37,6 @@ const Document = () => {
         const response = await apiClient.get(
           API_URLS.BALLOT_DETAIL.replace(":id", ballotId)
         );
-
         if (response.data.success && response.data.data.length > 0) {
           setDocumentData(response.data.data[0]);
         } else {
@@ -49,6 +50,25 @@ const Document = () => {
 
     if (ballotId) fetchDocument();
   }, [ballotId]);
+
+  const voteToDocument = async (voteType: number) => {
+    try {
+      const response = await apiClient.post(
+        API_URLS.BALLOT_DETAIL.replace(":id", ballotId),
+        {
+          vote_type: voteType,
+        }
+      );
+      if (response.data.success) {
+        setVoteStatus("Vote submitted successfully");
+      } else {
+        setVoteStatus("Failed to submit vote");
+      }
+    } catch (err) {
+      console.error("Error voting on document:", err);
+      setVoteStatus("Error submitting vote");
+    }
+  };
 
   if (error)
     return (
@@ -101,14 +121,19 @@ const Document = () => {
         <Row className="document-page_bottom mt-5">
           <Col>
             <h4 className="fw-bold">رای شما به این سند</h4>
-            <button className="btn-accept">
+            <button onClick={() => voteToDocument(0)} className="btn-accept">
               <BiLike />
               آری
             </button>
-            <button className="btn-danger">
+            <button onClick={() => voteToDocument(2)} className="btn-abstain">
+              <FaRegHand />
+              ممتنع
+            </button>
+            <button onClick={() => voteToDocument(1)} className="btn-danger">
               <BiDislike />
               خیر
             </button>
+            {voteStatus && <p>{voteStatus}</p>}
           </Col>
         </Row>
       </Container>

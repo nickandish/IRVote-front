@@ -55,13 +55,25 @@
         @include button(white, $accept, $accept, 1rem);
       }
     }
+
     .btn-danger {
       @include button($danger, $danger, transparent, 2rem);
       padding: 0.5rem 1rem;
-      margin-right: 2rem;
+      margin-right: 1rem;
       transition: all 0.3s ease-in-out;
       &:hover {
         @include button(white, $danger, $danger, 1rem);
+      }
+    }
+
+    .btn-abstain {
+      @include button($primary, $primary, transparent, 2rem);
+      padding: 0.5rem 1rem;
+      margin-right: 1rem;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        @include button(white, $primary, $primary, 1rem);
       }
     }
   }
