@@ -3,10 +3,10 @@ import { LiaBoxOpenSolid } from "react-icons/lia";
 import { PiInfoBold } from "react-icons/pi";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import "../../../scss/myElection.tsx/myElection.scss";
 import { useState } from "react";
 import { API_URLS } from "../../../api/urls";
 import apiClient from "../../../api/axios";
+import "../../../scss/myElection.tsx/myElection.scss";
 
 interface ElectionBoxProps {
   election: {
@@ -48,11 +48,20 @@ const getStatusText = (status: number) => {
 
 const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
   const [showModal, setShowModal] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
   const navigate = useNavigate();
 
   const handleClick = async () => {
     if (election.Confirm_status === 1) {
       setShowModal(true);
+      try {
+        const response = await apiClient.get(
+          API_URLS.PARTICIPATE_GET.replace(":id", String(election.id))
+        );
+        setConfirmText(response.data.Confirm_text); // Set the confirm text from the response
+      } catch (error) {
+        console.error("Error fetching confirmation text:", error);
+      }
     } else {
       try {
         await apiClient.post(
@@ -145,12 +154,10 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
       </Row>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>تایید مشارکت</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          شما قبلا در این انتخابات تایید شده‌اید. آیا می‌خواهید ادامه دهید؟
-        </Modal.Body>
+        <Modal.Body>{confirmText || "...درحال بارگیری"}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             بستن
