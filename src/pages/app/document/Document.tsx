@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Modal, Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
@@ -30,6 +30,8 @@ const Document = () => {
   const [documentData, setDocumentData] = useState<DocumentData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [voteStatus, setVoteStatus] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [finalizedCode, setFinalizedCode] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -40,11 +42,10 @@ const Document = () => {
         if (response.data.success && response.data.data.length > 0) {
           setDocumentData(response.data.data[0]);
         } else {
-          setError("Document not found");
+          setError(response.data.message || "Document not found");
         }
-      } catch (err) {
-        console.error("Error fetching document:", err);
-        setError("Failed to fetch document");
+      } catch (err: any) {
+        setError(err.response?.data?.message || "Failed to fetch document");
       }
     };
 
@@ -69,13 +70,14 @@ const Document = () => {
       );
 
       if (response.data.success) {
-        setVoteStatus("Vote submitted successfully");
+        setVoteStatus(response?.data?.message || "رای شما با موفقیت ثبت شد");
+        setFinalizedCode(response.data.data.finalized_code);
+        setShowModal(true);
       } else {
-        setVoteStatus("Failed to submit vote");
+        setVoteStatus(response.data.message);
       }
-    } catch (err) {
-      console.error("Error voting on document:", err);
-      setVoteStatus("Error submitting vote");
+    } catch (err: any) {
+      setVoteStatus(err.response?.data?.message || "Error submitting vote");
     }
   };
 
@@ -146,6 +148,21 @@ const Document = () => {
           </Col>
         </Row>
       </Container>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header>
+          <Modal.Title>نتیجه رای</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>رای شما با موفقیت ثبت شد</p>
+          <p>کد رهگیری: {finalizedCode}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => setShowModal(false)}>
+            تایید
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
