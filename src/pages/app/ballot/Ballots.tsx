@@ -19,16 +19,19 @@ const Ballots: React.FC<BallotProps> = ({ ballot }) => {
   const navigate = useNavigate();
 
   const getStatusInfo = (status: number | null) => {
-    if (status === null) return { text: "نامشخص", className: "unknown" };
+    if (status === null) return { text: "pending", className: "unknown" };
     switch (status) {
       case 0:
-        return { text: "غیر فعال", className: "status-not-started" };
+        return {
+          text: "درحال برگزاری",
+          className: "status-in-progress",
+        };
       case 1:
-        return { text: "درحال برگزاری", className: "status-in-progress" };
+        return { text: "خاتمه یافته", className: "status-not-started" };
       case 2:
       case 3:
       case 4:
-        return { text: "خاتمه یافته", className: "status-expired" };
+        return { text: "لفو شده", className: "status-expired" };
       default:
         return { text: "نامشخص", className: "status-unknown" };
     }

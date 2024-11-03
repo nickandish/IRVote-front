@@ -23,9 +23,9 @@ interface ElectionBoxProps {
 const getStatusClass = (status: number) => {
   switch (status) {
     case 0:
-      return "status-not-started";
+      return "status-in-progress";
     case 1:
-      return "status-ongoing";
+      return "status-expired";
     case 2:
       return "status-completed";
     default:
@@ -36,11 +36,11 @@ const getStatusClass = (status: number) => {
 const getStatusText = (status: number) => {
   switch (status) {
     case 0:
-      return "شروع نشده";
-    case 1:
       return "درحال برگزاری";
+    case 1:
+      return "غیر فعال";
     case 2:
-      return "خاتمه یافته";
+      return "آرشیو شده";
     default:
       return "وضعیت نامشخص";
   }
@@ -159,7 +159,13 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
         </Modal.Header>
         <Modal.Body>{confirmText || "...درحال بارگیری"}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowModal(false);
+              navigate("/my-election");
+            }}
+          >
             بستن
           </Button>
           <Button variant="primary" onClick={handleModalConfirm}>
