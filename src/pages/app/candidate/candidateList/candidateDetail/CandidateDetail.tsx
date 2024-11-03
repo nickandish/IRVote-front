@@ -43,28 +43,28 @@ const CandidateDetail: React.FC<CandidateProp> = ({ setModal, candidate }) => {
           <Row className="pic">
             <Col className="col-6">
               <div className="img-container">
-                <img src={candidate.ImagePath || img} alt="Candidate" />
+                <img src={candidate.Image || img} alt="Candidate" />
               </div>
             </Col>
           </Row>
           <Row className="buttons g-3">
             <Col className="col-6">
-              <button className="w-100 buttons1" disabled={!candidate.video}>
+              <button className="w-100 buttons1" disabled={!candidate.Video}>
                 <HiOutlinePlayPause className="me-2 icon" />
-                {candidate.video ? "نمایش فیلم" : "فیلم موجود نیست"}
+                {candidate.Video ? "نمایش فیلم" : "فیلم موجود نیست"}
               </button>
             </Col>
             <Col className="col-6">
-              <button className="w-100 buttons2" disabled={!candidate.cv}>
+              <button className="w-100 buttons2" disabled={!candidate.CV}>
                 <RxDownload className="me-2 icon" />
-                {candidate.cv ? "دانلود رزومه" : "رزومه موجود نیست"}
+                {candidate.CV ? "دانلود رزومه" : "رزومه موجود نیست"}
               </button>
             </Col>
           </Row>
         </Row>
 
         <Row>
-          <p className="text-light">{candidate.data}</p>
+          <p className="text-light">{candidate.Description}</p>
         </Row>
       </div>
     </div>
