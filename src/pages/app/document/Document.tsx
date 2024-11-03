@@ -52,13 +52,22 @@ const Document = () => {
   }, [ballotId]);
 
   const voteToDocument = async (voteType: number) => {
+    if (!documentData?.id) {
+      setVoteStatus("Document ID is missing");
+      return;
+    }
+
     try {
       const response = await apiClient.post(
-        API_URLS.BALLOT_DETAIL.replace(":id", ballotId),
+        API_URLS.DOCUMENT_VOTE.replace("ballot_id", ballotId).replace(
+          "doc_id",
+          String(documentData.id)
+        ),
         {
-          vote_type: voteType,
+          vote_Document: voteType,
         }
       );
+
       if (response.data.success) {
         setVoteStatus("Vote submitted successfully");
       } else {
