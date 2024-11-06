@@ -18,6 +18,7 @@ export const API_URLS = {
   ELECTION_Duration: "/Election/VoterElectionDurationList",
   PARTICIPATE_POST: "/Election/ParticipateInElection/:id/",
   PARTICIPATE_GET: "/Election/confirmtext/:id",
+  PARTICIPATE_CHECK: "/Election/VoterParticipate/:id/",
   BALLOT_LIST: "/Election/BallotList/:id",
   BALLOT_DETAIL: "/Election/BallotDetail/:id",
 

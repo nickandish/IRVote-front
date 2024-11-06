@@ -6,6 +6,7 @@ export interface Election {
   Status: number;
   logo: string | null;
   Confirm_status: number;
+  remaining_time: string;
 }
 
 export interface DurationItem {

@@ -54,16 +54,36 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
 
   const handleClick = async () => {
     if (election.Confirm_status === 1) {
-      setShowModal(true);
       try {
-        const response = await apiClient.get(
-          API_URLS.PARTICIPATE_GET.replace(":id", String(election.id))
+        // First, check participation status
+        const checkResponse = await apiClient.get(
+          API_URLS.PARTICIPATE_CHECK.replace(":id", String(election.id))
         );
-        setConfirmText(response.data.Confirm_text);
+
+        // Show modal if Participate is 0 or null
+        if (
+          checkResponse.data.data.Participate === 0 ||
+          checkResponse.data.data.Participate === null
+        ) {
+          setShowModal(true);
+          const getResponse = await apiClient.get(
+            API_URLS.PARTICIPATE_GET.replace(":id", String(election.id))
+          );
+          setConfirmText(getResponse.data.Confirm_text);
+        } else {
+          // Navigate directly if Participate is 1
+          navigate(`/ballot/${election.id}`, {
+            state: {
+              electionDurationId: election.id,
+              electionDurationTitle: election.Election_Duration_farsi_title,
+            },
+          });
+        }
       } catch (error) {
-        console.error("Error fetching confirmation text:", error);
+        console.error("Error checking participation:", error);
       }
     } else {
+      // If Confirm_status is 0, directly post participation and navigate
       try {
         await apiClient.post(
           API_URLS.PARTICIPATE_POST.replace(":id", String(election.id)),
@@ -82,6 +102,7 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
   };
 
   const handleModalConfirm = async () => {
+    // Post participation upon confirming in the modal
     try {
       await apiClient.post(
         API_URLS.PARTICIPATE_POST.replace(":id", String(election.id)),
