@@ -7,7 +7,7 @@
   padding-bottom: 12rem;
 
   &_btn {
-    @include button(white, white, $secondary, 5rem);
+    @include button(white, white, $accept, 5rem);
     margin: 2rem auto 8rem auto;
     font-size: 19px;
     width: 40%;
@@ -19,7 +19,7 @@
 
     &:hover,
     &:active {
-      @include button($secondary, $secondary, white, 1rem);
+      @include button($accept, $accept, white, 2rem);
       filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.2));
       transform: scale(1.04);
       cursor: pointer;

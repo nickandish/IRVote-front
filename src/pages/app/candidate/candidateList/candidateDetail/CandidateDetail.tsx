@@ -12,6 +12,21 @@ interface CandidateProp {
 }
 
 const CandidateDetail: React.FC<CandidateProp> = ({ setModal, candidate }) => {
+  const handleVideoClick = () => {
+    if (candidate.Video) {
+      window.open(candidate.Video, "_blank");
+    }
+  };
+
+  const handleCVDownload = () => {
+    if (candidate.CV) {
+      const link = document.createElement("a");
+      link.href = candidate.CV;
+      link.download = "resume.pdf";
+      link.click();
+    }
+  };
+
   return (
     <div className="candidate-detail">
       <div
@@ -49,13 +64,21 @@ const CandidateDetail: React.FC<CandidateProp> = ({ setModal, candidate }) => {
           </Row>
           <Row className="buttons g-3">
             <Col className="col-6">
-              <button className="w-100 buttons1" disabled={!candidate.Video}>
+              <button
+                className="w-100 buttons1"
+                disabled={!candidate.Video}
+                onClick={handleVideoClick} // Open the video in a new window
+              >
                 <HiOutlinePlayPause className="me-2 icon" />
                 {candidate.Video ? "نمایش فیلم" : "فیلم موجود نیست"}
               </button>
             </Col>
             <Col className="col-6">
-              <button className="w-100 buttons2" disabled={!candidate.CV}>
+              <button
+                className="w-100 buttons2"
+                disabled={!candidate.CV}
+                onClick={handleCVDownload}
+              >
                 <RxDownload className="me-2 icon" />
                 {candidate.CV ? "دانلود رزومه" : "رزومه موجود نیست"}
               </button>
