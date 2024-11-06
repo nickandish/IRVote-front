@@ -65,9 +65,7 @@ const Candidate = () => {
             </button>
           </div>
         </div>
-        {voteListVisible && (
-          <VoteList selectedCandidates={selectedCandidates} />
-        )}
+        {voteListVisible && <VoteList />}
         {candidateListVisible && (
           <CandidateList
             setVoteListVisible={setVoteListVisible}
