@@ -25,6 +25,7 @@
   .box {
     max-width: 540px;
     margin: auto;
+    position: relative;
 
     transition: all 0.3s ease-in-out;
     &:hover {
@@ -56,6 +57,16 @@
         font-size: 1.2rem;
         margin-right: 0.5rem;
         margin-left: 7px;
+      }
+      .remaining-time {
+        position: absolute;
+        background-color: $secondary;
+        color: white;
+        font-size: 12px;
+        max-width: 6rem !important;
+        border-radius: 5rem;
+        right: 70% !important;
+        bottom: 0.4rem;
       }
     }
 

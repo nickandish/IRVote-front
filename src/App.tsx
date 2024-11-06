@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Main from "./pages/Main";
-import "./app.scss";
 import Captcha from "./pages/login/mobile/step2/Captcha";
 import MyElection from "./pages/app/myElection/MyElection";
 import Ballot from "./pages/app/ballot/Ballot";
@@ -14,8 +13,9 @@ import Comment from "./pages/app/ticket/comment/Comment";
 import Profile from "./pages/app/profile-group/profile/Profile";
 import Document from "./pages/app/document/Document";
 import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
-import Loading from "./component/loading/Loading";
 import SignUp from "./pages/signUp/SignUp";
+import Result from "./pages/app/result/Result";
+import "./app.scss";
 
 function App() {
   return (
@@ -30,8 +30,8 @@ function App() {
         <Route path="/my-elections" element={<MyElection />} />
         <Route path="/ballot/:id" element={<Ballot />} />
         <Route path="/candidate/:id" element={<Candidate />} />
-
         <Route path="/document/:id" element={<Document />} />
+        <Route path="/result/:id" element={<Result />} />
 
         <Route path="/ticketAdd" element={<TicketAdd />} />
         <Route path="/ticketList" element={<TicketList />} />
@@ -42,7 +42,6 @@ function App() {
         <Route path="/profile-edit" element={<ProfileEdit />} />
 
         <Route path="/choose" element={<Main />} />
-        <Route path="/loading" element={<Loading />} />
       </Routes>
     </BrowserRouter>
   );

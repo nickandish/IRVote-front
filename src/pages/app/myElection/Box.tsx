@@ -17,6 +17,7 @@ interface ElectionBoxProps {
     Status: number;
     logo: string | null;
     Confirm_status: number;
+    remaining_time: string;
   };
 }
 
@@ -58,7 +59,7 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
         const response = await apiClient.get(
           API_URLS.PARTICIPATE_GET.replace(":id", String(election.id))
         );
-        setConfirmText(response.data.Confirm_text); // Set the confirm text from the response
+        setConfirmText(response.data.Confirm_text);
       } catch (error) {
         console.error("Error fetching confirmation text:", error);
       }
@@ -150,6 +151,7 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
         <Row className="bottom align-items-center">
           <PiInfoBold className="icon icon-info col-1" />
           <p className="info-p mb-0 col-10">{statusText}</p>
+          <p className="remaining-time mb-0 col">{election.remaining_time}</p>
         </Row>
       </Row>
 
