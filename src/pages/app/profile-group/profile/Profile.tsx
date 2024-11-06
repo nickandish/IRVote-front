@@ -1,14 +1,15 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { FaPhone } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { FaPen } from "react-icons/fa";
+import { FaPhone, FaPen } from "react-icons/fa";
+import {
+  MdEmail,
+  MdOutlineInsertChartOutlined,
+  MdOutlineFolderCopy,
+} from "react-icons/md";
 import { RiBodyScanFill } from "react-icons/ri";
-import { MdOutlineInsertChartOutlined } from "react-icons/md";
 import { PiEyeglasses } from "react-icons/pi";
-import { MdOutlineFolderCopy } from "react-icons/md";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { LuFolderPlus } from "react-icons/lu";
-import imgPlaceholder from "../../../../assets/femaileAvatar.svg"; // Use the placeholder image
+import imgPlaceholder from "../../../../assets/femaileAvatar.svg";
 import Header from "../../../navbar/Header";
 import Navbar from "../../../navbar/Navbar";
 import { Link } from "react-router-dom";
@@ -27,17 +28,12 @@ function Profile() {
         const response = await apiClient.get(API_URLS.GET_USER);
         const userData = response.data.data;
 
-        // ساختن آدرس کامل تصویر
-        const imgURL = userData.avatar
-          ? `${import.meta.env.VITE_APP_BASE_URL}${userData.avatar}`
-          : imgPlaceholder;
-
         setUser({
           firstName: userData.first_name,
           lastName: userData.last_name,
           email: userData.email,
           mobileNumber: userData.mobile,
-          img: imgURL, // تنظیم آدرس کامل تصویر
+          avatar: userData.avatar || imgPlaceholder, // Direct use of avatar URL from backend
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -55,7 +51,7 @@ function Profile() {
         <Row className="warper">
           <Col className="col-4">
             <img
-              src={user.img || imgPlaceholder} // استفاده مستقیم از user.img
+              src={user.avatar || imgPlaceholder}
               alt="profile"
               className="profile-image"
             />
@@ -83,16 +79,16 @@ function Profile() {
               </div>
             </Col>
           </Col>
-          <Col className="col-4  m-auto">
+          <Col className="col-4 m-auto">
             <Link to="/profile-edit">
-              <div className=" m-auto icon">
+              <div className="m-auto icon">
                 <FaPen className="i" />
               </div>
             </Link>
           </Col>
         </Row>
 
-        <Row className="profile-page_field ">
+        <Row className="profile-page_field">
           <Col className="col-12 profile-page_field_btn">
             <button>مدیریت پروفایل</button>
             <RiBodyScanFill className="profile-page_field_btn_icon" />

@@ -4,7 +4,6 @@ import { FaChevronLeft } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
 import imgPlaceholder from "../../../../assets/femaileAvatar.svg";
 import Toggle from "./Toggle";
-// import PasswordPopUp from "./PasswordPopUp";
 import "./profileEdit.scss";
 import { useUser } from "../../../../api/contextApi/UserContext";
 import apiClient from "../../../../api/axios";
@@ -18,9 +17,6 @@ const ProfileEdit: React.FC = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 
-  // const [newPassword, setNewPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-
   const handleToggle = (field: string) => {
     setToggle(toggle === field ? null : field);
   };
@@ -31,16 +27,12 @@ const ProfileEdit: React.FC = () => {
         const response = await apiClient.get(API_URLS.GET_USER);
         const userData = response.data.data;
 
-        const imgURL = userData.avatar
-          ? `${import.meta.env.VITE_APP_BASE_URL}${userData.avatar}`
-          : imgPlaceholder;
-
         setUser({
           firstName: userData.first_name,
           lastName: userData.last_name,
           email: userData.email,
           mobileNumber: userData.mobile,
-          img: imgURL,
+          avatar: userData.avatar || imgPlaceholder,
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -78,7 +70,7 @@ const ProfileEdit: React.FC = () => {
       // Handle profile image update
       if (selectedImage) {
         const formData = new FormData();
-        formData.append("photo", selectedImage);
+        formData.append("avatar", selectedImage);
 
         const imgResponse = await apiClient.put(API_URLS.CHANGE_IMG, formData, {
           headers: {
@@ -88,44 +80,20 @@ const ProfileEdit: React.FC = () => {
 
         if (imgResponse.data.success) {
           console.log("Profile image updated successfully");
+
+          // Fetch updated user data to reflect changes
           const updatedUserResponse = await apiClient.get(API_URLS.GET_USER);
           const updatedUserData = updatedUserResponse.data.data;
-
-          const imgURL = updatedUserData.avatar
-            ? `${import.meta.env.VITE_APP_BASE_URL}${updatedUserData.avatar}`
-            : imgPlaceholder;
 
           setUser({
             firstName: updatedUserData.first_name,
             lastName: updatedUserData.last_name,
             email: updatedUserData.email,
             mobileNumber: updatedUserData.mobile,
-            img: imgURL,
+            avatar: updatedUserData.avatar || imgPlaceholder,
           });
-
-          console.log("Updated user data:", updatedUserData);
         }
       }
-
-      // Handle password change
-      // if (newPassword && newPassword === confirmPassword) {
-      //   const passwordData = {
-      //     password: newPassword,
-      //     confirm_password: confirmPassword,
-      //   };
-      //   const passwordResponse = await apiClient.put(
-      //     API_URLS.CHANGE_PASSWORD,
-      //     passwordData
-      //   );
-
-      //   if (passwordResponse.data.success) {
-      //     console.log("Password updated successfully");
-      //   } else {
-      //     alert("There was an error updating your password. Please try again.");
-      //   }
-      // } else if (newPassword || confirmPassword) {
-      //   alert("Passwords do not match. Please try again.");
-      // }
 
       navigate("/profile");
     } catch (error) {
@@ -145,7 +113,7 @@ const ProfileEdit: React.FC = () => {
         <Row className="text-center">
           <div className="rounded-circle profile-edit_img">
             <img
-              src={user.img || imgPlaceholder} // استفاده مستقیم از user.img
+              src={user.avatar || imgPlaceholder}
               className="rounded-circle"
               alt="Profile"
             />
@@ -216,27 +184,6 @@ const ProfileEdit: React.FC = () => {
             </Col>
           ))}
         </Row>
-
-        {/* Password Change Section */}
-        {/* <Row className="text-center profile-edit_field">
-          <Col className="col-12">
-            <h5>تغییر رمز عبور</h5>
-          </Col>
-          <Col className="col-12">
-            <PasswordPopUp
-              title="رمز عبور جدید"
-              value={newPassword}
-              onChange={setNewPassword}
-            />
-          </Col>
-          <Col className="col-12">
-            <PasswordPopUp
-              title="تکرار رمز عبور جدید"
-              value={confirmPassword}
-              onChange={setConfirmPassword}
-            />
-          </Col>
-        </Row> */}
 
         <Row className="profile-edit_btn">
           <button onClick={handleSubmit}>ثبت تغییرات</button>

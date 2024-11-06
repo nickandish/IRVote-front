@@ -7,7 +7,7 @@ interface User {
   lastName: string;
   email: string;
   mobileNumber: string;
-  img: string;
+  avatar: string;
 }
 
 // Define the shape of the context
@@ -28,7 +28,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     lastName: "",
     email: "",
     mobileNumber: "",
-    img: imgPlaceholder,
+    avatar: imgPlaceholder,
   });
 
   return (

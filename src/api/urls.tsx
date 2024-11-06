@@ -4,7 +4,7 @@ export const API_URLS = {
   SIGNUP_BY_OTP: "/users/singup",
   GET_USER: "/users/UserDetail",
   FILL_PROFILE: "/users/FillProfileView",
-  CHANGE_IMG: "/users/change_photo",
+  CHANGE_IMG: "/users/avatarupdate",
   CHANGE_PASSWORD: "/users/change_password",
   CAPTCHA_GET: "/users/get_captcha",
   CAPTCHA_POST: "/users/check_captcha",
