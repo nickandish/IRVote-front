@@ -92,41 +92,44 @@ const VoteList: React.FC = () => {
           <Loading />
         </p>
       ) : (
-        <table className="text-center mt-4 tbl">
-          <thead className="text-light">
-            <tr>
-              <th></th>
-              <th colSpan={2}>نام کاندید</th>
-              <th>رای شما</th>
-            </tr>
-          </thead>
-          <tbody>
-            {votes?.selected_candidates.map((candidate: SelectedCandidate) => (
-              <tr key={candidate.candidate_id}>
-                <td>
-                  <div className="tbl_img">
-                    <img
-                      src={candidate.candidate_image || img}
-                      alt="Candidate"
-                    />
-                  </div>
-                </td>
-                <td colSpan={2}>{candidate.candidate_name}</td>
-                <td>
-                  <FaCircleCheck />
-                </td>
+        <>
+          <table className="text-center mt-4 tbl">
+            <thead className="text-light">
+              <tr>
+                <th></th>
+                <th colSpan={2}>نام کاندید</th>
+                <th>رای شما</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {votes?.selected_candidates.map(
+                (candidate: SelectedCandidate) => (
+                  <tr key={candidate.candidate_id}>
+                    <td>
+                      <div className="tbl_img">
+                        <img
+                          src={candidate.candidate_image || img}
+                          alt="Candidate"
+                        />
+                      </div>
+                    </td>
+                    <td colSpan={2}>{candidate.candidate_name}</td>
+                    <td>
+                      <FaCircleCheck />
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+          <button
+            className="candidate-list_btn fw-bold mt-5"
+            onClick={handleSubmitVotes}
+          >
+            ثبت نهایی رای
+          </button>
+        </>
       )}
-
-      <button
-        className="candidate-list_btn fw-bold mt-5"
-        onClick={handleSubmitVotes}
-      >
-        ثبت نهایی رای
-      </button>
 
       <Modal show={modalVisible} onHide={() => setModalVisible(false)}>
         <Modal.Header>

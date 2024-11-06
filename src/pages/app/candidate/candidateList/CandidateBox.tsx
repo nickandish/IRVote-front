@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Modal } from "react-bootstrap";
 import img from "../../../../assets/femaileAvatar.svg";
 import CandidateDetail from "./candidateDetail/CandidateDetail";
 import { Candidate } from "../../type";
 import apiClient from "../../../../api/axios";
 import { API_URLS } from "../../../../api/urls";
-import "./candidateBox.scss";
 import { useLocation } from "react-router-dom";
+import "./candidateBox.scss";
 
 interface CandidateBoxProps {
   candidate: Candidate;
@@ -20,10 +20,30 @@ const CandidateBox: React.FC<CandidateBoxProps> = ({
   setSelectedCandidates,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const isSelected = selectedCandidates.includes(candidate.id);
+  const [isSelected, setIsSelected] = useState(false);
 
   const location = useLocation();
   const ballotId = location.state?.ballotId as number;
+
+  // Fetch selected candidates to set isSelected initially
+  useEffect(() => {
+    const fetchVotes = async () => {
+      try {
+        const response = await apiClient.get(
+          API_URLS.GET_VOTER_VOTES.replace(":id", ballotId.toString())
+        );
+        if (response.data.success) {
+          const candidateIds = response.data.selected_candidates.map(
+            (selected: any) => selected.candidate_id
+          );
+          setIsSelected(candidateIds.includes(candidate.id));
+        }
+      } catch (error) {
+        console.error("Error fetching selected candidates:", error);
+      }
+    };
+    fetchVotes();
+  }, [ballotId, candidate.id]);
 
   const toggleSelection = async () => {
     const updatedCandidates = isSelected
@@ -31,6 +51,7 @@ const CandidateBox: React.FC<CandidateBoxProps> = ({
       : [...selectedCandidates, candidate.id];
 
     setSelectedCandidates(updatedCandidates);
+    setIsSelected(!isSelected);
 
     try {
       await apiClient.put(

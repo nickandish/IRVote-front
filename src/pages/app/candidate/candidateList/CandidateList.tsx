@@ -66,11 +66,11 @@ const CandidateList: React.FC<CandidateListProps> = ({
   if (error) return <ErrorPage />;
 
   return (
-    <div className="candidate_list text-center">
+    <div className=" text-center">
       <p className="fw-bold pp p-4">
         با کلیک بر روی عکس نامزدها توضیحات بیشتر را مشاهده کنید
       </p>
-      <div className="ballots candidate-list fw-bold">
+      <div className="fw-bold container">
         <Row className="g-3">
           {candidates && candidates.length > 0 ? (
             candidates.map((candidate) => (

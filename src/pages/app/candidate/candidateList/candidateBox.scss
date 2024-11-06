@@ -2,20 +2,19 @@
 
 .candidate-list {
   padding-top: 6.9rem;
+  padding: 6.9rem 1rem 1rem 1rem;
   z-index: 0;
   width: 100%;
   padding-bottom: 12rem;
 
   &_btn {
     @include button(white, white, $accept, 5rem);
-    margin: 2rem auto 8rem auto;
+    margin: 0.7rem auto 8rem auto;
     font-size: 19px;
     width: 40%;
     max-width: 20rem;
     height: 4rem;
     transition: all 0.3s ease-in-out;
-    position: relative;
-    bottom: -11rem !important;
 
     &:hover,
     &:active {
@@ -34,8 +33,7 @@
 
 .danger {
   color: $danger;
-  position: relative;
-  bottom: -13rem !important;
+  margin: 0.5rem;
 }
 
 .pp {
@@ -48,7 +46,6 @@
 .candidateBox {
   @include ballot($secondary, $primary, white);
   position: relative;
-  z-index: 1000;
   transition: all 0.3s ease-in-out;
 
   .p {
@@ -87,10 +84,17 @@
     flex-direction: column;
     align-items: center;
     padding: 15px 20px;
+    border-radius: 3rem;
+    width: 80%;
+    margin: auto;
   }
 
   button {
     width: 10rem !important;
+    position: absolute;
+    bottom: 0rem;
+    left: 47%;
+    transform: translate(-50%);
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 
     &:hover {
@@ -112,14 +116,29 @@
 
     button {
       position: absolute !important;
-      bottom: -1.3rem !important;
       width: 7rem !important;
+    }
+
+    &_box {
+      width: 90%;
     }
   }
   @media screen and (max-width: 360px) {
     margin-right: -2.6rem;
   }
 }
+
+.selected {
+  @include ballot($secondary, white, $primary);
+  .p {
+    color: white;
+  }
+
+  img {
+    border: 3px solid white;
+  }
+}
+
 header,
 nav {
   position: relative;
