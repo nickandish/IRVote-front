@@ -20,9 +20,11 @@ export const API_URLS = {
   PARTICIPATE_GET: "/Election/confirmtext/:id",
   BALLOT_LIST: "/Election/BallotList/:id",
   BALLOT_DETAIL: "/Election/BallotDetail/:id",
+
   DOCUMENT_VOTE: "/Election/DocumentVote/ballot_id/doc_id/",
-  CANDIDATE_VOTE: "/Election/VoteCandidate/:id",
-  EDIT_VOTE: "/Election/EditVote/:id",
-  CONFIRM_VOTE: "/Election/confirmvote/:id",
-  VOTE_LIST: "/Election/CandidateVoteCount/:id",
+
+  CANDIDATE_VOTE: "/Election/CandidateVote/:id/",
+  GET_VOTER_VOTES: "/Election/GetVoterVotes/:id/",
+  CONFIRM_VOTE: "/Election/voteconfirm/:id/",
+  RESULT: "/Election/CandidateVoteResults/:id/",
 };
