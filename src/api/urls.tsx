@@ -25,6 +25,7 @@ export const API_URLS = {
   DOCUMENT_VOTE: "/Election/DocumentVote/ballot_id/doc_id/",
 
   CANDIDATE_VOTE: "/Election/CandidateVote/:id/",
+  CONFIRM_STATUS: "/Election/Votecheck/:id/",
   GET_VOTER_VOTES: "/Election/GetVoterVotes/:id/",
   CONFIRM_VOTE: "/Election/voteconfirm/:id/",
   RESULT: "/Election/CandidateVoteResults/:id/",

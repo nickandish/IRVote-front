@@ -1,5 +1,30 @@
 @import "../../../../scss/box.scss";
 
+.disable {
+  button {
+    @include button(white, white, $disable, 5rem);
+    &:hover {
+      @include button(white, white, $disable, 5rem);
+      filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0.2));
+      transform: scale(1);
+      cursor: auto;
+    }
+  }
+  .danger {
+    display: none;
+  }
+  .candidateBox {
+    opacity: 0.8;
+    button {
+      background-color: $disable !important;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1) translateX(-50%);
+      }
+    }
+  }
+}
+
 .candidate-list {
   padding-top: 6.9rem;
   padding: 6.9rem 1rem 1rem 1rem;

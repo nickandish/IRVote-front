@@ -26,6 +26,7 @@ const CandidateList: React.FC<CandidateListProps> = ({
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [confirmed, setConfirmed] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -46,7 +47,20 @@ const CandidateList: React.FC<CandidateListProps> = ({
         setLoading(false);
       }
     };
+
+    const fetchConfirmStatus = async () => {
+      try {
+        const response = await apiClient.get(API_URLS.CONFIRM_STATUS);
+        if (response.data.success) {
+          setConfirmed(response.data.data.confirmed);
+        }
+      } catch (err) {
+        console.error("Error fetching confirmation status:", err);
+      }
+    };
+
     fetchCandidates();
+    fetchConfirmStatus();
   }, [ballotId]);
 
   const handleViewVotesClick = () => {
@@ -66,7 +80,7 @@ const CandidateList: React.FC<CandidateListProps> = ({
   if (error) return <ErrorPage />;
 
   return (
-    <div className=" text-center">
+    <div className={`text-center ${confirmed ? "disable" : ""}`}>
       <p className="fw-bold pp p-4">
         با کلیک بر روی عکس نامزدها توضیحات بیشتر را مشاهده کنید
       </p>
