@@ -1,6 +1,7 @@
 import { Row, Col } from "react-bootstrap";
 import { LiaBoxOpenSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom";
+import CountDown from "../myElection/CountDown";
 import "./ballot.scss";
 
 interface BallotProps {
@@ -11,7 +12,7 @@ interface BallotProps {
     Start_at: string;
     End_at: string;
     Status: number;
-    remaining_time?: string;
+    remaining_time?: number;
   };
 }
 
@@ -86,10 +87,14 @@ const Ballots: React.FC<BallotProps> = ({ ballot }) => {
               <Col className="text-start detail_p">125</Col>
             </Row>
 
-            <Row>
-              <Col className="detail_p">باقی‌مانده:</Col>
-              <Col className="text-start detail_p">
-                {ballot.remaining_time || "نامشخص"}
+            <Row className="timer">
+              <Col className="detail_p p">باقی‌مانده:</Col>
+              <Col className="text-start detail_p ltr">
+                {ballot.remaining_time ? (
+                  <CountDown initialSecond={ballot.remaining_time} />
+                ) : (
+                  "نامشخص"
+                )}
               </Col>
             </Row>
           </div>

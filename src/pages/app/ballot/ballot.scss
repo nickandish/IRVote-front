@@ -77,6 +77,16 @@
       margin-bottom: 2.5rem;
     }
 
+    .timer {
+      .p {
+        padding-left: 0;
+      }
+      .ltr {
+        padding-right: 0;
+        font-size: 15px;
+      }
+    }
+
     button {
       width: 9rem;
       height: 2rem;

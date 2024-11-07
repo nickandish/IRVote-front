@@ -7,6 +7,7 @@ import { useState } from "react";
 import { API_URLS } from "../../../api/urls";
 import apiClient from "../../../api/axios";
 import "../../../scss/myElection.tsx/myElection.scss";
+import CountDown from "./CountDown";
 
 interface ElectionBoxProps {
   election: {
@@ -17,7 +18,7 @@ interface ElectionBoxProps {
     Status: number;
     logo: string | null;
     Confirm_status: number;
-    remaining_time: string;
+    remaining_time: number;
   };
 }
 
@@ -28,7 +29,7 @@ const getStatusClass = (status: number) => {
     case 1:
       return "status-expired";
     case 2:
-      return "status-completed";
+      return "status-unknown";
     default:
       return "status-unknown";
   }
@@ -172,7 +173,9 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
         <Row className="bottom align-items-center">
           <PiInfoBold className="icon icon-info col-1" />
           <p className="info-p mb-0 col-10">{statusText}</p>
-          <p className="remaining-time mb-0 col">{election.remaining_time}</p>
+          <p className="remaining-time mb-0 col ltr">
+            <CountDown initialSecond={election.remaining_time} />
+          </p>
         </Row>
       </Row>
 
