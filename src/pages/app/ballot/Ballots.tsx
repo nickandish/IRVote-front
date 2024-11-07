@@ -98,7 +98,7 @@ const Ballots: React.FC<BallotProps> = ({ ballot }) => {
               </Col>
             </Row>
           </div>
-          <p className="ballot_view text-center">مشاهده کاندید</p>
+          <p className="ballot_view text-center"></p>
         </div>
 
         <div className="ballot_button text-center">

@@ -83,7 +83,6 @@
       }
       .ltr {
         padding-right: 0;
-        font-size: 15px;
       }
     }
 
@@ -106,6 +105,7 @@
     }
 
     @media screen and (max-width: 500px) {
+      border-radius: 3.5rem !important;
       p {
         font-size: 12px;
       }
@@ -121,14 +121,8 @@
       button {
         font-size: 12px;
         width: 6rem;
-      }
-    }
-    @media screen and (max-width: 500px) {
-      button {
-        font-size: 12px;
-        width: 5.7rem;
         padding: 1px 5px;
-        bottom: -0.5rem;
+        bottom: -0.7rem;
       }
       &_vote {
         width: 3.7rem;
@@ -137,6 +131,15 @@
         top: -0.8rem;
         right: -0.8rem;
       }
+      .ltr {
+        font-size: 12px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 502px) {
+    .ltr {
+      font-size: 15px;
     }
   }
 }

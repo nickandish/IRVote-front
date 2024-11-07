@@ -1,8 +1,4 @@
 @import "../../../../scss/box.scss";
-.up {
-  position: absolute;
-  z-index: 1000;
-}
 
 .ticketAdd {
   margin-top: 8rem;
@@ -65,9 +61,9 @@
       transition: all 0.3s ease-in;
 
       &:hover {
-        @include button(white, $primary, $primary, 0);
+        @include button(white, $primary, $primary, 0.6rem);
 
-        transform: scale(1.1);
+        transform: scale(1.08);
       }
     }
 
@@ -76,8 +72,8 @@
       transition: all 0.3s ease-in;
 
       &:hover {
-        @include button($primary, $primary, white, 0);
-        transform: scale(1.1);
+        @include button($primary, $primary, white, 0.6rem);
+        transform: scale(1.08);
       }
     }
   }

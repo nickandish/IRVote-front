@@ -64,10 +64,8 @@ const TicketAdd: React.FC = () => {
 
   return (
     <>
-      <div className="up">
-        <Header title="ثبت درخواست" />
-        <Navbar />
-      </div>
+      <Header title="ثبت درخواست" />
+      <Navbar />
       <Container>
         <div className="ticket-edit ticketAdd">
           <p className="text-center">{displayDate}</p>
