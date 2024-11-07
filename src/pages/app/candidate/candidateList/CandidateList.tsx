@@ -24,12 +24,12 @@ const CandidateList: React.FC<CandidateListProps> = ({
   setSelectedCandidates,
 }) => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
-  const [preSelectedCandidates, setPreSelectedCandidates] = useState<number[]>(
-    []
-  );
+  const [minVote, setMinVote] = useState<number>(0);
+  const [maxVote, setMaxVote] = useState<number>(0);
+  const [confirmed, setConfirmed] = useState<boolean>(false);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [confirmed, setConfirmed] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -37,15 +37,10 @@ const CandidateList: React.FC<CandidateListProps> = ({
         const response = await apiClient.get(
           API_URLS.BALLOT_DETAIL.replace(":id", ballotId.toString())
         );
-        console.log("Fetched Data:", response.data);
         if (response.data.success && Array.isArray(response.data.data)) {
           setCandidates(response.data.data);
-
-          // Set pre-selected candidates
-          const preSelected = response.data.data
-            .filter((candidate: Candidate) => candidate.is_selected)
-            .map((candidate: Candidate) => candidate.id);
-          setPreSelectedCandidates(preSelected);
+          setMinVote(response.data.data[0]?.min_allowed_selection || 0);
+          setMaxVote(response.data.data[0]?.max_allowed_selection || 0);
         } else {
           setError(response.data.message || "Failed to fetch candidates");
         }
@@ -54,6 +49,23 @@ const CandidateList: React.FC<CandidateListProps> = ({
         setError("Error fetching candidates");
       } finally {
         setLoading(false);
+      }
+    };
+
+    const fetchSelectedCandidates = async () => {
+      try {
+        const response = await apiClient.get(
+          API_URLS.GET_VOTER_VOTES.replace(":id", ballotId.toString())
+        );
+        if (response.data.success) {
+          const fetchedSelectedCandidates =
+            response.data.selected_candidates.map(
+              (selected: any) => selected.candidate_id
+            );
+          setSelectedCandidates(fetchedSelectedCandidates);
+        }
+      } catch (error) {
+        console.error("Error fetching selected candidates:", error);
       }
     };
 
@@ -71,28 +83,17 @@ const CandidateList: React.FC<CandidateListProps> = ({
     };
 
     fetchCandidates();
+    fetchSelectedCandidates();
     fetchConfirmStatus();
-  }, [ballotId]);
+  }, [ballotId, setSelectedCandidates]);
 
   const handleViewVotesClick = () => {
     setCandidateListVisible(false);
     setVoteListVisible(true);
   };
 
-  // Combine selected and pre-selected candidates for min/max checks
-  const combinedSelectedCandidates = new Set([
-    ...selectedCandidates,
-    ...preSelectedCandidates,
-  ]);
-
-  const minVote =
-    candidates.length > 0 ? candidates[0].min_allowed_selection : 0;
-  const maxVote =
-    candidates.length > 0 ? candidates[0].max_allowed_selection : 0;
-
   const isSubmitDisabled =
-    combinedSelectedCandidates.size < minVote ||
-    combinedSelectedCandidates.size > maxVote;
+    selectedCandidates.length < minVote || selectedCandidates.length > maxVote;
 
   if (loading) return <Loading />;
   if (error) return <ErrorPage />;
