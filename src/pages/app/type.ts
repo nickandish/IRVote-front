@@ -35,6 +35,7 @@ export interface Candidate {
   background: string;
   max_allowed_selection: number;
   min_allowed_selection: number;
+  is_selected: boolean;
   user: {
     username: string;
     first_name: string;

@@ -24,6 +24,9 @@ const CandidateList: React.FC<CandidateListProps> = ({
   setSelectedCandidates,
 }) => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [preSelectedCandidates, setPreSelectedCandidates] = useState<number[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState<boolean>(false);
@@ -37,6 +40,12 @@ const CandidateList: React.FC<CandidateListProps> = ({
         console.log("Fetched Data:", response.data);
         if (response.data.success && Array.isArray(response.data.data)) {
           setCandidates(response.data.data);
+
+          // Set pre-selected candidates
+          const preSelected = response.data.data
+            .filter((candidate: Candidate) => candidate.is_selected)
+            .map((candidate: Candidate) => candidate.id);
+          setPreSelectedCandidates(preSelected);
         } else {
           setError(response.data.message || "Failed to fetch candidates");
         }
@@ -50,8 +59,10 @@ const CandidateList: React.FC<CandidateListProps> = ({
 
     const fetchConfirmStatus = async () => {
       try {
-        const response = await apiClient.get(API_URLS.CONFIRM_STATUS);
-        if (response.data.success) {
+        const response = await apiClient.get(
+          API_URLS.CONFIRM_STATUS.replace(":id", ballotId.toString())
+        );
+        if (response.data) {
           setConfirmed(response.data.data.confirmed);
         }
       } catch (err) {
@@ -68,13 +79,20 @@ const CandidateList: React.FC<CandidateListProps> = ({
     setVoteListVisible(true);
   };
 
+  // Combine selected and pre-selected candidates for min/max checks
+  const combinedSelectedCandidates = new Set([
+    ...selectedCandidates,
+    ...preSelectedCandidates,
+  ]);
+
   const minVote =
     candidates.length > 0 ? candidates[0].min_allowed_selection : 0;
   const maxVote =
     candidates.length > 0 ? candidates[0].max_allowed_selection : 0;
 
   const isSubmitDisabled =
-    selectedCandidates.length < minVote || selectedCandidates.length > maxVote;
+    combinedSelectedCandidates.size < minVote ||
+    combinedSelectedCandidates.size > maxVote;
 
   if (loading) return <Loading />;
   if (error) return <ErrorPage />;
