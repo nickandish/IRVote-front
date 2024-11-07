@@ -3,7 +3,7 @@ import Header from "../../navbar/Header";
 import Navbar from "../../navbar/Navbar";
 import Ballots from "./Ballots";
 import { Row } from "react-bootstrap";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { API_URLS } from "../../../api/urls";
 import apiClient from "../../../api/axios";
 import { BallotItem } from "../type";

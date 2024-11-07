@@ -42,7 +42,9 @@ const getStatusText = (status: number) => {
     case 1:
       return "غیر فعال";
     case 2:
-      return "آرشیو شده";
+      return "نمایش نتایج";
+    case 3:
+      return "آرشیو";
     default:
       return "وضعیت نامشخص";
   }
@@ -77,6 +79,7 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
             state: {
               electionDurationId: election.id,
               electionDurationTitle: election.Election_Duration_farsi_title,
+              electionStatus: election.Status,
             },
           });
         }
@@ -94,6 +97,7 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
           state: {
             electionDurationId: election.id,
             electionDurationTitle: election.Election_Duration_farsi_title,
+            electionStatus: election.Status,
           },
         });
       } catch (error) {
@@ -113,6 +117,7 @@ const ElectionBox: React.FC<ElectionBoxProps> = ({ election }) => {
         state: {
           electionDurationId: election.id,
           electionDurationTitle: election.Election_Duration_farsi_title,
+          electionStatus: election.Status,
         },
       });
     } catch (error) {

@@ -1,0 +1,44 @@
+@import "../../../scss/box.scss";
+
+.result {
+  margin: 10rem auto 9rem auto !important;
+
+  .accept {
+    tr,
+    td {
+      color: $accept !important;
+    }
+  }
+  .blue {
+    tr,
+    td {
+      color: $blue !important;
+    }
+  }
+
+  .dang {
+    td {
+      color: $danger;
+    }
+  }
+}
+
+.result-doc {
+  margin: 10rem auto 9rem auto !important;
+  max-width: 20rem;
+
+  .accept {
+    margin-top: 1rem;
+    color: #35dccc;
+  }
+  .dangerr {
+    color: #eb8c95;
+  }
+  .blue {
+    color: #4cc9fe;
+  }
+
+  @media screen and (max-width: 500px) {
+    max-width: 16rem;
+  }
+}

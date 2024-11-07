@@ -1,6 +1,6 @@
 import { Row, Col } from "react-bootstrap";
 import { LiaBoxOpenSolid } from "react-icons/lia";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CountDown from "../myElection/CountDown";
 import "./ballot.scss";
 
@@ -18,6 +18,8 @@ interface BallotProps {
 
 const Ballots: React.FC<BallotProps> = ({ ballot }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const electionStatus = location.state?.electionStatus;
 
   const getStatusInfo = (status: number | null) => {
     if (status === null) return { text: "pending", className: "unknown" };
@@ -43,20 +45,42 @@ const Ballots: React.FC<BallotProps> = ({ ballot }) => {
   );
 
   const handleClick = () => {
-    if (ballot.Ballot_Type === 0) {
-      navigate(`/document/${ballot.id}`, {
-        state: {
-          ballotId: ballot.id,
-          ballotTitle: ballot.Ballot_Farsi_Title,
-        },
-      });
-    } else if (ballot.Ballot_Type === 1) {
-      navigate(`/candidate/${ballot.id}`, {
-        state: {
-          ballotId: ballot.id,
-          ballotTitle: ballot.Ballot_Farsi_Title,
-        },
-      });
+    if (electionStatus === 0) {
+      if (ballot.Ballot_Type === 0) {
+        navigate(`/document/${ballot.id}`, {
+          state: {
+            ballotId: ballot.id,
+            ballotTitle: ballot.Ballot_Farsi_Title,
+          },
+        });
+      } else if (ballot.Ballot_Type === 1) {
+        navigate(`/candidate/${ballot.id}`, {
+          state: {
+            ballotId: ballot.id,
+            ballotTitle: ballot.Ballot_Farsi_Title,
+          },
+        });
+      }
+    } else if (electionStatus === 2) {
+      if (ballot.Ballot_Type === 0) {
+        navigate(`/result/document/${ballot.id}`, {
+          state: {
+            electionDurationId: location.state?.electionDurationId,
+            electionDurationTitle: location.state?.electionDurationTitle,
+            ballotTitle: ballot.Ballot_Farsi_Title,
+            ballotId: ballot.id,
+          },
+        });
+      } else if (ballot.Ballot_Type === 1) {
+        navigate(`/result/candidate/${ballot.id}`, {
+          state: {
+            electionDurationId: location.state?.electionDurationId,
+            electionDurationTitle: location.state?.electionDurationTitle,
+            ballotTitle: ballot.Ballot_Farsi_Title,
+            ballotId: ballot.id,
+          },
+        });
+      }
     }
   };
 

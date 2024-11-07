@@ -29,4 +29,5 @@ export const API_URLS = {
   GET_VOTER_VOTES: "/Election/GetVoterVotes/:id/",
   CONFIRM_VOTE: "/Election/voteconfirm/:id/",
   RESULT: "/Election/CandidateVoteResults/:id/",
+  RESULT_DOC: "/Election/DocumentVoteResults/:id/",
 };

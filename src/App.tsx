@@ -16,6 +16,7 @@ import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
 import SignUp from "./pages/signUp/SignUp";
 import Result from "./pages/app/result/Result";
 import "./app.scss";
+import ResultDoc from "./pages/app/result/ResultDoc";
 
 function App() {
   return (
@@ -31,7 +32,9 @@ function App() {
         <Route path="/ballot/:id" element={<Ballot />} />
         <Route path="/candidate/:id" element={<Candidate />} />
         <Route path="/document/:id" element={<Document />} />
-        <Route path="/result/:id" element={<Result />} />
+
+        <Route path="/result/candidate/:id" element={<Result />} />
+        <Route path="/result/document/:id" element={<ResultDoc />} />
 
         <Route path="/ticketAdd" element={<TicketAdd />} />
         <Route path="/ticketList" element={<TicketList />} />
