@@ -32,6 +32,7 @@ const Document = () => {
   const [voteStatus, setVoteStatus] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [finalizedCode, setFinalizedCode] = useState<string | null>(null);
+  const [confirmed, setConfirmed] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -49,7 +50,21 @@ const Document = () => {
       }
     };
 
+    const fetchConfirmStatus = async () => {
+      try {
+        const response = await apiClient.get(
+          API_URLS.CONFIRM_STATUS.replace(":id", ballotId.toString())
+        );
+        if (response.data) {
+          setConfirmed(response.data.data.confirmed);
+        }
+      } catch (err) {
+        console.error("Error fetching confirmation status:", err);
+      }
+    };
+
     if (ballotId) fetchDocument();
+    fetchConfirmStatus();
   }, [ballotId]);
 
   const voteToDocument = async (voteType: number) => {
@@ -102,7 +117,7 @@ const Document = () => {
     <>
       <Header title="انتخاب سند" />
       <Navbar />
-      <Container className="document-page">
+      <Container className={`document-page ${confirmed ? "disable" : ""}`}>
         <Row className="document-page_top">
           <Col>
             <Row>

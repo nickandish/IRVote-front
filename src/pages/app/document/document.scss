@@ -1,5 +1,22 @@
 @import "../../../scss/box.scss";
 
+.disable {
+  opacity: 0.8;
+
+  button {
+    background-color: $disable !important;
+    color: white !important;
+    border-color: white !important;
+
+    &:hover,
+    &:active,
+    &:focus {
+      box-shadow: none !important;
+      border-radius: 3rem !important;
+    }
+  }
+}
+
 .document-page {
   margin-top: 8rem;
   margin-bottom: 8rem;
