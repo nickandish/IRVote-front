@@ -25,10 +25,9 @@
 
 .result-doc {
   margin: 10rem auto 9rem auto !important;
-  max-width: 20rem;
+  width: 80%;
 
   .accept {
-    margin-top: 1rem;
     color: #35dccc;
   }
   .dangerr {
@@ -36,6 +35,7 @@
   }
   .blue {
     color: #4cc9fe;
+    margin-bottom: 2rem;
   }
 
   @media screen and (max-width: 500px) {

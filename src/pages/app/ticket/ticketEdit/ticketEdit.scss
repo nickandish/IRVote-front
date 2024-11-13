@@ -19,14 +19,14 @@
     margin-right: 3.8rem;
 
     .input {
-      border: 2px solid #6a5ae0;
+      border: 2px solid $primary;
       border-radius: 50px;
       padding: 1rem;
       transition: 0.3s;
       width: 85%;
       margin: auto;
       &:focus {
-        border: 2px solid #6a5ae0 !important;
+        border: 2px solid $primary !important;
         outline: none;
       }
 

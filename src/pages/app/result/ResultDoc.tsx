@@ -8,6 +8,7 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useLocation } from "react-router-dom";
 import "./result.scss";
+import ErrorPage from "../../../component/error/ErrorPage";
 
 interface DocumentResult {
   document_id: number;
@@ -65,39 +66,14 @@ const ResultDoc = () => {
         {loading ? (
           <Loading />
         ) : error ? (
-          <div className="error">{error}</div>
+          <ErrorPage />
         ) : (
           resultData?.results.map((doc) => (
-            <div key={doc.document_id} className="chart-container">
-              <Pie
-                data={{
-                  labels: ["موافق", "مخالف", "ممتنع"],
-                  datasets: [
-                    {
-                      label: "Vote Distribution",
-                      data: [
-                        doc.agreed_percentage,
-                        doc.disagreed_percentage,
-                        doc.abstain_percentage,
-                      ],
-                      backgroundColor: ["#35dccc", "#eb8c95", "#4CC9FE"],
-                      borderWidth: 1,
-                    },
-                  ],
-                }}
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      position: "bottom",
-                      labels: {
-                        color: "#6a5ae0",
-                      },
-                    },
-                  },
-                }}
-              />
-              <div className="vote-details">
+            <div
+              key={doc.document_id}
+              className="chart-container container row"
+            >
+              <div className="vote-details col-md-6 col-12">
                 <div className="accept fw-bold">
                   تعداد آرای موافق: {doc.agreed} نفر
                 </div>
@@ -105,8 +81,38 @@ const ResultDoc = () => {
                   تعداد آرای مخالف: {doc.disagreed} نفر
                 </div>
                 <div className="blue fw-bold">
-                  تعداد آرایا متناع: {doc.abstain} نفر
+                  تعداد آرای ممتنع: {doc.abstain} نفر
                 </div>
+              </div>
+              <div className="col-md-6 col-12">
+                <Pie
+                  data={{
+                    labels: ["موافق", "مخالف", "ممتنع"],
+                    datasets: [
+                      {
+                        label: "Vote Distribution",
+                        data: [
+                          doc.agreed_percentage,
+                          doc.disagreed_percentage,
+                          doc.abstain_percentage,
+                        ],
+                        backgroundColor: ["#35dccc", "#eb8c95", "#4CC9FE"],
+                        borderWidth: 1,
+                      },
+                    ],
+                  }}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        position: "bottom",
+                        labels: {
+                          color: "#6a5ae0",
+                        },
+                      },
+                    },
+                  }}
+                />
               </div>
             </div>
           ))
