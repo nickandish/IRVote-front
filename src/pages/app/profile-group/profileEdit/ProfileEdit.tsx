@@ -32,7 +32,7 @@ const ProfileEdit: React.FC = () => {
           lastName: userData.last_name,
           email: userData.email,
           mobileNumber: userData.mobile,
-          avatar: userData.avatar || imgPlaceholder,
+          img: userData.avatar || imgPlaceholder,
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -90,7 +90,7 @@ const ProfileEdit: React.FC = () => {
             lastName: updatedUserData.last_name,
             email: updatedUserData.email,
             mobileNumber: updatedUserData.mobile,
-            avatar: updatedUserData.avatar || imgPlaceholder,
+            img: updatedUserData.avatar || imgPlaceholder,
           });
         }
       }
@@ -113,7 +113,7 @@ const ProfileEdit: React.FC = () => {
         <Row className="text-center">
           <div className="rounded-circle profile-edit_img">
             <img
-              src={user.avatar || imgPlaceholder}
+              src={user.img || imgPlaceholder}
               className="rounded-circle"
               alt="Profile"
             />
