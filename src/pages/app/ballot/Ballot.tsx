@@ -74,7 +74,7 @@ const Ballot = () => {
       <div className="ballots row fw-bold">
         <Row className="g-3 wd100">
           {ballots.map((item) => (
-            <Ballots key={item.id} ballot={item} />
+            <Ballots key={item.ballot.id} ballot={item.ballot} />
           ))}
         </Row>
       </div>

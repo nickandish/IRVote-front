@@ -14,7 +14,6 @@ const LoginCard = () => {
       <Card className="text-center login-card_mew">
         {!emailInput ? (
           <LoginInputs
-            setEmailInput={setEmailInput}
             pText="جهت ورود به سامانه شماره همراه خود را وارد کنید"
             btnText="ورود به سامانه"
             questionText="کاربر جدید"

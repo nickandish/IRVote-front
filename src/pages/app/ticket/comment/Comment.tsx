@@ -83,6 +83,7 @@ const CommentComponent = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      console.log(file);
       const selectedFile = e.target.files[0];
       setFile(selectedFile);
       console.log("Selected file:", selectedFile);

@@ -1,12 +1,14 @@
 export interface Election {
-  id: number;
-  Election_Duration_farsi_title: string;
-  Start_at: string;
-  End_at: string;
-  Status: number;
-  logo: string | null;
-  Confirm_status: number;
-  remaining_time: string;
+  election: {
+    id: number;
+    Election_Duration_farsi_title: string;
+    Start_at: string;
+    End_at: string;
+    Status: number;
+    logo: string | null;
+    Confirm_status: number;
+    remaining_time: number;
+  };
 }
 
 export interface DurationItem {
@@ -45,13 +47,13 @@ export interface Candidate {
 }
 
 export interface BallotItem {
-  id: number;
-  Ballot_Farsi_Title: string;
-  Ballot_Type: number;
-  Start_at: string;
-  End_at: string;
-  Status: number;
-  remaining_time?: string;
-  // min_vote: number;
-  // max_vote: number;
+  ballot: {
+    id: number;
+    Ballot_Farsi_Title: string;
+    Ballot_Type: number;
+    Start_at: string;
+    End_at: string;
+    Status: number;
+    remaining_time?: number;
+  };
 }

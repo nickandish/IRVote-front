@@ -7,7 +7,6 @@ import apiClient from "../../../../api/axios";
 const cookies = new Cookies();
 
 interface LoginProp {
-  setEmailInput: (value: boolean) => void;
   pText: string;
   btnText: string;
   questionText: string;
@@ -17,7 +16,6 @@ interface LoginProp {
 }
 
 const LoginInputs: React.FC<LoginProp> = ({
-  setEmailInput,
   pText,
   btnText,
   questionText,
@@ -64,6 +62,7 @@ const LoginInputs: React.FC<LoginProp> = ({
   const handleSendOtp = async () => {
     if (!mobileNumber || !isValidMobileNumber(mobileNumber)) {
       setStatusMessage("Enter a valid mobile number");
+      console.log(statusMessage);
       return;
     }
 
@@ -71,12 +70,14 @@ const LoginInputs: React.FC<LoginProp> = ({
       const response = await sendOtp(mobileNumber);
       if (response.success) {
         setStatusMessage("OTP has been sent");
+        console.log(statusMessage);
         navigate("/otp", { state: { mobileNumber, isSignup } });
       } else {
         setStatusMessage(response.message);
       }
     } catch (error) {
       setStatusMessage("Failed to send OTP");
+      console.log(statusMessage);
       console.error("Error sending OTP:", error);
     }
   };

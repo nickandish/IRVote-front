@@ -35,14 +35,18 @@ const MyElection: React.FC = () => {
   }, []);
 
   if (loading) return <LoadingScreen />;
-  if (error) return <ErrorScreen error={error} />;
+  // if (error) return <ErrorScreen error={error} />;
+  if (error) return <ErrorScreen />;
 
   return (
     <>
       <Header title="انتخابات من" />
       <Row className="my-elections">
         {elections.map((election) => (
-          <ElectionBox key={election.id} election={election} />
+          <ElectionBox
+            key={election.election.id}
+            election={election.election}
+          />
         ))}
       </Row>
       <Navbar />
@@ -58,7 +62,8 @@ const LoadingScreen = () => (
   </>
 );
 
-const ErrorScreen = ({ error }: { error: string }) => (
+// const ErrorScreen = ({ error }: { error: string }) => (
+const ErrorScreen = () => (
   <>
     <Header title="انتخابات من" />
     <Navbar />

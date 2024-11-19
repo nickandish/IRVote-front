@@ -18,7 +18,6 @@ const SignUp = () => {
           <Card className="text-center login-card_mew">
             {!emailInput ? (
               <LoginInputs
-                setEmailInput={setEmailInput}
                 pText="جهت ثبت نام در سامانه شماره همراه خود را وارد کنید"
                 btnText="ثبت نام در سامانه"
                 questionText="از قبل اکانت دارید؟"
