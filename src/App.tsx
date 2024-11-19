@@ -13,10 +13,10 @@ import Comment from "./pages/app/ticket/comment/Comment";
 import Profile from "./pages/app/profile-group/profile/Profile";
 import Document from "./pages/app/document/Document";
 import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
-import SignUp from "./pages/signUp/SignUp";
 import Result from "./pages/app/result/Result";
-import "./app.scss";
 import ResultDoc from "./pages/app/result/ResultDoc";
+import SignUp from "./pages/signUp/SignUp";
+import "./app.scss";
 
 function App() {
   return (
