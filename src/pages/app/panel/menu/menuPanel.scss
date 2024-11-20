@@ -1,0 +1,61 @@
+@import "../../../../scss/box.scss";
+
+.menuPanel {
+  position: fixed;
+  height: 100svh;
+  padding: 5rem 2rem;
+  font-weight: bold;
+  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
+
+  .menuPanel_top {
+    align-items: center;
+    color: $primary;
+    .h {
+      font-size: 20px;
+    }
+    padding-bottom: 2rem;
+  }
+
+  &_menuItem {
+    position: relative;
+
+    .icon {
+      color: $red;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .title {
+      color: $red;
+      transition: all 0.3s ease;
+      font-size: 12px;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%; // Start at the middle
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: $primary;
+      transform: translateX(-50%); // Center the underline
+      transition: width 0.3s ease;
+    }
+
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      .icon,
+      .title {
+        color: $primary;
+        scale: 1.1;
+      }
+
+      &::after {
+        width: 100%;
+        // max-width: 175px;
+      }
+    }
+  }
+}
