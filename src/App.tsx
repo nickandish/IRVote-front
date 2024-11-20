@@ -16,9 +16,9 @@ import ProfileEdit from "./pages/app/profile-group/profileEdit/ProfileEdit";
 import Result from "./pages/app/result/Result";
 import ResultDoc from "./pages/app/result/ResultDoc";
 import SignUp from "./pages/signUp/SignUp";
-import Admin from "./pages/app/panel/admin/Admin";
 import Observer from "./pages/app/panel/observer/Observer";
 import CandidatePanel from "./pages/app/panel/candidate/CandidatePanel";
+import Admin from "./pages/app/panel/admin/Admin";
 import "./app.scss";
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-edit" element={<ProfileEdit />} />
 
-        <Route path="/adminPanel" element={<Admin />} />
+        <Route path="/admin/*" element={<Admin />} />
         <Route path="/observerPanel" element={<Observer />} />
         <Route path="/candidatePanel" element={<CandidatePanel />} />
 

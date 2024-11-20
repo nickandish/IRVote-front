@@ -1,5 +1,4 @@
 import { Col, Row } from "react-bootstrap";
-import { NavLink, useLocation } from "react-router-dom";
 import "./menuPanel.scss";
 
 interface MenuItem {
@@ -11,11 +10,14 @@ interface MenuItem {
 interface MenuPanelProps {
   menuItems: MenuItem[];
   header: string;
+  onMenuItemClick: (path: string) => void;
 }
 
-const MenuPanel: React.FC<MenuPanelProps> = ({ menuItems, header }) => {
-  const location = useLocation();
-
+const MenuPanel: React.FC<MenuPanelProps> = ({
+  menuItems,
+  header,
+  onMenuItemClick,
+}) => {
   return (
     <>
       <Col className="menuPanel col-3">
@@ -24,18 +26,14 @@ const MenuPanel: React.FC<MenuPanelProps> = ({ menuItems, header }) => {
           <Col className="col-9 h">{header}</Col>
         </Row>
         {menuItems.map((item, index) => (
-          <NavLink
-            to={item.path}
+          <Row
             key={index}
-            className={`menuPanel_menuItem py-2 align-items-center ${
-              location.pathname === item.path ? "active" : ""
-            }`}
+            className="menuPanel_menuItem py-2 align-items-center"
+            onClick={() => onMenuItemClick(item.path)}
           >
-            <Row>
-              <Col className="col-auto icon">{item.icon}</Col>
-              <Col className="title">{item.title}</Col>
-            </Row>
-          </NavLink>
+            <Col className="col-auto icon">{item.icon}</Col>
+            <Col className="title">{item.title}</Col>
+          </Row>
         ))}
       </Col>
     </>
