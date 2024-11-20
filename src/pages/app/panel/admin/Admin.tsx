@@ -8,11 +8,31 @@ import "./admin.scss";
 
 const Admin = () => {
   const menuItems = [
-    { title: "برگشت به خانه", icon: <IoHome /> },
-    { title: "مدیریت دوره", icon: <MdManageHistory /> },
-    { title: "مدیریت صندوق‌ها", icon: <HiOutlineArchiveBox /> },
-    { title: "مدیریت رای دهندگان", icon: <GoPerson /> },
-    { title: "مدیریت گروه رای دهندگان", icon: <TiGroupOutline /> },
+    {
+      title: "برگشت به خانه",
+      icon: <IoHome />,
+      path: "/profile",
+    },
+    {
+      title: "مدیریت دوره",
+      icon: <MdManageHistory />,
+      path: "/manage-course",
+    },
+    {
+      title: "مدیریت صندوق‌ها",
+      icon: <HiOutlineArchiveBox />,
+      path: "/manage-boxes",
+    },
+    {
+      title: "مدیریت رای دهندگان",
+      icon: <GoPerson />,
+      path: "/manage-voters",
+    },
+    {
+      title: "مدیریت گروه رای دهندگان",
+      icon: <TiGroupOutline />,
+      path: "/manage-groups",
+    },
   ];
 
   return (

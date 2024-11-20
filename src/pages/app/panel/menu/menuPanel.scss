@@ -29,6 +29,7 @@
       color: $red;
       transition: all 0.3s ease;
       font-size: 12px;
+      padding-top: 0.7rem;
     }
 
     &::after {
@@ -54,7 +55,18 @@
 
       &::after {
         width: 100%;
-        // max-width: 175px;
+      }
+    }
+
+    .active {
+      .icon,
+      .title {
+        color: $primary;
+        scale: 1.1;
+      }
+
+      &::after {
+        width: 100%;
       }
     }
   }
