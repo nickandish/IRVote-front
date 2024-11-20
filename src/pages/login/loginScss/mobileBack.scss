@@ -1,9 +1,10 @@
+@import "../../../scss/box.scss";
 @import "../../../scss/animations";
 
 // bg animation
 
 .login-background {
-  background: linear-gradient(270deg, #6a5ae0, #c5bdf5);
+  background: linear-gradient(270deg, $primary, #809ed2);
   background-size: 400% 400%;
   -webkit-animation: AnimationName 20s ease infinite;
   -moz-animation: AnimationName 20s ease infinite;

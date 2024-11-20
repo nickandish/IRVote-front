@@ -4,7 +4,7 @@
   @include circle-animation(
     220px,
     transparent,
-    2px solid #ada4ef44,
+    2px solid #ffffff44,
     28s,
     1px,
     50px,
@@ -15,7 +15,7 @@
   @include circle-animation(
     170px,
     transparent,
-    2px solid #ada4ef44,
+    2px solid #ffffff44,
     25s,
     10px,
     28px,
@@ -27,7 +27,7 @@
   @include circle-animation(
     350px,
     transparent,
-    2px solid #ada4ef44,
+    2px solid #ffffff44,
     50s,
     -125px,
     360px,
@@ -36,21 +36,21 @@
 }
 
 .circle1 {
-  @include little-circles(1rem, #ada4ef44, 5s, 0, 0);
+  @include little-circles(1rem, #ffffff44, 5s, 0, 0);
 }
 .circle2 {
-  @include little-circles(2rem, #ada4ef44, 12s, 20rem, 0);
+  @include little-circles(2rem, #ffffff44, 12s, 20rem, 0);
 }
 .circle3 {
-  @include little-circles(1.5rem, #ada4ef44, 2s, 0, 15rem);
+  @include little-circles(1.5rem, #ffffff44, 2s, 0, 15rem);
 }
 .small {
-  @include little-circles(9px, #ada4ef44, 2s, 0, 0);
+  @include little-circles(9px, #ffffff44, 2s, 0, 0);
 }
 .fix {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  background-color: #ada4ef44;
+  background-color: #ffffff44;
   position: absolute;
 }
