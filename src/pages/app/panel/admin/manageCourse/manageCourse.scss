@@ -47,6 +47,7 @@
     }
   }
 
+  ///////// confirmManage
   .confirmManage {
     &_right {
       padding: 3rem;
@@ -103,5 +104,12 @@
         margin-right: 0;
       }
     }
+  }
+
+  ///////// endDuration
+  .endDuration {
+    color: $secondary2;
+    font-weight: bold;
+    padding-top: 1rem;
   }
 }
