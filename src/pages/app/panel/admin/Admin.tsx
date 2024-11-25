@@ -5,11 +5,11 @@ import { HiOutlineArchiveBox } from "react-icons/hi2";
 import { MdManageHistory } from "react-icons/md";
 import { TiGroupOutline } from "react-icons/ti";
 import { GoPerson } from "react-icons/go";
-import "./admin.scss";
 import ManageBoxes from "./manageBoxes/ManageBoxes";
 import ManageCourse from "./manageCourse/ManageCourse";
 import ManageGroups from "./manageGroups/ManageGroups";
 import ManageVoters from "./manageVoters/ManageVoters";
+import "./admin.scss";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -39,7 +39,6 @@ const Admin = () => {
     },
   ];
 
-  // Determine which component to render based on the current path
   const renderContent = () => {
     if (
       location.pathname === "/admin" ||

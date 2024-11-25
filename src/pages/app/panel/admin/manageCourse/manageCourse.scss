@@ -1,0 +1,106 @@
+@import "../../../../../scss/box.scss";
+
+.manageCourse {
+  padding-right: 22% !important;
+  padding-top: 3.5rem;
+
+  &_header {
+    width: 17rem;
+    border-bottom: 2px solid $primary;
+    color: $primary;
+    font-weight: bold;
+    font-size: 18px;
+    align-items: center;
+
+    .icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  ///////// durationDetail
+
+  .durationDetail {
+    &_right {
+      padding-left: 2rem !important;
+      p {
+        color: $secondary2;
+        font-weight: bold;
+        font-size: 13px;
+      }
+
+      .icon {
+        font-size: 5rem;
+        color: $primary;
+      }
+    }
+
+    &_left {
+      align-items: center;
+      padding-right: 2rem !important;
+      border-right: 1px solid $gray-form;
+
+      p {
+        margin: 0 !important;
+        color: $primary;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .confirmManage {
+    &_right {
+      padding: 3rem;
+      color: $primary;
+      font-weight: bold;
+
+      button {
+        width: 4rem;
+        height: 2rem;
+        transition: all 0.3s ease-in-out;
+        @include button($secondary2, $secondary2, transparent, 1rem);
+
+        &:hover {
+          @include button(white, $secondary2, $secondary2, 1rem);
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    &_left {
+      width: 62%;
+      padding: 3rem 3rem 1rem 3rem;
+      margin-top: 1rem;
+      margin-right: 2rem;
+      color: $primary;
+      font-weight: bold;
+
+      textarea {
+        color: $primary;
+        border: 2px solid $primary;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        height: 7rem;
+      }
+
+      button {
+        width: 10rem;
+        height: 2rem;
+        align-items: flex-start;
+        transition: all 0.3s ease-in-out;
+        @include button($secondary2, $secondary2, transparent, 1rem);
+
+        &:hover {
+          @include button(white, $secondary2, $secondary2, 1rem);
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    @media screen and (max-width: 992px) {
+      &_left {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  }
+}

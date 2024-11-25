@@ -2,9 +2,6 @@ $danger: #800000;
 $accept: #00a86b;
 $primary: #1b4792;
 $secondary: #ffb598;
-// $secondary: #ffb598;
-// $secondary: #f7a19e;
-// $secondary: #d21f3c;
 $blue: #0f52ba;
 $purple-light: #f1f1f1;
 $gray: #ececec;
@@ -16,6 +13,7 @@ $gray-form: #d9d9d9;
 $gray-placeholder: #c2c2c2;
 $gray-bg: #fcfcfc;
 $red: #b22222;
+$secondary2: #ff8352;
 
 @mixin box-color($color: $primary) {
   margin: 1rem 0.5rem;
