@@ -10,11 +10,11 @@ const ConfirmManage = () => {
             ایا رای دهندگان برای شرکت در انتخابات شما نیاز به تاییدیه دارند؟
           </p>
           <Row>
-            <Col>
+            <Col className="col-6">
               <button className="yes">بله</button>
             </Col>
-            <Col>
-              <button className="no">خیر</button>
+            <Col className="col-6">
+              <button className="no ">خیر</button>
             </Col>
           </Row>
         </Card>
