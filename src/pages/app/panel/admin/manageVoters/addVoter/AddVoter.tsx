@@ -1,8 +1,8 @@
 import { Container, Form, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import Dropdown from "../../manageCourse/components/DropDown";
+import { IoPersonAdd } from "react-icons/io5";
 import "./addVoter.scss";
-import { MdManageHistory } from "react-icons/md";
 
 const AddVoter = () => {
   const provinceOptions = [
@@ -44,7 +44,7 @@ const AddVoter = () => {
     <Container className="add-voter py-4">
       <Row className="manageCourse_header  mb-5">
         <Col className="col-2 icon">
-          <MdManageHistory />
+          <IoPersonAdd />
         </Col>
         <Col className="col-9">افزودن رای دهنده جدید</Col>
       </Row>
