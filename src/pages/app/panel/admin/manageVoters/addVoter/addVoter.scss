@@ -4,6 +4,12 @@
   padding-right: 22% !important;
   padding-top: 3.5rem;
 
+  font-size: 14px;
+
+  ::placeholder {
+    font-size: 13px;
+  }
+
   label {
     color: $primary;
     font-weight: bold;

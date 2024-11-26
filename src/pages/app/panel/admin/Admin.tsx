@@ -12,6 +12,7 @@ import ManageVoters from "./manageVoters/ManageVoters";
 import "./admin.scss";
 import ErrorPage from "../../../../component/error/ErrorPage";
 import AddVoter from "./manageVoters/addVoter/AddVoter";
+import AddVoterGroup from "./manageGroups/addVoterGroup/AddVoterGroup";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -55,6 +56,8 @@ const Admin = () => {
       return <ManageGroups />;
     } else if (location.pathname === "/admin/manage-voters/add-voter") {
       return <AddVoter />;
+    } else if (location.pathname === "/admin/manage-voters/add-voterGroup") {
+      return <AddVoterGroup />;
     }
     return <ErrorPage />;
   };
