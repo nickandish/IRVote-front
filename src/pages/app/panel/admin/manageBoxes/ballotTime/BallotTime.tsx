@@ -6,7 +6,7 @@ import "./ballotTime.scss";
 
 const BallotTime = () => {
   return (
-    <Container>
+    <Container className="ballot-time">
       <SetBallot />
       <EndOfBallot />
       <ExtendOfBallot />
