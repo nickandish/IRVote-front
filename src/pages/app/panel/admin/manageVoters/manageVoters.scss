@@ -3,4 +3,62 @@
 .voterManage {
   padding-right: 22% !important;
   padding-top: 3.5rem;
+
+  .header-voter {
+    p {
+      color: $primary;
+      font-weight: bold;
+      display: inline;
+      transition: all 0.3s ease-in;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.3));
+      }
+    }
+    .icon {
+      color: $primary;
+      font-size: 1.3rem;
+    }
+
+    &_search-bar {
+      position: relative;
+      input {
+        background-color: $gray-form;
+        border: 3px solid white;
+        border-radius: 2rem;
+        font-weight: bold;
+        padding: 0.5rem;
+        width: 80%;
+        box-shadow: 0 4px 3px 0px rgba($color: #00000044, $alpha: 0.1);
+      }
+
+      .icon {
+        position: absolute;
+        top: 0.7rem;
+        left: -24%;
+      }
+    }
+  }
+
+  table {
+    margin-top: 3.5rem !important;
+  }
+
+  &_btn {
+    @include button($accept, $accept, transparent, 2rem);
+    position: relative;
+    width: 8.9rem;
+    height: 2.5rem;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    left: -67%;
+    top: 2rem;
+
+    &:hover {
+      @include button(white, $accept, $accept, 2rem);
+      transform: scale(1.1);
+    }
+  }
 }
