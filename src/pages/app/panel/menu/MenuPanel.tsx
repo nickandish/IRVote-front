@@ -4,7 +4,7 @@ import "./menuPanel.scss";
 
 interface MenuItem {
   title: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   path: string;
 }
 
