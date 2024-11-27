@@ -20,7 +20,6 @@ const ResultManage = () => {
     setSelectedOption(selectedOption);
   };
 
-  console.log(selectedOption);
   return (
     <Card className="resultManage p-4 mt-3 mb-5">
       <Row>

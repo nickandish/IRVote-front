@@ -30,4 +30,8 @@ export const API_URLS = {
   CONFIRM_VOTE: "/Election/voteconfirm/:id/",
   RESULT: "/Election/CandidateVoteResults/:id/",
   RESULT_DOC: "/Election/DocumentVoteResults/:id/",
+
+  // ADMIN PANEL
+  GET_ROLE: "/management_panel/UserRoleDetails/",
+  DURATION_DETAIL: "/management_panel/ElectionDurationDetail/:id/",
 };

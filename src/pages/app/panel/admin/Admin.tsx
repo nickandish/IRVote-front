@@ -1,8 +1,6 @@
-// Admin.tsx
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import MenuPanel from "../menu/MenuPanel";
 import ManageBoxes from "./manageBoxes/ManageBoxes";
-import "./admin.scss";
 import { IoHome } from "react-icons/io5";
 import { MdManageHistory } from "react-icons/md";
 import { HiOutlineArchiveBox } from "react-icons/hi2";
@@ -17,6 +15,8 @@ import BallotTime from "./manageBoxes/ballotTime/BallotTime";
 import BallotRules from "./manageBoxes/ballotTime/BallotRules";
 import DocManage from "./manageBoxes/ballotTime/DocManage";
 import CandManage from "./manageBoxes/ballotTime/CandManage";
+import { DurationProvider } from "../../../../api/contextApi/DurationContext";
+import "./admin.scss";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Admin = () => {
 
   const getMenuItems = () => {
     if (location.pathname.startsWith("/admin/manage-boxes/")) {
-      const id = location.pathname.split("/")[3];
+      // const id = location.pathname.split("/")[3];
       return [
         {
           title: "بازگشت به مدیریت صندوق‌ها",
@@ -111,13 +111,15 @@ const Admin = () => {
 
   return (
     <div className="admin">
-      <MenuPanel
-        menuItems={getMenuItems()}
-        header="پنل مدیریتی"
-        onMenuItemClick={(path) => navigate(path)}
-      />
+      <DurationProvider>
+        <MenuPanel
+          menuItems={getMenuItems()}
+          header="پنل مدیریتی"
+          onMenuItemClick={(path) => navigate(path)}
+        />
 
-      <div className="admin-content">{renderContent()}</div>
+        <div className="admin-content">{renderContent()}</div>
+      </DurationProvider>
     </div>
   );
 };
