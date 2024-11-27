@@ -14,7 +14,10 @@ const ResultManage = () => {
     { value: "all_users", label: "همه کاربران" },
   ];
 
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  // Initialize state with the default option
+  const [selectedOption, setSelectedOption] = useState<DropdownOption>(
+    options[0]
+  );
 
   const handleChange = (selectedOption: DropdownOption) => {
     setSelectedOption(selectedOption);

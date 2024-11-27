@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Select, { SingleValue } from "react-select";
 import { DropdownOption } from "./ResultManage";
 import "../manageCourse.scss";
@@ -9,12 +9,6 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
-  useEffect(() => {
-    if (options.length > 0) {
-      onChange(options[0]);
-    }
-  }, [options, onChange]);
-
   const handleChange = (newValue: SingleValue<DropdownOption>) => {
     if (newValue) {
       onChange(newValue);
@@ -28,7 +22,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
       isSearchable
       className="custom-dropdown"
       classNamePrefix="custom-dropdown"
-      defaultValue={options[0]}
+      defaultValue={options[0]} // Default value handled here
       isClearable={false}
     />
   );

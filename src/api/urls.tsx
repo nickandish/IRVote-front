@@ -34,4 +34,8 @@ export const API_URLS = {
   // ADMIN PANEL
   GET_ROLE: "/management_panel/UserRoleDetails/",
   DURATION_DETAIL: "/management_panel/ElectionDurationDetail/:id/",
+  CONFIRM_STATUS_CHECK: "/management_panel/ConfirmStatusCheck/:id/",
+  CONFIRM_TEXT_EDIT: "/management_panel/ConfirmStatusCheck/:id/",
+  SET_STATUS_TO_NOT_ACTIVE: "/management_panel/SetStatusToNotActive/:id/",
+  RESULT_DROPDOWN: "/management_panel/SetResultShowLevel/:id/",
 };
