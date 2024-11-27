@@ -1,13 +1,17 @@
 import { Col, Container, Row, Form, Alert } from "react-bootstrap";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import apiClient from "../../../../../../api/axios";
 import { API_URLS } from "../../../../../../api/urls";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import "./addVoterGroup.scss";
 
-const AddVoterGroup = () => {
+const EditVoterGroup = () => {
   const { durationId } = useDuration();
+  const location = useLocation();
+  const idG = location.state?.idG;
+
   const [formData, setFormData] = useState({
     groupName: "",
     groupCode: "",
@@ -17,6 +21,39 @@ const AddVoterGroup = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const fetchGroupDetails = async () => {
+      try {
+        const url = API_URLS.GET_VOTER_GROUP.replace(":id", String(durationId));
+        const response = await apiClient.get(url);
+        console.log(response);
+        console.log("response");
+
+        const group = response.data.find(
+          (item: any) => item.id === Number(idG)
+        );
+
+        if (group) {
+          setFormData({
+            groupName: group.VoterGroup_Title,
+            groupCode: group.VoterGroup_Code,
+            desc: group.VoterGroup_Description || "",
+            times: group.Coefficient,
+          });
+        } else {
+          setError("گروه رای دهنده یافت نشد.");
+        }
+      } catch (err) {
+        setError("خطا در دریافت اطلاعات گروه رای دهنده.");
+        console.error(err);
+      }
+    };
+
+    if (idG) {
+      fetchGroupDetails();
+    }
+  }, [idG, durationId]);
 
   const handleChange = (field: string, value: any) => {
     setFormData({ ...formData, [field]: value });
@@ -46,12 +83,14 @@ const AddVoterGroup = () => {
     };
 
     try {
-      const url = API_URLS.NEW_VOTER_GROUP.replace(":id", String(durationId));
-      const response = await apiClient.post(url, payload);
-      setSuccess("گروه رای دهنده با موفقیت ثبت شد.");
-      console.log("Response:", response.data);
+      const url = API_URLS.EDIT_VOTER_GROUP.replace(
+        ":id",
+        String(durationId)
+      ).replace(":idG", String(idG));
+      await apiClient.put(url, payload);
+      setSuccess("گروه رای دهنده با موفقیت ویرایش شد.");
     } catch (err) {
-      setError("خطایی در ثبت گروه رای دهنده رخ داد.");
+      setError("خطایی در ویرایش گروه رای دهنده رخ داد.");
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -64,7 +103,7 @@ const AddVoterGroup = () => {
         <Col className="col-2 icon">
           <AiOutlineUsergroupAdd />
         </Col>
-        <Col className="col-9">افزودن گروه رای دهنده جدید</Col>
+        <Col className="col-9">ویرایش گروه رای دهنده</Col>
       </Row>
 
       {error && <Alert variant="danger">{error}</Alert>}
@@ -149,7 +188,7 @@ const AddVoterGroup = () => {
               className="btn btn-primary"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "لطفاً صبر کنید..." : "ثبت گروه جدید"}
+              {isSubmitting ? "لطفاً صبر کنید..." : "ویرایش گروه"}
             </button>
           </Col>
         </Form.Group>
@@ -158,4 +197,4 @@ const AddVoterGroup = () => {
   );
 };
 
-export default AddVoterGroup;
+export default EditVoterGroup;

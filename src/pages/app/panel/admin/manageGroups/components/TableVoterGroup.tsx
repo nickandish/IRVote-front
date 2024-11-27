@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import apiClient from "../../../../../../api/axios";
 import { API_URLS } from "../../../../../../api/urls";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
+import { useNavigate } from "react-router-dom";
 import "../ManageGroup.scss";
 
 interface TableVoterGroupProps {
@@ -20,6 +21,7 @@ interface VoterGroup {
 const TableVoterGroup: React.FC<TableVoterGroupProps> = ({ searchQuery }) => {
   const { durationId } = useDuration();
   const [votersGroup, setVotersGroup] = useState<VoterGroup[]>([]);
+  const navigate = useNavigate();
 
   const fetchVoterGroups = async () => {
     try {
@@ -42,6 +44,12 @@ const TableVoterGroup: React.FC<TableVoterGroupProps> = ({ searchQuery }) => {
     } catch (error) {
       console.error("Error deleting voter group:", error);
     }
+  };
+
+  const handleEditClick = (id: number) => {
+    navigate(`/admin/manage-voters/edit-voterGroup/${id}`, {
+      state: { idG: id },
+    });
   };
 
   useEffect(() => {
@@ -73,7 +81,10 @@ const TableVoterGroup: React.FC<TableVoterGroupProps> = ({ searchQuery }) => {
                 onClick={() => deleteVoterGroup(voter.id)}
                 className="delete-icon"
               />
-              <TbPencil className="edit-icon" />
+              <TbPencil
+                onClick={() => handleEditClick(voter.id)}
+                className="edit-icon"
+              />
             </td>
           </tr>
         ))}

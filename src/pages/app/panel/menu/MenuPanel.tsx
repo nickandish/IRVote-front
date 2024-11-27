@@ -22,30 +22,28 @@ const MenuPanel: React.FC<MenuPanelProps> = ({
   const location = useLocation();
 
   return (
-    <>
-      <Col className="menuPanel col-3">
-        <Row className="menuPanel_top">
-          <Col className="logo col-3">LOGO</Col>
-          <Col className="col-9 h">{header}</Col>
-        </Row>
-        {menuItems.map((item, index) => {
-          const isActive = location.pathname === item.path;
+    <Col className="menuPanel col-3">
+      <Row className="menuPanel_top">
+        <Col className="logo col-3">LOGO</Col>
+        <Col className="col-9 h">{header}</Col>
+      </Row>
+      {menuItems.map((item, index) => {
+        const isActive = location.pathname === item.path;
 
-          return (
-            <Row
-              key={index}
-              className={`menuPanel_menuItem py-2 align-items-center ${
-                isActive ? "active" : ""
-              }`}
-              onClick={() => onMenuItemClick(item.path)}
-            >
-              <Col className="col-auto icon">{item.icon}</Col>
-              <Col className="title">{item.title}</Col>
-            </Row>
-          );
-        })}
-      </Col>
-    </>
+        return (
+          <Row
+            key={index}
+            className={`menuPanel_menuItem py-2 align-items-center ${
+              isActive ? "active" : ""
+            }`}
+            onClick={() => onMenuItemClick(item.path)}
+          >
+            <Col className="col-auto icon">{item.icon}</Col>
+            <Col className="title">{item.title}</Col>
+          </Row>
+        );
+      })}
+    </Col>
   );
 };
 
