@@ -44,4 +44,10 @@ export const API_URLS = {
   NEW_VOTER_GROUP: "/management_panel/AddVoterGroup/:id/",
   EDIT_VOTER_GROUP: "/management_panel/EditeVoterGroup/:id/:idG/",
   CONFIRM_VOTER_GROUP: "/management_panel/ConfirmVoterGroupStatus/:id/",
+
+  GET_VOTER: "/management_panel/VoterList/:id/",
+  ADD_VOTER: "/management_panel/AddVoter/:id/",
+  EDIT_VOTER: "/management_panel/EditVoter/:id/:idV/",
+  DEL_VOTER: "/management_panel/DeleteVoter/:id/",
+  SUSPEND_VOTER: "/management_panel/SetVoterSuspend/:id/:idV/",
 };
