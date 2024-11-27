@@ -38,4 +38,10 @@ export const API_URLS = {
   CONFIRM_TEXT_EDIT: "/management_panel/ConfirmStatusCheck/:id/",
   SET_STATUS_TO_NOT_ACTIVE: "/management_panel/SetStatusToNotActive/:id/",
   RESULT_DROPDOWN: "/management_panel/SetResultShowLevel/:id/",
+
+  GET_VOTER_GROUP: "/management_panel/VoterGroupList/:id/",
+  DEL_VOTER_GROUP: "/management_panel/DeleteVoterGroup/:id/",
+  NEW_VOTER_GROUP: "/management_panel/AddVoterGroup/:id/",
+  EDIT_VOTER_GROUP: "/management_panel/EditeVoterGroup/:id/:idG/",
+  CONFIRM_VOTER_GROUP: "/management_panel/ConfirmVoterGroupStatus/:id/",
 };

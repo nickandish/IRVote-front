@@ -63,9 +63,9 @@ const Admin = () => {
         path: "/admin/manage-course",
       },
       {
-        title: "مدیریت صندوق‌ها",
-        icon: <HiOutlineArchiveBox />,
-        path: "/admin/manage-boxes",
+        title: "مدیریت گروه رای دهندگان",
+        icon: <TiGroupOutline />,
+        path: "/admin/manage-groups",
       },
       {
         title: "مدیریت رای دهندگان",
@@ -73,9 +73,9 @@ const Admin = () => {
         path: "/admin/manage-voters",
       },
       {
-        title: "مدیریت گروه رای دهندگان",
-        icon: <TiGroupOutline />,
-        path: "/admin/manage-groups",
+        title: "مدیریت صندوق‌ها",
+        icon: <HiOutlineArchiveBox />,
+        path: "/admin/manage-boxes",
       },
     ];
   };
