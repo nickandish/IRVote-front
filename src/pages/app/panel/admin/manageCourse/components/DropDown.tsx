@@ -22,7 +22,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
       isSearchable
       className="custom-dropdown"
       classNamePrefix="custom-dropdown"
-      defaultValue={options[0]} // Default value handled here
+      defaultValue={options[0]}
       isClearable={false}
     />
   );

@@ -118,9 +118,23 @@
 
   ///////// resultManage
   .resultManage {
-    p {
-      color: $primary;
+    button {
+      @include button($primary, transparent, transparent, 2rem);
+      font-weight: bold;
+      transition: all 0.3s ease-in;
+      p {
+        color: $primary;
+        transition: all 0.3s ease-in;
+      }
+
+      &:hover {
+        p {
+          color: $secondary2;
+        }
+        transform: scale(1.1);
+      }
     }
+
     .custom-dropdown__control {
       background-color: $gray-form;
       color: black;
