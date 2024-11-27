@@ -13,48 +13,51 @@ const ConfirmManage = () => {
 
   const handleConfirmStatus = async (confirm: boolean) => {
     if (!durationId) {
-      setMessage("Duration ID is missing.");
+      setMessage("شما متعلق به انتخاباتی نیستید");
       return;
     }
 
     try {
       setIsLoading(true);
       setMessage(null);
-      const response = await apiClient.patch(
+      const response = await apiClient.post(
         API_URLS.CONFIRM_STATUS_CHECK.replace(":id", String(durationId)),
         { confirm }
       );
-      setMessage(response.data.message || "Status updated successfully.");
+      setMessage(response.data.message || "با موفقیت آپدیت شد");
+      console.log(message);
     } catch (error) {
-      setMessage("Failed to update status.");
+      setMessage("ناموفق");
+      console.log(message);
     } finally {
       setIsLoading(false);
+      console.log(message);
     }
   };
 
   const handleTextSubmit = async () => {
     if (!durationId) {
-      setMessage("Duration ID is missing.");
+      setMessage("شما متعلق به انتخاباتی نیستید");
+      console.log(message);
       return;
     }
 
     if (!confirmText.trim()) {
-      setMessage("Confirmation text cannot be empty.");
+      setMessage("این فیلد نمیتواند خالی باشد");
+      console.log(message);
       return;
     }
 
     try {
       setIsLoading(true);
       setMessage(null);
-      const response = await apiClient.patch(
+      const response = await apiClient.post(
         API_URLS.CONFIRM_TEXT_EDIT.replace(":id", String(durationId)),
         { Confirm_text: confirmText }
       );
-      setMessage(
-        response.data.message || "Confirmation text updated successfully."
-      );
+      setMessage(response.data.message || "با موفقیت آپدیت شد");
     } catch (error) {
-      setMessage("Failed to update confirmation text.");
+      setMessage("ناموفق بود.");
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +90,6 @@ const ConfirmManage = () => {
               </button>
             </Col>
           </Row>
-          {message && <p className="feedback">{message}</p>}
         </Card>
 
         <Card className="col-lg-7 col-12 mt-4 confirmManage_left">
