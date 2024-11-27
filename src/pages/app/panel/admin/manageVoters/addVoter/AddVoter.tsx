@@ -1,48 +1,119 @@
-import { Container, Form, Row, Col } from "react-bootstrap";
-import { useState } from "react";
+import { Container, Form, Row, Col, Alert } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import Dropdown from "../../manageCourse/components/DropDown";
 import { IoPersonAdd } from "react-icons/io5";
+import apiClient from "../../../../../../api/axios";
+import { API_URLS } from "../../../../../../api/urls";
+import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import "./addVoter.scss";
 
+interface DropdownOption {
+  value: number;
+  label: string;
+}
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile: string;
+  province: DropdownOption;
+  city: DropdownOption;
+  role: DropdownOption | null;
+}
+
 const AddVoter = () => {
-  const provinceOptions = [
-    { value: "managers_observers", label: "استان" },
-    { value: "managers_only", label: "تهران" },
-    { value: "all_users", label: "فارس" },
-  ];
-  const cityOptions = [
-    { value: "managers_observers", label: "شهر" },
-    { value: "managers_only", label: "تهران" },
-    { value: "all_users", label: "شیراز" },
-  ];
-  const roleOptions = [
-    { value: "managers_observers", label: "ورزشکار" },
-    { value: "managers_only", label: "استاد" },
-    { value: "all_users", label: "دانشجو" },
+  const { durationId } = useDuration();
+
+  const provinceOptions: DropdownOption[] = [
+    { value: 0, label: "استان" },
+    { value: 1, label: "تهران" },
   ];
 
-  const [formData, setFormData] = useState({
+  const cityOptions: DropdownOption[] = [
+    { value: 0, label: "شهر" },
+    { value: 1, label: "تهران" },
+    { value: 2, label: "دماوند" },
+  ];
+
+  const [roleOptions, setRoleOptions] = useState<DropdownOption[]>([]);
+  const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
-    nationalCode: "",
+    email: "",
     mobile: "",
     province: provinceOptions[0],
     city: cityOptions[0],
-    role: roleOptions[0],
+    role: null,
   });
+  const [alert, setAlert] = useState<{ type: string; message: string } | null>(
+    null
+  );
 
-  const handleChange = (field: string, value: any) => {
-    setFormData({ ...formData, [field]: value });
+  useEffect(() => {
+    const fetchRoleOptions = async () => {
+      try {
+        const response = await apiClient.get(
+          API_URLS.GET_VOTER_GROUP.replace(":id", String(durationId))
+        );
+        const options = response.data.map((group: any) => ({
+          value: group.id,
+          label: group.VoterGroup_Title,
+        }));
+        setRoleOptions(options);
+        if (options.length > 0) {
+          setFormData((prev) => ({ ...prev, role: options[0] }));
+        }
+      } catch (error) {
+        console.error("Error fetching role options:", error);
+      }
+    };
+
+    fetchRoleOptions();
+  }, []);
+
+  const handleChange = (field: keyof FormData, value: any) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    const payload = {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email: formData.email,
+      mobile: formData.mobile,
+      province: formData.province.value,
+      city: formData.city.value,
+      Voter_Group: formData.role?.value,
+    };
+
+    try {
+      const response = await apiClient.post(
+        API_URLS.ADD_VOTER.replace(":id", String(durationId)),
+        payload
+      );
+      console.log("Voter added successfully:", response.data);
+      setAlert({ type: "success", message: "رای‌دهنده با موفقیت اضافه شد" });
+    } catch (error: any) {
+      console.error("Error adding voter:", error);
+      setAlert({
+        type: "danger",
+        message: error.response?.data.detail || "خطا در افزودن رای‌دهنده",
+      });
+    } finally {
+      setTimeout(() => setAlert(null), 3000);
+    }
   };
 
   return (
     <Container className="add-voter py-4">
-      <Row className="manageCourse_header  mb-5">
+      {alert && (
+        <Alert variant={alert.type} onClose={() => setAlert(null)} dismissible>
+          {alert.message}
+        </Alert>
+      )}
+      <Row className="manageCourse_header mb-5">
         <Col className="col-2 icon">
           <IoPersonAdd />
         </Col>
@@ -76,16 +147,16 @@ const AddVoter = () => {
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} className="mb-3" controlId="nationalCode">
+        <Form.Group as={Row} className="mb-3" controlId="email">
           <Form.Label column sm="3" className="text-end">
-            کد ملی
+            ایمیل
           </Form.Label>
           <Col sm="9">
             <Form.Control
-              type="text"
-              placeholder="کد ملی"
-              value={formData.nationalCode}
-              onChange={(e) => handleChange("nationalCode", e.target.value)}
+              type="email"
+              placeholder="ایمیل"
+              value={formData.email}
+              onChange={(e) => handleChange("email", e.target.value)}
             />
           </Col>
         </Form.Group>

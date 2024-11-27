@@ -4,7 +4,7 @@ import { DropdownOption } from "./ResultManage";
 import "../manageCourse.scss";
 
 interface DropdownProps {
-  options: DropdownOption[];
+  options: DropdownOption[] | any;
   onChange: (selectedOption: DropdownOption) => void;
 }
 
@@ -19,6 +19,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
     <Select
       options={options}
       onChange={handleChange}
+      placeholder="انتخاب کنید"
       isSearchable
       className="custom-dropdown"
       classNamePrefix="custom-dropdown"
