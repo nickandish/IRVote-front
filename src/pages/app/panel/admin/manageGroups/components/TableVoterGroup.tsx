@@ -1,26 +1,55 @@
-import { MdBlock } from "react-icons/md";
 import { LuTrash2 } from "react-icons/lu";
 import { TbPencil } from "react-icons/tb";
+import { useState, useEffect } from "react";
+import apiClient from "../../../../../../api/axios";
+import { API_URLS } from "../../../../../../api/urls";
+import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import "../ManageGroup.scss";
 
 interface TableVoterGroupProps {
   searchQuery: string;
 }
 
+interface VoterGroup {
+  VoterGroup_Title: string;
+  Coefficient: number;
+  VoterGroup_Code: number;
+  id: number;
+}
+
 const TableVoterGroup: React.FC<TableVoterGroupProps> = ({ searchQuery }) => {
-  const votersGroup = [
-    { groupName: "دانشجو", times: 2, groupCode: 3 },
-    { groupName: "دانشجو", times: 2, groupCode: 3 },
-    { groupName: "دانشجو", times: 2, groupCode: 3 },
-    { groupName: "دانشجو", times: 2, groupCode: 3 },
-    { groupName: "دانشجو", times: 2, groupCode: 3 },
-    { groupName: "دانشجو", times: 2, groupCode: 3 },
-    { groupName: "دانشجو", times: 2, groupCode: 3 },
-    { groupName: "دانشجو", times: 2, groupCode: 3 },
-  ];
+  const { durationId } = useDuration();
+  const [votersGroup, setVotersGroup] = useState<VoterGroup[]>([]);
+
+  const fetchVoterGroups = async () => {
+    try {
+      const response = await apiClient.get(
+        API_URLS.GET_VOTER_GROUP.replace(":id", durationId)
+      );
+      setVotersGroup(response.data);
+    } catch (error) {
+      console.error("Error fetching voter groups:", error);
+    }
+  };
+
+  const deleteVoterGroup = async (groupId: number) => {
+    try {
+      const response = await apiClient.delete(
+        API_URLS.DEL_VOTER_GROUP.replace(":id", String(groupId))
+      );
+      console.log("Voter group deleted successfully:", response.data);
+      fetchVoterGroups();
+    } catch (error) {
+      console.error("Error deleting voter group:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchVoterGroups();
+  }, [durationId]);
 
   const filteredVotersGroup = votersGroup.filter((voter) =>
-    voter.groupName.toLowerCase().includes(searchQuery.toLowerCase())
+    voter.VoterGroup_Title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -30,21 +59,21 @@ const TableVoterGroup: React.FC<TableVoterGroupProps> = ({ searchQuery }) => {
           <th>نام گروه</th>
           <th>ضریب</th>
           <th>کد گروه</th>
-          <th></th>
+          <th>عملیات</th>
         </tr>
       </thead>
       <tbody>
         {filteredVotersGroup.map((voter) => (
-          //   <tr key={voter.id}>
-          <tr>
-            <td>{voter.groupName}</td>
-            <td>{voter.times}</td>
-            <td>{voter.groupCode}</td>
-
+          <tr key={voter.id}>
+            <td>{voter.VoterGroup_Title}</td>
+            <td>{voter.Coefficient}</td>
+            <td>{voter.VoterGroup_Code}</td>
             <td>
-              <MdBlock />
-              <LuTrash2 />
-              <TbPencil />
+              <LuTrash2
+                onClick={() => deleteVoterGroup(voter.id)}
+                className="delete-icon"
+              />
+              <TbPencil className="edit-icon" />
             </td>
           </tr>
         ))}

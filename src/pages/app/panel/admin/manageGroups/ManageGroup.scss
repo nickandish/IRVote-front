@@ -70,4 +70,14 @@
       }
     }
   }
+
+  .delete-icon,
+  .edit-icon {
+    font-size: 1rem;
+    margin: 0.1rem;
+    &:hover {
+      color: $secondary;
+      cursor: pointer;
+    }
+  }
 }
