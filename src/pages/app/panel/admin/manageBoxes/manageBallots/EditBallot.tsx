@@ -6,6 +6,8 @@ import { API_URLS } from "../../../../../../api/urls";
 import apiClient from "../../../../../../api/axios";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import Loading from "../../../../../../component/loading/Loading";
+import MenuPanel from "../../../menu/MenuPanel";
+import BallotWrapper from "../BallotWrapper";
 
 const EditBallot = () => {
   const { id } = useParams<{ id: string }>();
@@ -114,108 +116,111 @@ const EditBallot = () => {
   }
 
   return (
-    <Container className="editBallot addGroup add-voter">
-      <Row className="manageCourse_header voterGroupHeader mb-5">
-        <Col className="col-2 icon">
-          <AiOutlineUsergroupAdd />
-        </Col>
-        <Col className="col-9">ویرایش صندوق</Col>
-      </Row>
-
-      {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">{success}</Alert>}
-
-      <Form onSubmit={handleSubmit} className="form-layout">
-        <Form.Group as={Row} className="mb-3" controlId="Ballot_Farsi_Title">
-          <Form.Label column sm="3" className="text-end">
-            نام صندوق
-          </Form.Label>
-          <Col sm="9">
-            <Form.Control
-              type="text"
-              placeholder="نام صندوق"
-              value={formData.Ballot_Farsi_Title}
-              onChange={(e) =>
-                handleChange("Ballot_Farsi_Title", e.target.value)
-              }
-              disabled={isSubmitting}
-            />
+    <>
+      <BallotWrapper />
+      <Container className="editBallot addGroup add-voter">
+        <Row className="manageCourse_header voterGroupHeader mb-5">
+          <Col className="col-2 icon">
+            <AiOutlineUsergroupAdd />
           </Col>
-        </Form.Group>
+          <Col className="col-9">ویرایش صندوق</Col>
+        </Row>
 
-        <Form.Group as={Row} className="mb-3" controlId="Ballot_Type">
-          <Form.Label column sm="3" className="text-end">
-            نوع صندوق
-          </Form.Label>
-          <Col sm="9">
-            <Form.Select
-              value={formData.Ballot_Type}
-              onChange={(e) =>
-                handleChange("Ballot_Type", parseInt(e.target.value))
-              }
-              disabled={isSubmitting}
-            >
-              <option value={0}>سند</option>
-              <option value={1}>کاندید</option>
-            </Form.Select>
-          </Col>
-        </Form.Group>
+        {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
 
-        <Form.Group as={Row} className="mb-3" controlId="Main_count">
-          <Form.Label column sm="3" className="text-end">
-            تعداد اصلی
-          </Form.Label>
-          <Col sm="9">
-            <Form.Control
-              type="number"
-              value={formData.Main_count}
-              onChange={(e) =>
-                handleChange("Main_count", parseInt(e.target.value))
-              }
-              disabled={isSubmitting}
-            />
-          </Col>
-        </Form.Group>
+        <Form onSubmit={handleSubmit} className="form-layout">
+          <Form.Group as={Row} className="mb-3" controlId="Ballot_Farsi_Title">
+            <Form.Label column sm="3" className="text-end">
+              نام صندوق
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control
+                type="text"
+                placeholder="نام صندوق"
+                value={formData.Ballot_Farsi_Title}
+                onChange={(e) =>
+                  handleChange("Ballot_Farsi_Title", e.target.value)
+                }
+                disabled={isSubmitting}
+              />
+            </Col>
+          </Form.Group>
 
-        <Form.Group as={Row} className="mb-3" controlId="Reserve_count">
-          <Form.Label column sm="3" className="text-end">
-            تعداد رزرو
-          </Form.Label>
-          <Col sm="9">
-            <Form.Control
-              type="number"
-              value={formData.Reserve_count}
-              onChange={(e) =>
-                handleChange("Reserve_count", parseInt(e.target.value))
-              }
-              disabled={isSubmitting}
-            />
-          </Col>
-        </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="Ballot_Type">
+            <Form.Label column sm="3" className="text-end">
+              نوع صندوق
+            </Form.Label>
+            <Col sm="9">
+              <Form.Select
+                value={formData.Ballot_Type}
+                onChange={(e) =>
+                  handleChange("Ballot_Type", parseInt(e.target.value))
+                }
+                disabled={isSubmitting}
+              >
+                <option value={0}>سند</option>
+                <option value={1}>کاندید</option>
+              </Form.Select>
+            </Col>
+          </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
-          <Col sm="6" className="text-end">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "لطفاً صبر کنید..." : "ثبت تغییرات"}
-            </button>
-          </Col>
-          <Col sm="6" className="text-start">
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={handleDelete}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "لطفاً صبر کنید..." : "حذف صندوق"}
-            </button>
-          </Col>
-        </Form.Group>
-      </Form>
-    </Container>
+          <Form.Group as={Row} className="mb-3" controlId="Main_count">
+            <Form.Label column sm="3" className="text-end">
+              تعداد اصلی
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control
+                type="number"
+                value={formData.Main_count}
+                onChange={(e) =>
+                  handleChange("Main_count", parseInt(e.target.value))
+                }
+                disabled={isSubmitting}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3" controlId="Reserve_count">
+            <Form.Label column sm="3" className="text-end">
+              تعداد رزرو
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control
+                type="number"
+                value={formData.Reserve_count}
+                onChange={(e) =>
+                  handleChange("Reserve_count", parseInt(e.target.value))
+                }
+                disabled={isSubmitting}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3">
+            <Col sm="6" className="text-end">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "لطفاً صبر کنید..." : "ثبت تغییرات"}
+              </button>
+            </Col>
+            <Col sm="6" className="text-start">
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleDelete}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "لطفاً صبر کنید..." : "حذف صندوق"}
+              </button>
+            </Col>
+          </Form.Group>
+        </Form>
+      </Container>{" "}
+    </>
   );
 };
 

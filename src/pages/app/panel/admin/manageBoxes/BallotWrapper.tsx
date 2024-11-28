@@ -23,10 +23,6 @@ const BallotWrapper = () => {
           <Route path="rules" element={<BallotRules />} />
           <Route path="documents" element={<DocManage />} />
           <Route path="candidates" element={<CandManage />} />
-          <Route
-            path="*"
-            element={<h3>لطفاً یک گزینه معتبر از منوی صندوق انتخاب کنید.</h3>}
-          />
         </Routes>
       </div>
     </div>
