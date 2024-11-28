@@ -80,7 +80,9 @@ const TableVoters: React.FC<TableVotersProps> = ({ searchQuery }) => {
   };
 
   const handleEditClick = (voterId: number) => {
-    navigate(`/admin/manage-voters/edit-voter/${voterId}`);
+    navigate(`/admin/manage-voters/edit-voter/${voterId}`, {
+      state: { idV: voterId },
+    });
   };
 
   useEffect(() => {

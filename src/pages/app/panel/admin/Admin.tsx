@@ -11,6 +11,7 @@ import BallotTime from "./manageBoxes/ballotTime/BallotTime";
 import BallotRules from "./manageBoxes/ballotTime/BallotRules";
 import DocManage from "./manageBoxes/ballotTime/DocManage";
 import CandManage from "./manageBoxes/ballotTime/CandManage";
+import EditVoter from "./manageVoters/addVoter/EditVoter";
 import { DurationProvider } from "../../../../api/contextApi/DurationContext";
 import { IoHome } from "react-icons/io5";
 import { MdManageHistory } from "react-icons/md";
@@ -89,6 +90,10 @@ const Admin = () => {
             <Route path="/manage-voters" element={<ManageVoters />} />
             <Route path="/manage-groups" element={<ManageGroups />} />
             <Route path="/manage-voters/add-voter" element={<AddVoter />} />
+            <Route
+              path="/manage-voters/edit-voter/:id"
+              element={<EditVoter />}
+            />
             <Route
               path="/manage-voters/add-voterGroup"
               element={<AddVoterGroup />}
