@@ -4,9 +4,11 @@ import { Alert, Col, Container, Form, Row } from "react-bootstrap";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { API_URLS } from "../../../../../../api/urls";
 import apiClient from "../../../../../../api/axios";
-import { useDuration } from "../../../../../../api/contextApi/DurationContext";
+import {
+  DurationProvider,
+  useDuration,
+} from "../../../../../../api/contextApi/DurationContext";
 import Loading from "../../../../../../component/loading/Loading";
-import MenuPanel from "../../../menu/MenuPanel";
 import BallotWrapper from "../BallotWrapper";
 
 const EditBallot = () => {
@@ -219,7 +221,7 @@ const EditBallot = () => {
             </Col>
           </Form.Group>
         </Form>
-      </Container>{" "}
+      </Container>
     </>
   );
 };
