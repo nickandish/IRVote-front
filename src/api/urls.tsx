@@ -63,7 +63,7 @@ export const API_URLS = {
   EXTEND_BALLOT_TIME: "/management_panel/ExtendBallotEndTime/:idB/",
   HALT_BALLOT: "/management_panel/halt-ballot/:idB/",
 
-  GET_DOC: "/management_panel/GetDocumentList/8/",
+  GET_DOC: "/management_panel/GetDocumentList/:id/",
   ADD_DOC: "/management_panel/AddDocumentToBallot/:idB/",
   EDIT_DOC: "/management_panel/EditeDocumentInBallot/:idB/:idD/",
 
