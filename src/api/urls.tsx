@@ -54,7 +54,7 @@ export const API_URLS = {
   GET_BALLOT: "/management_panel/BallotList/1/",
   ADD_BALLOT: "/management_panel/AddBallot/:id/",
   EDIT_BALLOT: "/management_panel/EditeBallot/:id/:idB/",
-  DEL_BALLOT: "/management_panel/DeleteBallot/:id/:idB/",
+  DEL_BALLOT: "/management_panel/DeleteBallot/:idB/",
 
   SET_TIME_BALLOT: "/management_panel/SetTimeBallot/:id/",
   SET_CANDIDATE_EDIT_TIME: "/management_panel/SetCandidateEditTime/:id/",
