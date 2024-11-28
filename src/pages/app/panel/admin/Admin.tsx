@@ -7,10 +7,6 @@ import ManageGroups from "./manageGroups/ManageGroups";
 import AddVoter from "./manageVoters/addVoter/AddVoter";
 import AddVoterGroup from "./manageGroups/addVoterGroup/AddVoterGroup";
 import EditVoterGroup from "./manageGroups/addVoterGroup/EditVoterGroup";
-import BallotTime from "./manageBoxes/ballotTime/BallotTime";
-import BallotRules from "./manageBoxes/ballotTime/BallotRules";
-import DocManage from "./manageBoxes/ballotTime/DocManage";
-import CandManage from "./manageBoxes/ballotTime/CandManage";
 import EditVoter from "./manageVoters/addVoter/EditVoter";
 import { DurationProvider } from "../../../../api/contextApi/DurationContext";
 import { IoHome } from "react-icons/io5";
@@ -48,33 +44,6 @@ const Admin = () => {
     },
   ];
 
-  const ballotMenuItem = [
-    {
-      title: "بازگشت به مدیریت صندوق‌ها",
-      icon: <IoHome />,
-      path: "/admin/manage-boxes",
-    },
-    {
-      title: "مدیریت زمان‌بندی صندوق",
-      icon: <MdManageHistory />,
-      path: `/admin/manage-boxes/id/scheduling`,
-    },
-    {
-      title: "مدیریت قواعد صندوق",
-      icon: <MdManageHistory />,
-      path: `/admin/manage-boxes/id/rules`,
-    },
-    {
-      title: "مدیریت سند",
-      icon: <MdManageHistory />,
-      path: `/admin/manage-boxes/id/documents`,
-    },
-    {
-      title: "مدیریت کاندیدها",
-      icon: <MdManageHistory />,
-      path: `/admin/manage-boxes/id/candidates`,
-    },
-  ];
   return (
     <div className="admin">
       <DurationProvider>
@@ -103,16 +72,7 @@ const Admin = () => {
               element={<EditVoterGroup />}
             />
             <Route path="/manage-boxes" element={<ManageBoxes />} />
-            <Route
-              path="/manage-boxes/:id/scheduling"
-              element={<BallotTime />}
-            />
-            <Route path="/manage-boxes/:id/rules" element={<BallotRules />} />
-            <Route path="/manage-boxes/:id/documents" element={<DocManage />} />
-            <Route
-              path="/manage-boxes/:id/candidates"
-              element={<CandManage />}
-            />
+            <Route path="/manage-boxes/:id" element={<ManageBoxes />} />
             <Route
               path="*"
               element={<h3>لطفاً یک گزینه از منو انتخاب کنید.</h3>}

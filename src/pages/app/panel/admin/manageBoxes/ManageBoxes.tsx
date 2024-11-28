@@ -1,15 +1,44 @@
-// ManageBoxes.tsx
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, Routes, Route } from "react-router-dom";
 import BallotTime from "./ballotTime/BallotTime";
 import BallotRules from "./ballotTime/BallotRules";
 import DocManage from "./ballotTime/DocManage";
 import CandManage from "./ballotTime/CandManage";
 import { Card, Col, Container, Row } from "react-bootstrap";
+import { IoHome } from "react-icons/io5";
+import { MdManageHistory } from "react-icons/md";
+import MenuPanel from "../../menu/MenuPanel";
 import "./manageBoxes.scss";
+
+export const ballotMenuItem = [
+  {
+    title: "بازگشت به مدیریت صندوق‌ها",
+    icon: <IoHome />,
+    path: "/admin/manage-boxes",
+  },
+  {
+    title: "مدیریت زمان‌بندی صندوق",
+    icon: <MdManageHistory />,
+    path: `/admin/manage-boxes/:id/scheduling`,
+  },
+  {
+    title: "مدیریت قواعد صندوق",
+    icon: <MdManageHistory />,
+    path: `/admin/manage-boxes/:id/rules`,
+  },
+  {
+    title: "مدیریت سند",
+    icon: <MdManageHistory />,
+    path: `/admin/manage-boxes/:id/documents`,
+  },
+  {
+    title: "مدیریت کاندیدها",
+    icon: <MdManageHistory />,
+    path: `/admin/manage-boxes/:id/candidates`,
+  },
+];
 
 const ManageBoxes = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { id } = useParams<{ id: string }>();
 
   const ballotBoxes = [
@@ -23,24 +52,36 @@ const ManageBoxes = () => {
     { id: 8, title: "صندوق 8", description: "توضیحات صندوق 8" },
   ];
 
-  const renderContent = () => {
-    if (location.pathname === `/admin/manage-boxes/${id}/scheduling`) {
-      return <BallotTime />;
-    } else if (location.pathname === `/admin/manage-boxes/${id}/rules`) {
-      return <BallotRules />;
-    } else if (location.pathname === `/admin/manage-boxes/${id}/documents`) {
-      return <DocManage />;
-    } else if (location.pathname === `/admin/manage-boxes/${id}/candidates`) {
-      return <CandManage />;
-    }
-
-    return <h3>لطفاً یک گزینه از منو انتخاب کنید.</h3>;
-  };
-
   return (
-    <div className="manage-boxes">
+    <div className="">
       {id ? (
-        <div className="admin-content">{renderContent()}</div>
+        <div className="admin-content">
+          <MenuPanel
+            menuItems={ballotMenuItem}
+            header="پنل  مدیرتی صندوق‌ها"
+            onMenuItemClick={(path) => navigate(path)}
+          />
+          <BallotTime />
+          <Routes>
+            <Route path="/admin/manage-boxes/:id" element={<BallotTime />} />
+            <Route
+              path="/admin/manage-boxes/:id/scheduling"
+              element={<BallotTime />}
+            />
+            <Route
+              path="/admin/manage-boxes/:id/rules"
+              element={<BallotRules />}
+            />
+            <Route
+              path="/admin/manage-boxes/:id/documents"
+              element={<DocManage />}
+            />
+            <Route
+              path="/admin/manage-boxes/:id/candidates"
+              element={<CandManage />}
+            />
+          </Routes>
+        </div>
       ) : (
         <Container className="manage-boxes">
           <Row>
