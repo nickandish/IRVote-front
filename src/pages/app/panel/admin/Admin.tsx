@@ -8,6 +8,7 @@ import AddVoter from "./manageVoters/addVoter/AddVoter";
 import AddVoterGroup from "./manageGroups/addVoterGroup/AddVoterGroup";
 import EditVoterGroup from "./manageGroups/addVoterGroup/EditVoterGroup";
 import EditVoter from "./manageVoters/addVoter/EditVoter";
+import BallotWrapper from "./manageBoxes/BallotWrapper";
 import { DurationProvider } from "../../../../api/contextApi/DurationContext";
 import { IoHome } from "react-icons/io5";
 import { MdManageHistory } from "react-icons/md";
@@ -36,7 +37,6 @@ const Admin = () => {
       icon: <GoPerson />,
       path: "/admin/manage-voters",
     },
-
     {
       title: "مدیریت صندوق‌ها",
       icon: <HiOutlineArchiveBox />,
@@ -71,8 +71,11 @@ const Admin = () => {
               path="/manage-voters/edit-voterGroup/:id"
               element={<EditVoterGroup />}
             />
+
+            {/* Manage Ballots */}
             <Route path="/manage-boxes" element={<ManageBoxes />} />
-            <Route path="/manage-boxes/:id" element={<ManageBoxes />} />
+            <Route path="/manage-boxes/:id/*" element={<BallotWrapper />} />
+
             <Route
               path="*"
               element={<h3>لطفاً یک گزینه از منو انتخاب کنید.</h3>}
