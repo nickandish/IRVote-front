@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Col, Container, Row, Spinner, Alert } from "react-bootstrap";
+import { Card, Col, Container, Row, Alert } from "react-bootstrap";
 import apiClient from "../../../../../api/axios";
 import { API_URLS } from "../../../../../api/urls";
-import "./manageBoxes.scss";
 import HeaderBallotManage from "./manageBallots/HeaderBallotManage";
+import Loading from "../../../../../component/loading/Loading";
+import "./manageBoxes.scss";
 
 interface Ballot {
   id: number;
@@ -25,7 +26,6 @@ const ManageBoxes = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch ballot data
   useEffect(() => {
     const fetchBallots = async () => {
       try {
@@ -47,12 +47,7 @@ const ManageBoxes = () => {
   );
 
   if (loading) {
-    return (
-      <div className="loading-container">
-        <Spinner animation="border" />
-        <p>در حال بارگذاری...</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
