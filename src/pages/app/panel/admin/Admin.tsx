@@ -16,6 +16,8 @@ import { HiOutlineArchiveBox } from "react-icons/hi2";
 import { GoPerson } from "react-icons/go";
 import { TiGroupOutline } from "react-icons/ti";
 import "./admin.scss";
+import EditBallot from "./manageBoxes/manageBallots/EditBallot";
+import AddBallot from "./manageBoxes/manageBallots/AddBallot";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -74,6 +76,8 @@ const Admin = () => {
 
             {/* Manage Ballots */}
             <Route path="/manage-boxes" element={<ManageBoxes />} />
+            <Route path="/manage-boxes/:id" element={<EditBallot />} />
+            <Route path="/manage-boxes/add-ballot" element={<AddBallot />} />
             <Route path="/manage-boxes/:id/*" element={<BallotWrapper />} />
 
             <Route
