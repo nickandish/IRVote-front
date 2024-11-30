@@ -6,7 +6,7 @@ import "./candidatePanel.scss";
 
 const CandidateDetail = () => {
   return (
-    <Card className="candidate-detail p-4 mb-4">
+    <Card className="candidate-detail-panel p-4 ">
       <Row className="align-items-center">
         <Col xs={3} className="text-center">
           <div className="profile-pic">

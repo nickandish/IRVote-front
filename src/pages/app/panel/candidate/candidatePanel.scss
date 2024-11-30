@@ -1,27 +1,7 @@
 @import "../../../../scss/box.scss";
 
 .candidate-panel {
-  .manage-course-header {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-
-    .header-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-align: right;
-    }
-
-    .icon {
-      text-align: center;
-      color: #555;
-    }
-  }
-
-  .candidate-detail {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-
+  .candidate-detail-panel {
     .profile-pic {
       position: relative;
 
@@ -66,6 +46,24 @@
 
       &:hover {
         color: $primary;
+      }
+    }
+  }
+
+  &_video-file {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    button {
+      @include button(white, $secondary, $secondary, 2rem);
+      width: 10rem;
+      height: 2rem;
+      margin: 1rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+
+      &:hover {
+        @include button($secondary, $secondary, white, 1.5rem);
       }
     }
   }
