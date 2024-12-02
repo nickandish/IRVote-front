@@ -7,6 +7,7 @@ import apiClient from "../../../../../../api/axios";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import Loading from "../../../../../../component/loading/Loading";
 import BallotWrapper from "../BallotWrapper";
+import "../manageBoxes.scss";
 
 const EditBallot = () => {
   const { id } = useParams<{ id: string }>();

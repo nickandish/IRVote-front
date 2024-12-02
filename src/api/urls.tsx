@@ -56,12 +56,12 @@ export const API_URLS = {
   EDIT_BALLOT: "/management_panel/EditeBallot/:id/:idB/",
   DEL_BALLOT: "/management_panel/DeleteBallot/:idB/",
 
-  SET_TIME_BALLOT: "/management_panel/SetTimeBallot/:id/", //////
-  SET_CANDIDATE_EDIT_TIME: "/management_panel/SetCandidateEditTime/:id/", //////
-  EXTEND_CANDIDATE_EDIT_TIME: "/management_panel/ExtendCandidateEditTime/:id/", //////
-  SET_CANDIDATE_EDIT_STATUS: "/management_panel/SetCandidateEditStatus/:idB/", //////
-  EXTEND_BALLOT_TIME: "/management_panel/ExtendBallotEndTime/:idB/", //////////
-  HALT_BALLOT: "/management_panel/halt-ballot/:idB/", //////////
+  SET_TIME_BALLOT: "/management_panel/SetTimeBallot/:id/",
+  SET_CANDIDATE_EDIT_TIME: "/management_panel/SetCandidateEditTime/:id/",
+  EXTEND_CANDIDATE_EDIT_TIME: "/management_panel/ExtendCandidateEditTime/:id/",
+  SET_CANDIDATE_EDIT_STATUS: "/management_panel/SetCandidateEditStatus/:idB/",
+  EXTEND_BALLOT_TIME: "/management_panel/ExtendBallotEndTime/:idB/",
+  HALT_BALLOT: "/management_panel/halt-ballot/:idB/",
 
   GET_DOC: "/management_panel/GetDocumentList/:id/",
   ADD_DOC: "/management_panel/AddDocumentToBallot/:idB/",
