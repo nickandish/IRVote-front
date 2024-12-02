@@ -4,7 +4,7 @@ import { TbPencil } from "react-icons/tb";
 import { Alert, Modal, Button } from "react-bootstrap";
 import apiClient from "../../../../../../../api/axios";
 import { API_URLS } from "../../../../../../../api/urls";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../../../../../../component/loading/Loading";
 import "../ballotRules.scss";
 
@@ -19,6 +19,8 @@ const CandidateCategoriesTable: React.FC<{ searchQuery: string }> = ({
   searchQuery,
 }) => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
   const [categories, setCategories] = useState<VoterGroup[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<VoterGroup[]>(
     []
@@ -80,8 +82,14 @@ const CandidateCategoriesTable: React.FC<{ searchQuery: string }> = ({
   };
 
   const handleEditClick = (categoryId: number) => {
-    console.log(`Editing category with ID: ${categoryId}`);
-    // Navigate or trigger edit logic here
+    const categoryToEdit = categories.find(
+      (category) => category.id === categoryId
+    );
+    if (categoryToEdit) {
+      navigate(`/admin/manage-boxes/${id}/rules/editRules`, {
+        state: { category: categoryToEdit }, // Pass the category object
+      });
+    }
   };
 
   const openDeleteModal = (categoryId: number) => {

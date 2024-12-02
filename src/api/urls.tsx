@@ -74,6 +74,7 @@ export const API_URLS = {
 
   GET_CATEGORIES: "/management_panel/GetBallotCandidateCategory/:idB/",
   ADD_CATEGORIES: "/management_panel/AddBallotCandidateCategory/:idB/",
-  EDIT_CATEGORIES: "/management_panel/EditeBallotCandidateCategory/:idB/:idCat",
+  EDIT_CATEGORIES:
+    "/management_panel/EditeBallotCandidateCategory/:idB/:idCat/",
   DEL_CATEGORIES: "/management_panel/DeleteBallotCandidateCategory/:idCat/",
 };

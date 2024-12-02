@@ -1,12 +1,15 @@
 @import "../../../../../../scss/box.scss";
 
 .ballot-rules {
+  padding-right: 6% !important;
+
   .delete-icon,
   .edit-icon {
-    color: $secondary;
+    color: $primary;
+    font-size: 1rem;
     &:hover {
+      color: $secondary2;
       cursor: pointer;
-      color: $primary;
     }
   }
 }
