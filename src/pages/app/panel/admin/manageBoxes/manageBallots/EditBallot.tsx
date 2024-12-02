@@ -4,10 +4,7 @@ import { Alert, Col, Container, Form, Row } from "react-bootstrap";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { API_URLS } from "../../../../../../api/urls";
 import apiClient from "../../../../../../api/axios";
-import {
-  DurationProvider,
-  useDuration,
-} from "../../../../../../api/contextApi/DurationContext";
+import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import Loading from "../../../../../../component/loading/Loading";
 import BallotWrapper from "../BallotWrapper";
 
@@ -160,6 +157,7 @@ const EditBallot = () => {
                   handleChange("Ballot_Type", parseInt(e.target.value))
                 }
                 disabled={isSubmitting}
+                className="custom-dropdown__control"
               >
                 <option value={0}>سند</option>
                 <option value={1}>کاندید</option>

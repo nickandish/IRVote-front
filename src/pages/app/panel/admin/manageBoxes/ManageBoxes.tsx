@@ -65,10 +65,10 @@ const ManageBoxes = () => {
               onClick={() => navigate(`/admin/manage-boxes/${ballot.id}`)}
             >
               <Card.Body className="text-center">
-                <h5>{ballot.Ballot_Farsi_Title}</h5>
+                <h5 className="fw-bold">{ballot.Ballot_Farsi_Title}</h5>
+                <p>نوع: {ballot.Ballot_Type === 0 ? "سند" : "کاندید"}</p>
                 <p>
-                  نوع: {ballot.Ballot_Type === 0 ? "سند" : "کاندید"} | تعداد
-                  اصلی: {ballot.Main_count} | رزرو: {ballot.Reserve_count}
+                  تعداد اصلی:{ballot.Main_count} رزرو:{ballot.Reserve_count}
                 </p>
               </Card.Body>
             </Card>

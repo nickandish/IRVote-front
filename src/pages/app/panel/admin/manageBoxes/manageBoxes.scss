@@ -1,7 +1,15 @@
 @import "../../../../../scss/box.scss";
 
 .manage-boxes {
-  padding-right: 15% !important;
-  padding-top: 3.5rem;
+  padding-right: 22% !important;
   padding-bottom: 3.5rem;
+
+  .ballot-box-card {
+    margin-top: 1rem;
+    height: 180px;
+    p {
+      font-size: 14px;
+      margin-bottom: 10px !important;
+    }
+  }
 }
