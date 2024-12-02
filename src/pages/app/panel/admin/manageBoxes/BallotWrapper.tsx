@@ -5,6 +5,7 @@ import BallotTime from "./ballotTime/BallotTime";
 import BallotRules from "./ballotTime/BallotRules";
 import DocManage from "./ballotTime/DocManage";
 import CandManage from "./ballotTime/CandManage";
+import AddCategories from "./ballotTime/candidateCategories/AddCategories";
 import { DurationProvider } from "../../../../../api/contextApi/DurationContext";
 
 const BallotWrapper = () => {
@@ -23,6 +24,7 @@ const BallotWrapper = () => {
           <Routes>
             <Route path="scheduling" element={<BallotTime />} />
             <Route path="rules" element={<BallotRules />} />
+            <Route path="rules/addRules" element={<AddCategories />} />
             <Route path="documents" element={<DocManage />} />
             <Route path="candidates" element={<CandManage />} />
           </Routes>

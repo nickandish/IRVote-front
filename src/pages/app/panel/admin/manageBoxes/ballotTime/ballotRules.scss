@@ -1,0 +1,12 @@
+@import "../../../../../../scss/box.scss";
+
+.ballot-rules {
+  .delete-icon,
+  .edit-icon {
+    color: $secondary;
+    &:hover {
+      cursor: pointer;
+      color: $primary;
+    }
+  }
+}
