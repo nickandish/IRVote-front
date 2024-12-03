@@ -45,6 +45,8 @@ const CandAdd: React.FC = () => {
   });
 
   const [categories, setCategories] = useState<Category[]>([]);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const [alertType, setAlertType] = useState<"success" | "error" | null>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -81,21 +83,37 @@ const CandAdd: React.FC = () => {
           },
         }
       );
-      console.log("Response:", response);
-    } catch (error) {
-      console.error("Error submitting form:", error);
+      console.log(response);
+
+      setAlertMessage("کاندید با موفقیت ثبت شد!");
+      setAlertType("success");
+
+      setTimeout(() => {
+        setAlertMessage(null);
+        setAlertType(null);
+      }, 3000);
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.detail || "خطا در ارسال اطلاعات";
+      setAlertMessage(errorMessage);
+      setAlertType("error");
+
+      setTimeout(() => {
+        setAlertMessage(null);
+        setAlertType(null);
+      }, 3000);
     }
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, files }: any = e.target as any;
+    const { name, value, files }: any = e.target;
 
     if (files) {
       setFormData((prevData) => ({
         ...prevData,
-        [name]: files[0], // Only use the first file in case of multiple files
+        [name]: files[0],
       }));
     } else {
       setFormData((prevData) => ({
@@ -106,12 +124,25 @@ const CandAdd: React.FC = () => {
   };
 
   return (
-    <CandDetail
-      formData={formData}
-      onInputChange={handleInputChange}
-      onSubmit={handleSubmit}
-      categories={categories}
-    />
+    <div>
+      {alertMessage && (
+        <div
+          className={`alert ${
+            alertType === "success" ? "alert-success" : "alert-danger"
+          }`}
+          role="alert"
+        >
+          {alertMessage}
+        </div>
+      )}
+
+      <CandDetail
+        formData={formData}
+        onInputChange={handleInputChange}
+        onSubmit={handleSubmit}
+        categories={categories}
+      />
+    </div>
   );
 };
 

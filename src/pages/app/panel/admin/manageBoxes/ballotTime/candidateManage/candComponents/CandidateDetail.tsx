@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Col, Dropdown, Row } from "react-bootstrap";
 import { LuImagePlus } from "react-icons/lu";
-import { FaPen, FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
+import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
 import img from "../../../../../../../../assets/femaileAvatar.svg";
 
 interface CandidateDetailProps {
@@ -33,28 +33,49 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
     formData.Candidate_Confirm_Status === "1"
   );
 
+  useEffect(() => {
+    if (formData.Candidate_Confirm_Status === undefined) {
+      const event = {
+        target: { name: "Candidate_Confirm_Status", value: "0" },
+      } as React.ChangeEvent<HTMLInputElement>;
+
+      onInputChange(event);
+    }
+  }, [formData.Candidate_Confirm_Status, onInputChange]);
+
   const handleUploadFile = () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
+
     input.onchange = (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
         setImageSrc(URL.createObjectURL(file));
-        onInputChange({
-          target: { name: "Image", value: file },
-        });
+
+        const customEvent = {
+          target: {
+            name: "Image",
+            files: [file],
+          },
+        };
+
+        onInputChange(customEvent as any);
       }
     };
+
     input.click();
   };
 
   const handleConfirmToggle = () => {
-    setStatus(!status);
     const newStatus = status ? "0" : "1";
-    onInputChange({
+    setStatus(!status);
+
+    const event = {
       target: { name: "Candidate_Confirm_Status", value: newStatus },
-    });
+    } as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+
+    onInputChange(event);
   };
 
   return (
@@ -82,6 +103,11 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
               وضعیت:
             </Col>
             <Col xs={6} className="value">
+              {formData.Candidate_Confirm_Status === "1" ? (
+                <p> تایید شده</p>
+              ) : (
+                <p> تایید نشده</p>
+              )}
               <button onClick={handleConfirmToggle}>
                 {status ? "تایید شده" : "تایید کردن کاندید"}
               </button>
@@ -149,7 +175,7 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
                   if (id) {
                     onInputChange({
                       target: { name: "CandidateCategory", value: id },
-                    });
+                    } as React.ChangeEvent<HTMLInputElement>);
                   }
                 }}
               >
@@ -174,9 +200,9 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
         <Col xs={2} className="text-center">
           <Row className="mb-3">
             {formData.Candidate_Confirm_Status === "1" ? (
-              <FaRegCircleXmark className="action-icon" />
-            ) : (
               <FaRegCircleCheck className="action-icon" />
+            ) : (
+              <FaRegCircleXmark className="action-icon" />
             )}
           </Row>
         </Col>
