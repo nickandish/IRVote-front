@@ -8,6 +8,7 @@ import DocManage from "./ballotTime/DocManage";
 import CandManage from "./ballotTime/CandManage";
 import AddCategories from "./ballotTime/candidateCategories/AddCategories";
 import EditCategories from "./ballotTime/candidateCategories/EditCategories";
+import CandAdd from "./ballotTime/candidateManage/CandAdd";
 
 const BallotWrapper = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,6 +30,7 @@ const BallotWrapper = () => {
             <Route path="rules/editRules" element={<EditCategories />} />
             <Route path="documents" element={<DocManage />} />
             <Route path="candidates" element={<CandManage />} />
+            <Route path="candidates/addCandidate" element={<CandAdd />} />
           </Routes>
         </div>
       </DurationProvider>
