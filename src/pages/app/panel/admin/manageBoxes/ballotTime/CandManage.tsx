@@ -12,12 +12,19 @@ import "./candManage.scss";
 const CandManage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchQuery, setSearchQuery] = useState("");
-  const [candidates, setCandidates] = useState([]);
+  const [candidates, setCandidates] = useState<any[]>([]); // Define the type for candidates as any or Candidate[]
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+  };
+
+  // Function to update the candidates list after a deletion
+  const updateCandidates = (deletedCandidateId: number) => {
+    setCandidates((prevCandidates) =>
+      prevCandidates.filter((candidate) => candidate.id !== deletedCandidateId)
+    );
   };
 
   useEffect(() => {
@@ -35,7 +42,7 @@ const CandManage = () => {
     };
 
     fetchCandidates();
-  }, []);
+  }, [id]);
 
   return (
     <Container className="candidate-manage">
@@ -52,7 +59,11 @@ const CandManage = () => {
       ) : error ? (
         <div>{error}</div>
       ) : (
-        <CandTable candidates={candidates} searchQuery={searchQuery} />
+        <CandTable
+          candidates={candidates}
+          searchQuery={searchQuery}
+          updateCandidates={updateCandidates}
+        />
       )}
     </Container>
   );

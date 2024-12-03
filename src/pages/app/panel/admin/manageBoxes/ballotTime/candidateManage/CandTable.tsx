@@ -19,9 +19,11 @@ interface Candidate {
 const CandTable = ({
   candidates,
   searchQuery,
+  updateCandidates, // Get the function from parent to update candidates list
 }: {
   candidates: Candidate[];
   searchQuery: string;
+  updateCandidates: (deletedCandidateId: number) => void; // Type for the updateCandidates function
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -50,9 +52,10 @@ const CandTable = ({
     if (selectedCandidate === null) return;
     try {
       await apiClient.delete(
-        API_URLS.DEL_CATEGORIES.replace(":idCat", String(selectedCandidate))
+        API_URLS.DEL_cANDIDATE.replace(":id", String(selectedCandidate))
       );
       setSuccess("دسته‌بندی با موفقیت حذف شد.");
+      updateCandidates(selectedCandidate); // Call the function to update the list
       setShowModal(false);
     } catch (err: any) {
       setError("خطا در حذف دسته‌بندی.");
