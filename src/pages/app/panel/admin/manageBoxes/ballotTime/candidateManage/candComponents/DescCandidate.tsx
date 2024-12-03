@@ -1,15 +1,33 @@
-import { Card } from "react-bootstrap";
+import React from "react";
+import { Card, Form } from "react-bootstrap";
 
-const DescCandidate = () => {
+interface DescCandidateProps {
+  formData: {
+    Description: string;
+  };
+  onInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+}
+
+const DescCandidate: React.FC<DescCandidateProps> = ({
+  formData,
+  onInputChange,
+}) => {
   return (
     <Card className="mt-4 candidate-panel_desc">
       <Card.Body>
         <h5 className="desc-title mb-3">توضیحات کاندید درباره خود:</h5>
-        <p className="desc-text">
-          توضیحات کاندید درباره خود توضیحات کاندید درباره خود توضیحات کاندید
-          درباره خود توضیحات کاندید درباره خود توضیحات کاندید درباره خود توضیحات
-          کاندید درباره خود توضیحات کاندید درباره خود توضیحات کاندید درباره خود.
-        </p>
+        <Form.Group controlId="Description">
+          <Form.Label>توضیحات</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={4}
+            name="Description"
+            value={formData.Description}
+            onChange={onInputChange}
+          />
+        </Form.Group>
       </Card.Body>
     </Card>
   );
