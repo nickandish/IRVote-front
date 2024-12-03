@@ -1,3 +1,14 @@
+@import "../../../../../../scss/box.scss";
+
 .candidate-manage {
   padding-right: 10% !important;
+
+  .delete-icon,
+  .edit-icon {
+    font-size: 1rem;
+    &:hover {
+      color: $secondary2;
+      cursor: pointer;
+    }
+  }
 }

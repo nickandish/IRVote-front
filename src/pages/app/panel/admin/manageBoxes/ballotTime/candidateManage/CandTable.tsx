@@ -65,7 +65,7 @@ const CandTable = ({
 
   const handleEditClick = (candidateId: number) => {
     navigate(
-      `/admin/manage-boxes/${id}/candidates/edit-candidate/${candidateId}`
+      `/admin/manage-boxes/${id}/candidates/editCandidate/${candidateId}`
     );
   };
 
