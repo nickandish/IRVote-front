@@ -3,8 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import apiClient from "../../../../../../../api/axios";
 import { API_URLS } from "../../../../../../../api/urls";
 import CandidateDetail from "./candidateEditComponent/CandidateDetail";
-import FileVideoBtn from "./candidateEditComponent/FileVideoBtn";
-import DescCandidate from "./candidateEditComponent/DescCandidate";
 import BtnSubmit from "./candidateEditComponent/BtnSubmit";
 import TicketCandidate from "./candidateEditComponent/TicketCandidate";
 import { Category } from "./CandAdd";
@@ -72,12 +70,16 @@ const CandEdit = () => {
             ...prev,
             first_name: candidateData.first_name,
             last_name: candidateData.last_name,
-            email: candidateData.email || "",
-            mobile: candidateData.mobile || "",
+            email: candidateData.email,
+            mobile: candidateData.mobile,
+            Image: candidateData.Image,
+            Video: candidateData.Video,
+            CV: candidateData.CV,
+            Description: candidateData.Description,
             Candidate_Confirm_Status: String(
               candidateData.Candidate_Confirm_Status
             ),
-            CandidateCategory: candidateData.CandidateCategory || "",
+            CandidateCategory: candidateData.CandidateCategory,
             Qualified: candidateData.Qualified || false,
           }));
         }
@@ -108,7 +110,8 @@ const CandEdit = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value, files } = e.target;
+    const { name, value, files }: any = e.target;
+
     if (name === "Image" || name === "CV" || name === "Video") {
       setFormData((prev) => ({
         ...prev,
@@ -125,33 +128,64 @@ const CandEdit = () => {
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    try {
-      const formDataToSend = new FormData();
-      for (const key in formData) {
-        if (formData[key] !== null) {
-          formDataToSend.append(key, formData[key]);
+    const formDataToSend = new FormData();
+
+    Object.keys(formData).forEach((key) => {
+      if (formData[key as keyof FormData] !== null) {
+        if (key === "Image" || key === "CV" || key === "Video") {
+          if (formData[key as keyof FormData] instanceof File) {
+            formDataToSend.append(key, formData[key as keyof FormData] as File);
+          } else {
+            formDataToSend.append(
+              key,
+              formData[key as keyof FormData] as string
+            );
+          }
+        } else {
+          formDataToSend.append(key, formData[key as keyof FormData] as string);
         }
       }
+    });
 
-      await apiClient.put(
+    try {
+      const response = await apiClient.put(
         API_URLS.EDIT_CANDIDATE.replace(":idB", String(id)).replace(
           ":idC",
           String(idC)
         ),
-        formDataToSend
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
+      console.log(response);
 
       setAlertMessage("کاندید با موفقیت ویرایش شد.");
       setAlertType("success");
+
+      setTimeout(() => {
+        setAlertMessage(null);
+        setAlertType(null);
+      }, 3000);
+
       navigate(`/admin/manage-boxes/${id}/candidates`);
-    } catch (error) {
-      setAlertMessage("خطا در ویرایش کاندید.");
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.detail || "خطا در ویرایش کاندید.";
+      setAlertMessage(errorMessage);
       setAlertType("danger");
+
+      setTimeout(() => {
+        setAlertMessage(null);
+        setAlertType(null);
+      }, 3000);
     }
   };
 
   return (
-    <div>
+    <form onSubmit={onSubmit} encType="multipart/form-data">
       <Container className="candidate-panel candidate-manage">
         {alertMessage && (
           <div
@@ -175,8 +209,6 @@ const CandEdit = () => {
           onInputChange={onInputChange}
           categories={categories}
         />
-        <FileVideoBtn formData={formData} onInputChange={onInputChange} />
-        <DescCandidate formData={formData} onInputChange={onInputChange} />
 
         <BtnSubmit onSubmit={onSubmit} />
 
@@ -188,7 +220,7 @@ const CandEdit = () => {
         </Row>
         <TicketCandidate />
       </Container>
-    </div>
+    </form>
   );
 };
 

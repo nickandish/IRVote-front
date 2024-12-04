@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Form } from "react-bootstrap";
 
 interface DescCandidateProps {
@@ -14,6 +14,10 @@ const DescCandidate: React.FC<DescCandidateProps> = ({
   formData,
   onInputChange,
 }) => {
+  useEffect(() => {
+    console.log(formData);
+  }, []);
+
   return (
     <Card className="mt-4 candidate-panel_desc">
       <Card.Body>
