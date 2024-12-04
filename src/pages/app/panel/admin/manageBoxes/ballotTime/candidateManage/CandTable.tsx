@@ -19,11 +19,11 @@ interface Candidate {
 const CandTable = ({
   candidates,
   searchQuery,
-  updateCandidates, // Get the function from parent to update candidates list
+  updateCandidates,
 }: {
   candidates: Candidate[];
   searchQuery: string;
-  updateCandidates: (deletedCandidateId: number) => void; // Type for the updateCandidates function
+  updateCandidates: (deletedCandidateId: number) => void;
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const CandTable = ({
         API_URLS.DEL_cANDIDATE.replace(":id", String(selectedCandidate))
       );
       setSuccess("دسته‌بندی با موفقیت حذف شد.");
-      updateCandidates(selectedCandidate); // Call the function to update the list
+      updateCandidates(selectedCandidate);
       setShowModal(false);
     } catch (err: any) {
       setError("خطا در حذف دسته‌بندی.");
@@ -68,7 +68,8 @@ const CandTable = ({
 
   const handleEditClick = (candidateId: number) => {
     navigate(
-      `/admin/manage-boxes/${id}/candidates/editCandidate/${candidateId}`
+      `/admin/manage-boxes/${id}/candidates/editCandidate/${candidateId}`,
+      { state: { idC: candidateId, id: id } }
     );
   };
 
