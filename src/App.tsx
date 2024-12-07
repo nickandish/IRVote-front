@@ -48,7 +48,7 @@ function App() {
         <Route path="/profile-edit" element={<ProfileEdit />} />
 
         <Route path="/admin/*" element={<Admin />} />
-        <Route path="/observerPanel" element={<Observer />} />
+        <Route path="/observerPanel/*" element={<Observer />} />
         <Route path="/candidatePanel" element={<CandidatePanel />} />
 
         <Route path="/choose" element={<Main />} />
