@@ -1,7 +1,12 @@
-import React from "react";
+import { Container } from "react-bootstrap";
+import VoterBallotList from "./components/VoterBallotList";
 
 const Lists = () => {
-  return <div>Lists</div>;
+  return (
+    <Container className="list">
+      <VoterBallotList />
+    </Container>
+  );
 };
 
 export default Lists;
