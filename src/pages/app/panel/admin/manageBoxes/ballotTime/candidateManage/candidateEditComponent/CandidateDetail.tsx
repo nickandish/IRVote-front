@@ -19,7 +19,7 @@ interface CandidateDetailProps {
     Ballot_ID: string;
     Description: string;
     CandidateCategory: string;
-    Qualified: boolean;
+    Qualified: boolean | (() => boolean);
   };
   onInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,16 +39,16 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
 
   useEffect(() => {
     console.log(formData);
-  }, []);
+    setIsQualified(formData.Qualified ? 1 : 0);
+  }, [formData]);
 
-  const handleQualifiedToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = e.target.checked;
-    setIsQualified(isChecked);
+  const handleQualifiedToggle = (value: number) => {
+    setIsQualified(value);
 
     const event = {
       target: {
         name: "Qualified",
-        value: isChecked ? "true" : "false",
+        value: value === 1 ? "true" : "false",
       },
     } as React.ChangeEvent<HTMLInputElement>;
 
@@ -121,13 +121,26 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
               </Col>
               <Col xs={6} className="value">
                 <Form.Check
-                  type="checkbox"
-                  label="تایید صلاحیت"
-                  checked={isQualified}
-                  onChange={handleQualifiedToggle}
+                  type="radio"
+                  id="qualifiedYes"
+                  label="بله"
+                  name="Qualified"
+                  value="1"
+                  checked={isQualified === 1}
+                  onChange={() => handleQualifiedToggle(1)}
+                />
+                <Form.Check
+                  type="radio"
+                  id="qualifiedNo"
+                  label="خیر"
+                  name="Qualified"
+                  value="0"
+                  checked={isQualified === 0}
+                  onChange={() => handleQualifiedToggle(0)}
                 />
               </Col>
             </Row>
+
             <Row className="mb-2">
               <Col xs={6} className="label">
                 نام:
@@ -185,7 +198,6 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
                 گروه کاندید:
               </Col>
               <Col xs={6} className="value">
-                {/* Label مخفی برای نمایش ID */}
                 <label htmlFor="CandidateCategory" style={{ display: "none" }}>
                   {formData.CandidateCategory}
                 </label>

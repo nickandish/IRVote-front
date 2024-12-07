@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Card, Col, Dropdown, Row } from "react-bootstrap";
+import { Card, Col, Dropdown, Row, Form } from "react-bootstrap";
 import { LuImagePlus } from "react-icons/lu";
-import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
 import img from "../../../../../../../../assets/femaileAvatar.svg";
 
 interface CandidateDetailProps {
@@ -29,12 +28,12 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
   categories,
 }) => {
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
-  const [status, setStatus] = useState<boolean>(
-    formData.Candidate_Confirm_Status === "1"
+  const [isQualified, setIsQualified] = useState<number>(
+    formData.Candidate_Confirm_Status === "1" ? 1 : 0
   );
 
   useEffect(() => {
-    if (formData.Candidate_Confirm_Status === undefined) {
+    if (!formData.Candidate_Confirm_Status) {
       const event = {
         target: { name: "Candidate_Confirm_Status", value: "0" },
       } as React.ChangeEvent<HTMLInputElement>;
@@ -42,6 +41,16 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
       onInputChange(event);
     }
   }, [formData.Candidate_Confirm_Status, onInputChange]);
+
+  const handleQualifiedToggle = (value: number) => {
+    setIsQualified(value);
+
+    const event = {
+      target: { name: "Candidate_Confirm_Status", value: value.toString() },
+    } as React.ChangeEvent<HTMLInputElement>;
+
+    onInputChange(event);
+  };
 
   const handleUploadFile = () => {
     const input = document.createElement("input");
@@ -67,17 +76,6 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
     input.click();
   };
 
-  const handleConfirmToggle = () => {
-    const newStatus = status ? "0" : "1";
-    setStatus(!status);
-
-    const event = {
-      target: { name: "Candidate_Confirm_Status", value: newStatus },
-    } as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-
-    onInputChange(event);
-  };
-
   return (
     <Card className="candidate-detail-panel p-4">
       <Row className="align-items-center">
@@ -100,19 +98,30 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
         <Col xs={7}>
           <Row className="mb-2">
             <Col xs={6} className="label">
-              وضعیت:
+              تایید صلاحیت:
             </Col>
             <Col xs={6} className="value">
-              {formData.Candidate_Confirm_Status === "1" ? (
-                <p> تایید شده</p>
-              ) : (
-                <p> تایید نشده</p>
-              )}
-              <button onClick={handleConfirmToggle}>
-                {status ? "تایید شده" : "تایید کردن کاندید"}
-              </button>
+              <Form.Check
+                type="radio"
+                id="qualifiedYes"
+                label="بله"
+                name="Qualified"
+                value="1"
+                checked={isQualified === 1}
+                onChange={() => handleQualifiedToggle(1)}
+              />
+              <Form.Check
+                type="radio"
+                id="qualifiedNo"
+                label="خیر"
+                name="Qualified"
+                value="0"
+                checked={isQualified === 0}
+                onChange={() => handleQualifiedToggle(0)}
+              />
             </Col>
           </Row>
+
           <Row className="mb-2">
             <Col xs={6} className="label">
               نام:
@@ -194,16 +203,6 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
-          </Row>
-        </Col>
-
-        <Col xs={2} className="text-center">
-          <Row className="mb-3">
-            {formData.Candidate_Confirm_Status === "1" ? (
-              <FaRegCircleCheck className="action-icon" />
-            ) : (
-              <FaRegCircleXmark className="action-icon" />
-            )}
           </Row>
         </Col>
       </Row>
