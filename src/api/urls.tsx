@@ -78,6 +78,9 @@ export const API_URLS = {
     "/management_panel/EditeBallotCandidateCategory/:idB/:idCat/",
   DEL_CATEGORIES: "/management_panel/DeleteBallotCandidateCategory/:idCat/",
 
+  GET_CANDIDATE_PANEL: "/management_panel/CandidateGetuser/",
+  PUT_CANDIDATE_PANEL: "/management_panel/CandidateSelfEdit/",
+
   VOTER_BALLOT_LIST: "",
   VOTED_CANDIDATE_BALLOTS: "",
   DOCUMENT_BALLOT_LIST: "",

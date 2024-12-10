@@ -4,8 +4,8 @@ import { MdManageHistory } from "react-icons/md";
 import { TiGroupOutline } from "react-icons/ti";
 import MenuPanel from "../menu/MenuPanel";
 import Chart from "./charts/Chart";
-import Lists from "./lists/Lists";
 import "./observer.scss";
+import VoterLog from "./lists/voterLog/VoterLog";
 
 const Observer = () => {
   const navigate = useNavigate();
@@ -18,9 +18,19 @@ const Observer = () => {
       path: "/observerPanel/chart",
     },
     {
-      title: "لاگ‌ها",
+      title: "لاگ‌های رای دهنده",
       icon: <TiGroupOutline />,
-      path: "/observerPanel/logs",
+      path: "/observerPanel/voter-logs",
+    },
+    {
+      title: "لاگ‌های کاندیدها",
+      icon: <MdManageHistory />,
+      path: "/observerPanel/candidate-logs",
+    },
+    {
+      title: "لاگ‌های صندوق‌ها",
+      icon: <TiGroupOutline />,
+      path: "/observerPanel/ballot-logs",
     },
   ];
 
@@ -34,7 +44,9 @@ const Observer = () => {
       <Routes>
         <Route path="/" element={<Chart />} />
         <Route path="/chart" element={<Chart />} />
-        <Route path="/logs" element={<Lists />} />
+        <Route path="/voter-logs" element={<VoterLog />} />
+        <Route path="/candidate-logs" element={<VoterLog />} />
+        <Route path="/ballot-logs" element={<VoterLog />} />
       </Routes>
     </div>
   );
