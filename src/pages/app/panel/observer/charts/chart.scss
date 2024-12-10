@@ -3,4 +3,34 @@
 .chart {
   padding-right: 20% !important;
   padding-top: 10%;
+
+  .primary {
+    @include button(white, $primary, $primary, 2rem);
+    height: 2.5rem;
+    width: 12rem;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      @include button($primary, $primary, white, 2rem);
+      transform: scale(1.05);
+    }
+  }
+  .secondary {
+    @include button($primary, $primary, white, 2rem);
+    height: 2.5rem;
+    width: 12rem;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      @include button(white, $primary, $primary, 2rem);
+      transform: scale(1.05);
+    }
+  }
+
+  .css-1lbgfbl-MuiResponsiveChart-container {
+    width: 600px;
+
+    text {
+      background: red !important;
+      color: red !important;
+    }
+  }
 }
