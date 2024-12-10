@@ -4,8 +4,11 @@ import { MdManageHistory } from "react-icons/md";
 import { TiGroupOutline } from "react-icons/ti";
 import MenuPanel from "../menu/MenuPanel";
 import Chart from "./charts/Chart";
-import "./observer.scss";
 import VoterLog from "./lists/voterLog/VoterLog";
+import CandidateLog from "./lists/candidateLog/CandidateLog";
+import BallotLog from "./lists/ballotLog/BallotLog";
+import "./observer.scss";
+import { DurationProvider } from "../../../../api/contextApi/DurationContext";
 
 const Observer = () => {
   const navigate = useNavigate();
@@ -41,13 +44,15 @@ const Observer = () => {
         header="پنل نظارتی"
         onMenuItemClick={(path) => navigate(path)}
       />
-      <Routes>
-        <Route path="/" element={<Chart />} />
-        <Route path="/chart" element={<Chart />} />
-        <Route path="/voter-logs" element={<VoterLog />} />
-        <Route path="/candidate-logs" element={<VoterLog />} />
-        <Route path="/ballot-logs" element={<VoterLog />} />
-      </Routes>
+      <DurationProvider>
+        <Routes>
+          <Route path="/" element={<Chart />} />
+          <Route path="/chart" element={<Chart />} />
+          <Route path="/voter-logs" element={<VoterLog />} />
+          <Route path="/candidate-logs" element={<CandidateLog />} />
+          <Route path="/ballot-logs" element={<BallotLog />} />
+        </Routes>
+      </DurationProvider>
     </div>
   );
 };
