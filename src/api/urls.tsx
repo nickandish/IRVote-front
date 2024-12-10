@@ -82,6 +82,7 @@ export const API_URLS = {
   PUT_CANDIDATE_PANEL: "/management_panel/CandidateSelfEdit/",
 
   VOTER_PROVINCE_COUNT: "/observing_panel/VoterCount/:id/",
+  VOTER_GROUP_COUNT: "/observing_panel/VoterGroupCount/:id/",
 
   VOTER_BALLOT_LIST: "",
   VOTED_CANDIDATE_BALLOTS: "",
