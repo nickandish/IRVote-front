@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const apiClient = axios.create({
-  baseURL: "http://172.16.25.249:8000",
+  baseURL: "http://172.16.17.9:8000",
   headers: {
     "Content-Type": "application/json",
   },
