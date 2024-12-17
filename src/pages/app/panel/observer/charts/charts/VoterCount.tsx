@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URLS } from "../../../../../../api/urls";
 import apiClient from "../../../../../../api/axios";
-import { BarChart } from "@mui/x-charts";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import Loading from "../../../../../../component/loading/Loading";
 
@@ -29,10 +28,10 @@ const VoterCount: React.FC = () => {
         if (response.data) {
           setData(response.data);
         } else {
-          setError("دریافت اطلاعات رای‌دهندگان موفق نبود.");
+          setError("دریافت اطلاعات رأی‌دهندگان موفق نبود.");
         }
       } catch (err) {
-        setError("خطایی هنگام دریافت اطلاعات رای‌دهندگان رخ داد.");
+        setError("خطایی هنگام دریافت اطلاعات رأی‌دهندگان رخ داد.");
       } finally {
         setLoading(false);
       }
@@ -45,39 +44,62 @@ const VoterCount: React.FC = () => {
   if (error) return <p style={{ color: "red" }}>خطا: {error}</p>;
   if (!data) return <p>اطلاعاتی در دسترس نیست.</p>;
 
-  const dataset = [
-    { name: "تعداد رای دهندگان", value: data.total_voters },
-    { name: "حداقل رای ", value: data.vote_min_limit },
-    { name: "رای‌های تایید شده", value: data.voted_voters },
-  ];
+  const totalWidth = 100;
+  const votedWidth = (data.voted_voters / data.total_voters) * totalWidth;
+  const voteMinLimitWidth =
+    (data.vote_min_limit / data.total_voters) * totalWidth;
+
+  const getColor = () => {
+    const progress = Math.min(data.voted_voters / data.vote_min_limit, 1);
+    const greenIntensity = Math.floor(progress * 255);
+    return `rgb(255, ${greenIntensity}, 0)`;
+  };
+
+  const containerStyle = {
+    width: "100%",
+    height: "40px",
+    backgroundColor: "#e0e0e0",
+    borderRadius: "8px",
+    position: "relative",
+    overflow: "hidden",
+  };
+
+  const votedStyle = {
+    width: `${votedWidth}%`,
+    backgroundColor: getColor(),
+    height: "100%",
+    transition: "width 0.5s ease-in-out, background-color 0.5s ease-in-out",
+  };
+
+  const lineStyle = (left: number, color: string) => ({
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: `${left}%`,
+    width: "2px",
+    backgroundColor: color,
+  });
 
   return (
-    <BarChart
-      xAxis={[
-        {
-          label: "رای دهندگان",
-          dataKey: "name",
-          scaleType: "band",
-        },
-      ]}
-      yAxis={[
-        {
-          label: "تعداد رای‌ها",
-          scaleType: "linear",
-        },
-      ]}
-      width={350}
-      height={250}
-      layout="vertical"
-      grid={{ horizontal: true }}
-      dataset={dataset}
-      series={[
-        {
-          dataKey: "value",
-          color: "#8884d8",
-        },
-      ]}
-    />
+    <div>
+      <div style={containerStyle}>
+        <div style={votedStyle}></div>
+        <div style={lineStyle(voteMinLimitWidth, "red")}></div>
+        <div style={lineStyle(100, "green")}></div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "8px",
+        }}
+      >
+        <span>حداقل رأی: {data.vote_min_limit}</span>
+        <span>رأی‌های تأییدشده: {data.voted_voters}</span>
+        <span>کل رأی‌دهندگان: {data.total_voters}</span>
+      </div>
+    </div>
   );
 };
 

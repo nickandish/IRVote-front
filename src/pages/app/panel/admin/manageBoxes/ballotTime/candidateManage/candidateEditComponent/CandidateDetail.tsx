@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Dropdown, Row, Form } from "react-bootstrap";
 import { LuImagePlus } from "react-icons/lu";
-import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
 import img from "../../../../../../../../assets/femaileAvatar.svg";
 import "../../../../../candidate/candidatePanel.scss";
 
@@ -232,16 +231,6 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
               </Col>
             </Row>
           </Col>
-
-          <Col xs={2} className="text-center">
-            <Row className="mb-3">
-              {formData.Candidate_Confirm_Status === "1" ? (
-                <FaRegCircleCheck className="action-icon" />
-              ) : (
-                <FaRegCircleXmark className="action-icon" />
-              )}
-            </Row>
-          </Col>
         </Row>
       </Card>
 
@@ -265,7 +254,6 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
         <Card.Body>
           <Row className="align-items-center">
             <Col sm={6} className="text-center file-section">
-              <span>فایل پیوست کاندید</span>
               <Form.Group controlId="CV" className="mt-3">
                 <Form.Label>آپلود فایل</Form.Label>
                 <Form.Control
@@ -280,7 +268,6 @@ const CandidateDetail: React.FC<CandidateDetailProps> = ({
             <Col sm={6} className="text-center video-section">
               <span className="video-label">ویدیو پیوست کاندید</span>
               <Form.Group controlId="Video" className="mt-3">
-                <Form.Label>آپلود ویدیو</Form.Label>
                 <Form.Control
                   type="file"
                   name="Video"

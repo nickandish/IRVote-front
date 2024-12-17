@@ -1,0 +1,17 @@
+.obs-list {
+  padding-right: 25%;
+  padding-top: 4rem;
+
+  .table-container {
+    overflow: auto;
+    max-width: 100%;
+    max-height: 700px;
+    min-height: 650px;
+  }
+
+  .tbl {
+    width: 100%;
+    min-width: 800px;
+    table-layout: fixed;
+  }
+}

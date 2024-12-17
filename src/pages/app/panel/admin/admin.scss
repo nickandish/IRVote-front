@@ -1,0 +1,7 @@
+@import "../../../../scss/box.scss";
+
+button {
+  @include button();
+  width: 10rem;
+  //   height: 2rem;
+}

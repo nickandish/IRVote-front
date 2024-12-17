@@ -52,7 +52,7 @@ const CandidateDetail: React.FC = () => {
           lastName: data.last_name || "",
           email: data.email || "",
           mobile: data.mobile || "",
-          image: null, // Images aren't directly retrievable via GET, usually a URL is returned
+          image: null,
           cv: null,
           video: null,
           description: data.description || "",
@@ -65,7 +65,6 @@ const CandidateDetail: React.FC = () => {
     fetchCandidate();
   }, []);
 
-  // Save candidate data on form submit
   const saveCandidate = async () => {
     const formData = new FormData();
     formData.append("first_name", candidate.firstName);

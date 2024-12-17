@@ -11,26 +11,14 @@ const Chart = () => {
   return (
     <Container className="chart mb-5">
       <Row>
-        <Col className="col-12 col-md-6 col-lg-4">
-          <VoterCount />
-        </Col>
-        <Col className="col-12 col-md-6 col-lg-4">
-          <VoterProvinceCount />
-        </Col>
-        <Col className="col-12 col-lg-4">
-          <VoterGroupCount />
-        </Col>
+        <VoterCount />
+        <VoterProvinceCount />
+        <VoterGroupCount />
       </Row>
-      <Col className="col-12">
-        <VoterBallotList />
-      </Col>
+      <VoterBallotList />
       <Row>
-        <Col className="col-12 col-md-6">
-          <CandidateVoteResult />
-        </Col>
-        <Col className="col-12 col-md-6">
-          <DocVoterResult />
-        </Col>
+        <CandidateVoteResult />
+        <DocVoterResult />
       </Row>
 
       <Row className="text-center mt-5">

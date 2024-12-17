@@ -3,6 +3,7 @@ import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import apiClient from "../../../../../../api/axios";
 import { API_URLS } from "../../../../../../api/urls";
 import { BarChart } from "@mui/x-charts";
+import Loading from "../../../../../../component/loading/Loading";
 
 interface VoterGroupData {
   group: string;
@@ -47,8 +48,8 @@ const VoterGroupCount: React.FC = () => {
     fetchVoterGroupData();
   }, [durationId]);
 
-  if (durationLoading || loading) return <p>Loading...</p>;
-  if (durationError || error) return <p>Error: {durationError || error}</p>;
+  if (durationLoading || loading) return <Loading />;
+  if (durationError || error) return <p>ارور {durationError || error}</p>;
 
   if (!data || !data.voter_groups) return <p>No data available</p>;
 
@@ -59,8 +60,8 @@ const VoterGroupCount: React.FC = () => {
   return (
     <BarChart
       series={[
-        { data: capacity, label: "Min Limit", color: "#d3d3d3" },
-        { data: voterCounts, label: "Voter Count", color: "#3f51b5" },
+        { data: capacity, label: "Min Limit", color: "blue" },
+        { data: voterCounts, label: "Voter Count", color: "green" },
       ]}
       height={290}
       xAxis={[{ data: xAxisLabels, scaleType: "band" }]}

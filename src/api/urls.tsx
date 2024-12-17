@@ -85,8 +85,7 @@ export const API_URLS = {
   VOTER_PROVINCE_COUNT: "/observing_panel/VoterProvinceCount/:id/",
   VOTER_GROUP_COUNT: "/observing_panel/VoterGroupCount/:id/",
 
-  VOTER_BALLOT_LIST: "",
-  VOTED_CANDIDATE_BALLOTS: "",
-  DOCUMENT_BALLOT_LIST: "",
-  VOTER_STATUS_CHANGES: "",
+  VOTER_BALLOT: "/observing_panel/VoterBallotVoteList/:id/",
+  VOTER_STATUS_LIST: "/observing_panel/VoterStatusLogList/:id/",
+  VOTER_ACTION_LIST: "/observing_panel/VoterActionsLogList/:id/",
 };
