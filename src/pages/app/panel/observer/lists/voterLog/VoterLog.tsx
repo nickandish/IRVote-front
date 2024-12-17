@@ -7,11 +7,11 @@ import { Container } from "react-bootstrap";
 const VoterLog = () => {
   return (
     <Container className="obs-list">
-      <h3>فعالیت رای دهندگان</h3>
+      <h3 className="mt-5">فعالیت رای دهندگان</h3>
       <VoterVoteList />
-      <h3>وضعیت رای دهندگان</h3>
+      <h3 className="mt-5">وضعیت رای دهندگان</h3>
       <VoterSuspendList />
-      <h3>مدیریت اطلاعات رای دهندگان</h3>
+      <h3 className="mt-5">مدیریت اطلاعات رای دهندگان</h3>
       <VoterAction />
     </Container>
   );
