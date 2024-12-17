@@ -29,7 +29,7 @@ const VoterAction = () => {
       .catch((error) => {
         console.error("Error fetching voter action list:", error);
       });
-  }, []);
+  }, [observerDurationId]);
 
   return (
     <div

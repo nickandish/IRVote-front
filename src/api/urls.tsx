@@ -81,6 +81,7 @@ export const API_URLS = {
   GET_CANDIDATE_PANEL: "/management_panel/CandidateGetuser/",
   PUT_CANDIDATE_PANEL: "/management_panel/CandidateSelfEdit/",
 
+  // ObserverPanel
   VOTER_COUNT: "/observing_panel/VoterCount/:id/",
   VOTER_PROVINCE_COUNT: "/observing_panel/VoterProvinceCount/:id/",
   VOTER_GROUP_COUNT: "/observing_panel/VoterGroupCount/:id/",
@@ -88,4 +89,9 @@ export const API_URLS = {
   VOTER_BALLOT: "/observing_panel/VoterBallotVoteList/:id/",
   VOTER_STATUS_LIST: "/observing_panel/VoterStatusLogList/:id/",
   VOTER_ACTION_LIST: "/observing_panel/VoterActionsLogList/:id/",
+
+  ACTION_LOG: "/observing_panel/CandidateActionLogList/1/",
+  QUALIFIED_LOG: "/observing_panel/CandidateQualifiedLogList/1/",
+  EDIT_TIME_EXTENSION: "/observing_panel/CandidateEditTimeExtensionLogList/:id",
+  EDIT_STATUS_EXTENSION: "/observing_panel/CandidateEditStatusLogList/1/",
 };
