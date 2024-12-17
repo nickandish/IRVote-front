@@ -31,6 +31,19 @@ const VoterAction = () => {
       });
   }, [observerDurationId]);
 
+  const getActionText = (action: string) => {
+    switch (action) {
+      case "0":
+        return "افزودن";
+      case "1":
+        return "ویرایش";
+      case "2":
+        return "حذف";
+      default:
+        return "عملیاتی انجام نشده";
+    }
+  };
+
   return (
     <div
       className="table-container"
@@ -54,7 +67,7 @@ const VoterAction = () => {
               <td>{item.voter_first_name}</td>
               <td>{item.voter_last_name}</td>
               <td>{item.voter_mobile}</td>
-              <td>{item.action}</td>
+              <td>{getActionText(item.action)}</td>
               <td>{item.manager}</td>
               <td>{item.manager_ip || "ندارد"}</td>
               <td>{new Date(item.timestamp).toLocaleString("fa-IR")}</td>
