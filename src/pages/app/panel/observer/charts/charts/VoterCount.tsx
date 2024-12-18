@@ -97,6 +97,7 @@ const VoterCount: React.FC = () => {
             }}
             stroke="red"
             strokeDasharray="3 3"
+            strokeWidth={3}
           />
         </BarChart>
       </ResponsiveContainer>

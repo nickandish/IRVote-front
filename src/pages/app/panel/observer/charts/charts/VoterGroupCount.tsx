@@ -1,9 +1,19 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import apiClient from "../../../../../../api/axios";
 import { API_URLS } from "../../../../../../api/urls";
-import { BarChart } from "@mui/x-charts";
 import Loading from "../../../../../../component/loading/Loading";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Rectangle,
+} from "recharts";
 
 interface VoterGroupData {
   group: string;
@@ -12,8 +22,30 @@ interface VoterGroupData {
 }
 
 interface VoterGroupResponse {
-  voter_groups: VoterGroupData[] | null;
+  voter_groups: VoterGroupData[];
 }
+
+// تابع برای رسم خط قرمز (سفارشی)
+const CustomBarWithLimit = (props: any) => {
+  const { x, y, width, height, payload } = props;
+  const minLimit = payload.minLimit;
+
+  return (
+    <g>
+      {/* رسم مستطیل (ستون اصلی) */}
+      <Rectangle x={x} y={y} width={width} height={height} fill="#82ca9d" />
+      {/* رسم خط قرمز برای لیمیت */}
+      <line
+        x1={x}
+        y1={y + height - minLimit * (height / payload.voters)} // محاسبه دقیق موقعیت لیمیت
+        x2={x + width}
+        y2={y + height - minLimit * (height / payload.voters)}
+        stroke="red"
+        strokeWidth="3"
+      />
+    </g>
+  );
+};
 
 const VoterGroupCount: React.FC = () => {
   const {
@@ -36,10 +68,10 @@ const VoterGroupCount: React.FC = () => {
         if (response.data) {
           setData(response.data);
         } else {
-          setError("Failed to fetch voter group data");
+          setError("مشکلی در بارگیری رخ داده");
         }
       } catch (err) {
-        setError("An error occurred while fetching voter group data");
+        setError("با مشکلی در بارگیری اطلاعات مواجه هستیم");
       } finally {
         setLoading(false);
       }
@@ -49,24 +81,40 @@ const VoterGroupCount: React.FC = () => {
   }, [observerDurationId]);
 
   if (durationLoading || loading) return <Loading />;
-  if (durationError || error) return <p>ارور {durationError || error}</p>;
+  if (durationError || error) return <p>ارور: {durationError || error}</p>;
+  if (!data || !data.voter_groups) return <p>اطلاعاتی موجود نیست</p>;
 
-  if (!data || !data.voter_groups) return <p>No data available</p>;
-
-  const xAxisLabels = data.voter_groups.map((group) => group.group);
-  const voterCounts = data.voter_groups.map((group) => group.voter_count);
-  const capacity = data.voter_groups.map((group) => group.VoterGroup_min_limit);
+  const chartData = data.voter_groups.map((group) => ({
+    name: group.group,
+    voters: group.voter_count,
+    minLimit: group.VoterGroup_min_limit,
+  }));
 
   return (
-    <BarChart
-      series={[
-        { data: capacity, label: "Min Limit", color: "blue" },
-        { data: voterCounts, label: "Voter Count", color: "green" },
-      ]}
-      height={290}
-      xAxis={[{ data: xAxisLabels, scaleType: "band" }]}
-      margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
-    />
+    <div style={{ width: "100%", height: 400 }}>
+      <ResponsiveContainer>
+        <BarChart
+          data={chartData}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar
+            dataKey="voters"
+            name="تعداد رأی‌دهندگان"
+            shape={<CustomBarWithLimit />}
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

@@ -2,16 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import apiClient from "../../../../../../api/axios";
 import { API_URLS } from "../../../../../../api/urls";
-import { BarChart } from "@mui/x-charts";
 import Loading from "../../../../../../component/loading/Loading";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from "recharts";
 
 interface ProvinceData {
   province: string | null;
-  voter_count: number;
+  voted_voters: number;
 }
 
 interface VoterResponse {
-  provinces: ProvinceData[] | null;
+  provinces: ProvinceData[];
   Province_min_limit: number;
 }
 
@@ -54,25 +64,47 @@ const VoterProvinceCount: React.FC = () => {
 
   if (durationLoading || loading) return <Loading />;
   if (durationError || error) return <p>ارور: {durationError || error}</p>;
+  if (!data || !data.provinces) return <p>اطلاعاتی موجود نیست</p>;
 
-  if (!data || !data.provinces) return <p>No data available</p>;
-
-  const xAxisLabels = data.provinces.map(
-    (province) => province.province || "Unknown"
-  );
-  const voterCounts = data.provinces.map((province) => province.voter_count);
-  const capacity = Array(data.provinces.length).fill(data.Province_min_limit);
+  // Prepare data for the chart
+  const chartData = data.provinces.map((province) => ({
+    name: province.province || "ناشناخته",
+    voters: province.voted_voters,
+  }));
 
   return (
-    <BarChart
-      series={[
-        { data: capacity, label: "Capacity", color: "#d3d3d3" },
-        { data: voterCounts, label: "Voter Count", color: "#3f51b5" },
-      ]}
-      height={290}
-      xAxis={[{ data: xAxisLabels, scaleType: "band" }]}
-      margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
-    />
+    <div style={{ width: "100%", height: 400 }}>
+      <ResponsiveContainer>
+        <BarChart
+          data={chartData}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="voters" fill="#82ca9d" name="رأی‌دهندگان" />
+          <ReferenceLine
+            y={data.Province_min_limit}
+            label={{
+              value: `حداقل رأی: ${data.Province_min_limit}`,
+              position: "insideTopRight",
+              fill: "#000",
+              fontWeight: "bold",
+            }}
+            stroke="red"
+            strokeDasharray="3 3"
+            strokeWidth={3}
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
