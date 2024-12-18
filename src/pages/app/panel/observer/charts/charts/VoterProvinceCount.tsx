@@ -66,10 +66,10 @@ const VoterProvinceCount: React.FC = () => {
   if (durationError || error) return <p>ارور: {durationError || error}</p>;
   if (!data || !data.provinces) return <p>اطلاعاتی موجود نیست</p>;
 
-  // Prepare data for the chart
   const chartData = data.provinces.map((province) => ({
     name: province.province || "ناشناخته",
     voters: province.voted_voters,
+    isAboveLimit: province.voted_voters > data.Province_min_limit,
   }));
 
   return (
@@ -84,22 +84,53 @@ const VoterProvinceCount: React.FC = () => {
             bottom: 5,
           }}
         >
+          <defs>
+            <linearGradient id="aboveLimitGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#26ba6d" />
+              <stop offset="50%" stopColor="#02d880" />
+              <stop offset="100%" stopColor="#72d5f6" />
+            </linearGradient>
+            <linearGradient id="belowLimitGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#86f0ff" />
+              <stop offset="50%" stopColor="#72d5f6" />
+              <stop offset="100%" stopColor="#72d5f6" />
+            </linearGradient>
+          </defs>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="voters" fill="#82ca9d" name="رأی‌دهندگان" />
+          <Bar
+            dataKey="voters"
+            name="رأی‌دهندگان"
+            shape={(props: any) => {
+              const { x, y, width, height, payload } = props;
+              const gradientId = payload.isAboveLimit
+                ? "aboveLimitGradient"
+                : "belowLimitGradient";
+              return (
+                <rect
+                  x={x}
+                  y={y}
+                  width={width}
+                  height={height}
+                  fill={`url(#${gradientId})`}
+                />
+              );
+            }}
+          />
+
           <ReferenceLine
             y={data.Province_min_limit}
             label={{
               value: `حداقل رأی: ${data.Province_min_limit}`,
-              position: "insideTopRight",
+              position: "top",
               fill: "#000",
               fontWeight: "bold",
             }}
             stroke="red"
-            strokeDasharray="3 3"
+            strokeDasharray="10 10"
             strokeWidth={3}
           />
         </BarChart>

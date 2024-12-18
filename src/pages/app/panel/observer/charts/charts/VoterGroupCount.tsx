@@ -25,19 +25,16 @@ interface VoterGroupResponse {
   voter_groups: VoterGroupData[];
 }
 
-// تابع برای رسم خط قرمز (سفارشی)
 const CustomBarWithLimit = (props: any) => {
   const { x, y, width, height, payload } = props;
   const minLimit = payload.minLimit;
 
   return (
     <g>
-      {/* رسم مستطیل (ستون اصلی) */}
       <Rectangle x={x} y={y} width={width} height={height} fill="#82ca9d" />
-      {/* رسم خط قرمز برای لیمیت */}
       <line
         x1={x}
-        y1={y + height - minLimit * (height / payload.voters)} // محاسبه دقیق موقعیت لیمیت
+        y1={y + height - minLimit * (height / payload.voters)}
         x2={x + width}
         y2={y + height - minLimit * (height / payload.voters)}
         stroke="red"

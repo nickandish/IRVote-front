@@ -7,6 +7,7 @@ import CandidateQualified from "./CandidateQualified";
 const CandidateLog = () => {
   return (
     <Container className="obs-list">
+      <hr className="mt-5" />
       <h3>مدیریت اطلاعات کاندید</h3>
       <CandidateAction />
       <hr className="mt-5" />

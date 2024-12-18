@@ -12,6 +12,7 @@ import {
   Legend,
   ResponsiveContainer,
   ReferenceLine,
+  LabelList,
 } from "recharts";
 import Loading from "../../../../../../component/loading/Loading";
 
@@ -52,14 +53,16 @@ const VoterCount: React.FC = () => {
 
   const chartData = [
     {
-      name: "Voters",
+      name: "رای دهندگان",
       Participated: data.Participated_voters_count,
       Remaining: data.total_voters - data.Participated_voters_count,
     },
   ];
 
+  const isAboveLimit = data.Participated_voters_count >= data.vote_min_limit;
+
   return (
-    <div style={{ width: "50%", height: 400 }}>
+    <div style={{ width: "100%", height: 400, maxWidth: "20rem" }}>
       <ResponsiveContainer>
         <BarChart
           data={chartData}
@@ -70,32 +73,56 @@ const VoterCount: React.FC = () => {
             bottom: 5,
           }}
         >
+          {/* Define Gradient */}
+          <defs>
+            <linearGradient id="dynamicGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="0%"
+                stopColor={isAboveLimit ? "#26ba6d" : "#72d5f6"}
+              />
+              <stop
+                offset="50%"
+                stopColor={isAboveLimit ? "#02d880" : "#72d5f6"}
+              />
+
+              <stop
+                offset="100%"
+                stopColor={isAboveLimit ? "#72d5f6" : "#02d880"}
+              />
+            </linearGradient>
+          </defs>
+
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
+
+          {/* Dynamic Gradient for Participated */}
           <Bar
             dataKey="Participated"
             stackId="a"
-            fill="#82ca9d"
+            fill="url(#dynamicGradient)" // Use the gradient here
             name="شرکت کرده‌ها"
-          />
+          >
+            <LabelList dataKey="Participated" position="top" />
+          </Bar>
+
           <Bar
             dataKey="Remaining"
             stackId="a"
-            fill="#8884d8"
+            fill="#c2c2c2"
             name="باقی‌مانده‌ها"
           />
+
           {/* Vote Minimum Limit as a Reference Line */}
           <ReferenceLine
             y={data.vote_min_limit}
             label={{
               value: `حداقل رأی: ${data.vote_min_limit}`,
-              position: "insideTopRight",
+              position: "top",
               fill: "#000",
             }}
-            stroke="red"
             strokeDasharray="3 3"
             strokeWidth={3}
           />

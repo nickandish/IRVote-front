@@ -1,7 +1,4 @@
-import { Col, Container, Row } from "react-bootstrap";
-import CandidateVoteResult from "./charts/CandidateVoteResult";
-import DocVoterResult from "./charts/DocVoterResult";
-import VoterBallotList from "./charts/VoterBallotList";
+import { Container } from "react-bootstrap";
 import VoterCount from "./charts/VoterCount";
 import VoterGroupCount from "./charts/VoterGroupCount";
 import VoterProvinceCount from "./charts/VoterProvinceCount";
@@ -9,30 +6,23 @@ import "./chart.scss";
 
 const Chart = () => {
   return (
-    <Container className="chart mb-5">
-      <Row>
+    <Container className="chart mb-5 text-center">
+      <hr className="mt-5" />
+      <h3>فعالیت رای دهندگان</h3>
+      <div className="chart_chart">
         <VoterCount />
+      </div>
+      <hr className="mt-5" />
+      <h3>فعالیت رای دهندگان</h3>
+      <div className="chart_chart">
         <VoterProvinceCount />
-        <VoterGroupCount />
-      </Row>
-      <VoterBallotList />
-      <Row>
-        <CandidateVoteResult />
-        <DocVoterResult />
-      </Row>
+      </div>
 
-      <Row className="text-center mt-5">
-        <Col>
-          <button className="col-12 col-md-6 secondary">
-            تایید رای‌های نهایی نشده
-          </button>
-        </Col>
-        <Col>
-          <button className="col-12 col-md-6 primary">
-            تایید نهایی رای ها
-          </button>
-        </Col>
-      </Row>
+      <hr className="mt-5" />
+      <h3>فعالیت رای دهندگان</h3>
+      <div className="chart_chart">
+        <VoterGroupCount />
+      </div>
     </Container>
   );
 };
