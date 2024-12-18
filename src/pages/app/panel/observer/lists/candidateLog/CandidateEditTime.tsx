@@ -32,7 +32,7 @@ const CandidateEditTime = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [observerDurationId]);
 
   return (
     <div

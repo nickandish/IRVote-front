@@ -4,37 +4,40 @@ import { API_URLS } from "../../../../../../api/urls";
 import Loading from "../../../../../../component/loading/Loading";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 
-interface CandidateEditStatusItem {
-  ballot_id: number;
-  ballot_farsi_title: string;
-  old_status: boolean;
-  new_status: boolean;
+interface BallotActionItem {
+  action: string;
+  ballot_id: number | null;
+  ballot_name: string | null;
   manager: string;
   timestamp: string;
 }
 
-const CandidateEditStatus = () => {
-  const [data, setData] = useState<CandidateEditStatusItem[]>([]);
+const getActionText = (action: string) => {
+  switch (action) {
+    case "0":
+      return "افزودن";
+    case "1":
+      return "ویرایش";
+    case "2":
+      return "حذف";
+    default:
+      return "عملیاتی انجام نشده";
+  }
+};
+
+const BallotAction = () => {
+  const [data, setData] = useState<BallotActionItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { observerDurationId } = useDuration();
 
-  const getStatusText = (status: boolean) => {
-    return status ? "فعال" : "غیرفعال";
-  };
-
   useEffect(() => {
     apiClient
-      .get(
-        API_URLS.EDIT_STATUS_EXTENSION.replace(
-          ":id",
-          String(observerDurationId)
-        )
-      )
+      .get(API_URLS.BALLOT_ACTION.replace(":id", String(observerDurationId)))
       .then((response) => {
         setData(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching edit status logs:", error);
+        console.error("Error fetching ballot actions:", error);
       })
       .finally(() => {
         setLoading(false);
@@ -54,19 +57,17 @@ const CandidateEditStatus = () => {
         <table className="text-center mt-4 tbl">
           <thead className="text-light">
             <tr>
-              <th>عنوان رای‌گیری</th>
-              <th>وضعیت قبلی</th>
-              <th>وضعیت جدید</th>
+              <th>نام صندوق</th>
+              <th>عملیات</th>
               <th>مدیر</th>
-              <th>زمان تغییر</th>
+              <th>زمان انجام</th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index}>
-                <td>{item.ballot_farsi_title}</td>
-                <td>{getStatusText(item.old_status)}</td>
-                <td>{getStatusText(item.new_status)}</td>
+                <td>{item.ballot_name || "ناموجود"}</td>
+                <td>{getActionText(item.action)}</td>
                 <td>{item.manager}</td>
                 <td>{new Date(item.timestamp).toLocaleString("fa-IR")}</td>
               </tr>
@@ -78,4 +79,4 @@ const CandidateEditStatus = () => {
   );
 };
 
-export default CandidateEditStatus;
+export default BallotAction;

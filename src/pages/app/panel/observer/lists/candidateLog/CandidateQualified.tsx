@@ -32,7 +32,7 @@ const CandidateQualified = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [observerDurationId]);
 
   return (
     <div

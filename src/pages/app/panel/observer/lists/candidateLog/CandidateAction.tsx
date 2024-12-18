@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { API_URLS } from "../../../../../../api/urls";
 import apiClient from "../../../../../../api/axios";
 import Loading from "../../../../../../component/loading/Loading";
+import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 
 interface CandidateActionItem {
   candidate_last_name: string;
@@ -18,6 +19,7 @@ interface CandidateActionItem {
 const CandidateAction = () => {
   const [data, setData] = useState<CandidateActionItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { observerDurationId } = useDuration();
 
   const getActionText = (action: string) => {
     switch (action) {
@@ -34,7 +36,7 @@ const CandidateAction = () => {
 
   useEffect(() => {
     apiClient
-      .get(API_URLS.ACTION_LOG)
+      .get(API_URLS.ACTION_LOG.replace(":id", String(observerDurationId)))
       .then((response) => {
         setData(response.data);
       })
@@ -44,7 +46,7 @@ const CandidateAction = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [observerDurationId]);
 
   return (
     <div

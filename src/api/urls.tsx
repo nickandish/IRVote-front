@@ -90,8 +90,12 @@ export const API_URLS = {
   VOTER_STATUS_LIST: "/observing_panel/VoterStatusLogList/:id/",
   VOTER_ACTION_LIST: "/observing_panel/VoterActionsLogList/:id/",
 
-  ACTION_LOG: "/observing_panel/CandidateActionLogList/1/",
-  QUALIFIED_LOG: "/observing_panel/CandidateQualifiedLogList/1/",
+  // candidate log
+  ACTION_LOG: "/observing_panel/CandidateActionLogList/:id/",
+  QUALIFIED_LOG: "/observing_panel/CandidateQualifiedLogList/:id/",
   EDIT_TIME_EXTENSION: "/observing_panel/CandidateEditTimeExtensionLogList/:id",
-  EDIT_STATUS_EXTENSION: "/observing_panel/CandidateEditStatusLogList/1/",
+  EDIT_STATUS_EXTENSION: "/observing_panel/CandidateEditStatusLogList/:id/",
+
+  BALLOT_STATUS: "/observing_panel/BallotStatusLogList/:id/",
+  BALLOT_ACTION: "/observing_panel/BallotActionLogList/:id/",
 };
