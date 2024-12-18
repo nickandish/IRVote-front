@@ -7,8 +7,10 @@ import Chart from "./charts/Chart";
 import VoterLog from "./lists/voterLog/VoterLog";
 import CandidateLog from "./lists/candidateLog/CandidateLog";
 import BallotLog from "./lists/ballotLog/BallotLog";
-import "./observer.scss";
 import { DurationProvider } from "../../../../api/contextApi/DurationContext";
+import CandidateVoteResult from "./charts/charts/CandidateVoteResult";
+import DocVoterResult from "./charts/charts/DocVoterResult";
+import "./observer.scss";
 
 const Observer = () => {
   const navigate = useNavigate();
@@ -35,6 +37,16 @@ const Observer = () => {
       icon: <TiGroupOutline />,
       path: "/observerPanel/ballot-logs",
     },
+    {
+      title: "نمایش نتایج کاندیدها",
+      icon: <TiGroupOutline />,
+      path: "/observerPanel/candidate-result",
+    },
+    {
+      title: "نمایش نتایج سندها",
+      icon: <TiGroupOutline />,
+      path: "/observerPanel/document-result",
+    },
   ];
 
   return (
@@ -51,6 +63,8 @@ const Observer = () => {
           <Route path="/voter-logs" element={<VoterLog />} />
           <Route path="/candidate-logs" element={<CandidateLog />} />
           <Route path="/ballot-logs" element={<BallotLog />} />
+          <Route path="/candidate-result" element={<CandidateVoteResult />} />
+          <Route path="/document-result" element={<DocVoterResult />} />
         </Routes>
       </DurationProvider>
     </div>

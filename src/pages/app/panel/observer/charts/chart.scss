@@ -34,3 +34,17 @@
     }
   }
 }
+
+.candidate-chart {
+  .green-bar {
+    fill: $accept;
+  }
+
+  .blue-bar {
+    fill: $secondary2;
+  }
+
+  .red-bar {
+    fill: $red;
+  }
+}
