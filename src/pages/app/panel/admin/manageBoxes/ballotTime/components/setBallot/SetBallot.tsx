@@ -5,11 +5,12 @@ import { Row, Col, Form, Card, Alert } from "react-bootstrap";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import gregorian_fa from "react-date-object/locales/gregorian_fa";
-import { MdCalendarMonth } from "react-icons/md";
 import apiClient from "../../../../../../../../api/axios";
 import { API_URLS } from "../../../../../../../../api/urls";
 import { useParams } from "react-router-dom";
 import "../../ballotTime.scss";
+import { HiOutlineArchiveBox } from "react-icons/hi2";
+import { BsPersonArmsUp } from "react-icons/bs";
 
 const SetBallot = () => {
   const { id } = useParams<{ id: string }>();
@@ -133,7 +134,6 @@ const SetBallot = () => {
           <Row>
             <Col sm={6}>
               تاریخ شروع صندوق:
-              <MdCalendarMonth style={{ cursor: "pointer" }} />
               <DatePicker
                 value={startDate}
                 onChange={(date) => setStartDate(date ? date.toDate() : null)}
@@ -154,7 +154,6 @@ const SetBallot = () => {
           <Row>
             <Col sm={6}>
               تاریخ پایان صندوق:
-              <MdCalendarMonth style={{ cursor: "pointer" }} />
               <DatePicker
                 value={endDate}
                 onChange={(date) => setEndDate(date ? date.toDate() : null)}
@@ -174,7 +173,7 @@ const SetBallot = () => {
           </Row>
         </Col>
         <Col className="col-4">
-          <MdCalendarMonth style={{ fontSize: "15rem" }} />
+          <HiOutlineArchiveBox className="big-icon" />
         </Col>
       </Row>
       <Row>
@@ -185,7 +184,6 @@ const SetBallot = () => {
           <Row>
             <Col sm={6}>
               تاریخ شروع ویرایش کاندیدها:
-              <MdCalendarMonth style={{ cursor: "pointer" }} />
               <DatePicker
                 value={candidateEditStart}
                 onChange={(date) =>
@@ -208,7 +206,6 @@ const SetBallot = () => {
           <Row>
             <Col sm={6}>
               تاریخ پایان ویرایش کاندید:
-              <MdCalendarMonth style={{ cursor: "pointer" }} />
               <DatePicker
                 value={candidateEditEnd}
                 onChange={(date) =>
@@ -232,7 +229,7 @@ const SetBallot = () => {
           </Row>
         </Col>
         <Col className="col-4">
-          <MdCalendarMonth style={{ fontSize: "15rem" }} />
+          <BsPersonArmsUp className="big-icon" />
         </Col>
       </Row>
 

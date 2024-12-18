@@ -24,6 +24,13 @@
 
   input {
     height: 2rem;
+    border-bottom: 1px solid $primary;
+    border-radius: 2rem;
+  }
+
+  .big-icon {
+    margin-top: 3rem;
+    font-size: 8rem;
   }
 
   button {
@@ -36,6 +43,21 @@
 
     &:hover {
       @include button($primary, $primary, white, 2rem);
+    }
+  }
+
+  .rmdp-arrow-container {
+    @include button(blue, transparent, transparent, 2rem);
+    width: 1.5rem;
+    height: 1.5rem;
+    border: none;
+
+    &:hover {
+      background: $primary;
+      padding: 0.3rem;
+      color: inherit;
+      border: none !important;
+      box-shadow: none;
     }
   }
 }

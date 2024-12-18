@@ -2,6 +2,18 @@
 
 .candidate-panel {
   padding-right: 20% !important;
+
+  input {
+    border-radius: 2rem;
+    border: 1px solid $primary;
+    border-bottom: 2px solid $primary;
+    height: 2.3rem;
+    padding-right: 0.6rem;
+  }
+
+  .form-check-input {
+    padding-right: 0rem;
+  }
   .candidate-detail-panel {
     .profile-pic {
       position: relative;
@@ -14,18 +26,31 @@
 
       .image-overlay {
         position: absolute;
-        width: 1.5rem;
-        height: 1.5rem;
-        bottom: 0px;
-        right: 55px;
+        width: 2rem;
+        height: 2rem;
+        bottom: -13px;
+        right: 48px;
         background: #fff;
         border: 1px solid #ddd;
         border-radius: 50%;
         padding: 4px;
+        transition: all 0.3s ease-in;
 
         .icon {
           color: $primary;
-          height: 1.5rem;
+          height: 2rem;
+          padding-bottom: 0.5rem;
+          transition: all 0.3s ease-in;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background-color: $primary;
+          border-color: $primary;
+          .icon {
+            color: white;
+            transform: scale(1.1);
+          }
         }
       }
     }
