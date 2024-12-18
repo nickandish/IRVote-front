@@ -17,7 +17,7 @@ interface VoterGroupResponse {
 
 const VoterGroupCount: React.FC = () => {
   const {
-    durationId,
+    observerDurationId,
     isLoading: durationLoading,
     error: durationError,
   } = useDuration();
@@ -27,11 +27,11 @@ const VoterGroupCount: React.FC = () => {
 
   useEffect(() => {
     const fetchVoterGroupData = async () => {
-      if (!durationId) return;
+      if (!observerDurationId) return;
       setLoading(true);
       try {
         const response = await apiClient.get(
-          API_URLS.VOTER_GROUP_COUNT.replace(":id", String(durationId))
+          API_URLS.VOTER_GROUP_COUNT.replace(":id", String(observerDurationId))
         );
         if (response.data) {
           setData(response.data);
@@ -46,7 +46,7 @@ const VoterGroupCount: React.FC = () => {
     };
 
     fetchVoterGroupData();
-  }, [durationId]);
+  }, [observerDurationId]);
 
   if (durationLoading || loading) return <Loading />;
   if (durationError || error) return <p>ارور {durationError || error}</p>;

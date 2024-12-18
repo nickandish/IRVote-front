@@ -17,7 +17,7 @@ interface VoterResponse {
 
 const VoterProvinceCount: React.FC = () => {
   const {
-    durationId,
+    observerDurationId,
     isLoading: durationLoading,
     error: durationError,
   } = useDuration();
@@ -27,11 +27,14 @@ const VoterProvinceCount: React.FC = () => {
 
   useEffect(() => {
     const fetchVoterData = async () => {
-      if (!durationId) return;
+      if (!observerDurationId) return;
       setLoading(true);
       try {
         const response = await apiClient.get(
-          API_URLS.VOTER_PROVINCE_COUNT.replace(":id", String(durationId))
+          API_URLS.VOTER_PROVINCE_COUNT.replace(
+            ":id",
+            String(observerDurationId)
+          )
         );
         if (response.data) {
           setData(response.data);
@@ -47,7 +50,7 @@ const VoterProvinceCount: React.FC = () => {
     };
 
     fetchVoterData();
-  }, [durationId]);
+  }, [observerDurationId]);
 
   if (durationLoading || loading) return <Loading />;
   if (durationError || error) return <p>ارور: {durationError || error}</p>;
