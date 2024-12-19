@@ -25,25 +25,6 @@ interface VoterGroupResponse {
   voter_groups: VoterGroupData[];
 }
 
-const CustomBarWithLimit = (props: any) => {
-  const { x, y, width, height, payload } = props;
-  const minLimit = payload.minLimit;
-
-  return (
-    <g>
-      <Rectangle x={x} y={y} width={width} height={height} fill="#82ca9d" />
-      <line
-        x1={x}
-        y1={y + height - minLimit * (height / payload.voters)}
-        x2={x + width}
-        y2={y + height - minLimit * (height / payload.voters)}
-        stroke="red"
-        strokeWidth="3"
-      />
-    </g>
-  );
-};
-
 const VoterGroupCount: React.FC = () => {
   const {
     observerDurationId,
@@ -99,6 +80,18 @@ const VoterGroupCount: React.FC = () => {
             bottom: 5,
           }}
         >
+          <defs>
+            <linearGradient id="aboveLimitGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#26ba6d" />
+              <stop offset="50%" stopColor="#02d880" />
+              <stop offset="100%" stopColor="#72d5f6" />
+            </linearGradient>
+            <linearGradient id="belowLimitGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#86f0ff" />
+              <stop offset="50%" stopColor="#72d5f6" />
+              <stop offset="100%" stopColor="#72d5f6" />
+            </linearGradient>
+          </defs>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
@@ -107,7 +100,37 @@ const VoterGroupCount: React.FC = () => {
           <Bar
             dataKey="voters"
             name="تعداد رأی‌دهندگان"
-            shape={<CustomBarWithLimit />}
+            shape={(props: any) => {
+              const { x, y, width, height, payload } = props;
+              const minLimitHeight =
+                payload.minLimit * (height / payload.voters);
+
+              const isAboveLimit = payload.voters >= payload.minLimit;
+
+              return (
+                <g>
+                  <Rectangle
+                    x={x}
+                    y={y}
+                    width={width}
+                    height={height}
+                    fill={
+                      isAboveLimit
+                        ? "url(#aboveLimitGradient)"
+                        : "url(#belowLimitGradient)"
+                    }
+                  />
+                  <line
+                    x1={x}
+                    y1={y + height - minLimitHeight}
+                    x2={x + width}
+                    y2={y + height - minLimitHeight}
+                    stroke="red"
+                    strokeWidth="3"
+                  />
+                </g>
+              );
+            }}
           />
         </BarChart>
       </ResponsiveContainer>

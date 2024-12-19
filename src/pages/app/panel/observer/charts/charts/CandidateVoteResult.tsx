@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import {
   BarChart,
   Bar,
@@ -53,41 +53,66 @@ const CandidateVoteResult = () => {
 
   if (!ballotData) return <Loading />;
 
+  const handlePostVote = async (document_id: number) => {
+    try {
+      const response = await apiClient.post(
+        API_URLS.POST_OBSERVER.replace(":id", String(document_id))
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error posting vote:", error);
+    }
+  };
+
   return (
     <Container className="obs-list candidate-chart">
       <h3 className="mt-5">فعالیت رای دهندگان</h3>
       {Object.keys(ballotData).map((ballotName) => (
-        <div key={ballotName}>
-          <h4>{ballotName}</h4>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart
-              width={600}
-              height={400}
-              data={transformChartData(ballotData[ballotName])}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="weighted_votes" name="تعداد آراء">
-                {transformChartData(ballotData[ballotName]).map(
-                  (entry, index) => (
-                    <Cell key={`cell-${index}`} className={entry.className} />
-                  )
-                )}
-              </Bar>
-              <Bar dataKey="percentage" name="درصد آراء">
-                {transformChartData(ballotData[ballotName]).map(
-                  (entry, index) => (
-                    <Cell key={`cell-${index}`} className={entry.className} />
-                  )
-                )}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        <>
+          <hr />
+          <div key={ballotName}>
+            <h4>{ballotName}</h4>
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart
+                width={600}
+                height={400}
+                data={transformChartData(ballotData[ballotName])}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="weighted_votes" name="تعداد آراء">
+                  {transformChartData(ballotData[ballotName]).map(
+                    (entry, index) => (
+                      <Cell key={`cell-${index}`} className={entry.className} />
+                    )
+                  )}
+                </Bar>
+                <Bar dataKey="percentage" name="درصد آراء">
+                  {transformChartData(ballotData[ballotName]).map(
+                    (entry, index) => (
+                      <Cell key={`cell-${index}`} className={entry.className} />
+                    )
+                  )}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <Row>
+            <Col className="col-12 col-sm-7"></Col>
+            <Col className="col-12 col-sm-5">
+              <button
+                className="button"
+                onClick={() => handlePostVote(ballotData[ballotName].ballot_id)}
+              >
+                تایید رای های نهایی نشده
+              </button>
+            </Col>
+          </Row>
+        </>
       ))}
     </Container>
   );

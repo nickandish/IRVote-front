@@ -8,6 +8,10 @@
     max-width: 30rem;
     margin: auto;
   }
+
+  .voterCount {
+    margin-right: 5rem;
+  }
 }
 
 .candidate-chart {
@@ -31,4 +35,16 @@
   .doc-title {
     display: none;
   }
+}
+.button {
+  margin-top: 1rem;
+  @include button();
+  border-radius: 3rem !important;
+  width: 12rem;
+  height: 2.5rem;
+}
+
+.doc-btn {
+  margin-top: auto;
+  margin-right: 2rem;
 }

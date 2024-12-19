@@ -22,9 +22,9 @@ const getStatusText = (status: number) => {
     case 2:
       return "پایان یافته";
     case 3:
-      return "متوقف شده";
-    case 4:
       return "لغو شده";
+    case 4:
+      return "متوقف شده";
     default:
       return "وضعیت نامشخص";
   }

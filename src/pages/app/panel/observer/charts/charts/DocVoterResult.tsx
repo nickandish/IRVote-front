@@ -121,8 +121,19 @@ const DocVoterResult = () => {
 
   if (!ballotData) return <Loading />;
 
+  const handlePostVote = async (document_id: number) => {
+    try {
+      const response = await apiClient.post(
+        API_URLS.POST_OBSERVER.replace(":id", String(document_id))
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error posting vote:", error);
+    }
+  };
+
   return (
-    <div className="doc-voter-result obs-list container row">
+    <div className="doc-voter-result obs-list  row">
       {Object.keys(ballotData).map((ballotName) => (
         <Col className="col-12 col-md-4 col-sm-6">
           <h4 className=" text-center ">{ballotName}</h4>
@@ -164,6 +175,12 @@ const DocVoterResult = () => {
               </div>
             ))}
           </div>
+          <button
+            className="button doc-btn"
+            onClick={() => handlePostVote(ballotData[ballotName].ballot_id)}
+          >
+            تایید رای های نهایی نشده
+          </button>
         </Col>
       ))}
     </div>

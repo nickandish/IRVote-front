@@ -62,7 +62,10 @@ const VoterCount: React.FC = () => {
   const isAboveLimit = data.Participated_voters_count >= data.vote_min_limit;
 
   return (
-    <div style={{ width: "100%", height: 400, maxWidth: "20rem" }}>
+    <div
+      className="voterCount"
+      style={{ width: "100%", height: 400, maxWidth: "20rem" }}
+    >
       <ResponsiveContainer>
         <BarChart
           data={chartData}

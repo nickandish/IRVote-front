@@ -102,4 +102,6 @@ export const API_URLS = {
 
   BALLOT_STATUS: "/observing_panel/BallotStatusLogList/:id/",
   BALLOT_ACTION: "/observing_panel/BallotActionLogList/:id/",
+
+  POST_OBSERVER: "/observing_panel/SetVotesConfirmedByBallot/:id/",
 };
