@@ -10,16 +10,17 @@ import "../../../scss/myElection.tsx/myElection.scss";
 import CountDown from "./CountDown";
 
 interface ElectionBoxProps {
-  election: {
-    id: number;
-    Election_Duration_farsi_title: string;
-    Start_at: string;
-    End_at: string;
-    Status: number;
-    logo: string | null;
-    Confirm_status: number;
-    remaining_time: number;
-  };
+  election: Election;
+}
+export interface Election {
+  id: number;
+  Election_Duration_farsi_title: string;
+  Start_at: string;
+  End_at: string;
+  Status: number;
+  logo: string | null;
+  Confirm_status: number | null;
+  remaining_time: number;
 }
 
 const getStatusClass = (status: number) => {

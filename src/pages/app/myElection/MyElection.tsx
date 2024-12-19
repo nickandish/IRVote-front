@@ -35,18 +35,14 @@ const MyElection: React.FC = () => {
   }, []);
 
   if (loading) return <LoadingScreen />;
-  // if (error) return <ErrorScreen error={error} />;
   if (error) return <ErrorScreen />;
 
   return (
     <>
       <Header title="انتخابات من" />
       <Row className="my-elections">
-        {elections.map((election) => (
-          <ElectionBox
-            key={election.election.id}
-            election={election.election}
-          />
+        {elections.map((election: any) => (
+          <ElectionBox key={election.id} election={election} />
         ))}
       </Row>
       <Navbar />
