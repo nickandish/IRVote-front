@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row, Button } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import {
   BarChart,
   Bar,
@@ -116,12 +116,12 @@ const CandidateVoteResult = () => {
 
           <Row>
             <Col className="col-12 col-sm-6">
-              <Button
+              <button
                 className="button"
                 onClick={() => toggleChart(ballotName)}
               >
                 {showPercentage[ballotName] ? "نمایش عددی" : "نمایش درصدی"}
-              </Button>
+              </button>
             </Col>
             <Col className="col-12 col-sm-6">
               <button
