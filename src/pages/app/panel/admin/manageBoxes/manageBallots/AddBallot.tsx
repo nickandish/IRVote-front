@@ -26,10 +26,11 @@ const AddBallot = () => {
     setIsSubmitting(true);
     setError(null);
     setSuccess(null);
+    console.log(durationId);
 
     try {
       await apiClient.post(
-        API_URLS.ADD_BALLOT.replace(":id", durationId),
+        API_URLS.ADD_BALLOT.replace(":id", String(durationId)),
         formData
       );
       setSuccess("صندوق جدید با موفقیت اضافه شد.");

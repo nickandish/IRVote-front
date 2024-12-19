@@ -8,12 +8,14 @@ import gregorian_fa from "react-date-object/locales/gregorian_fa";
 import apiClient from "../../../../../../../../api/axios";
 import { API_URLS } from "../../../../../../../../api/urls";
 import { useParams } from "react-router-dom";
-import "../../ballotTime.scss";
 import { HiOutlineArchiveBox } from "react-icons/hi2";
 import { BsPersonArmsUp } from "react-icons/bs";
+import { useDuration } from "../../../../../../../../api/contextApi/DurationContext";
+import "../../ballotTime.scss";
 
 const SetBallot = () => {
   const { id } = useParams<{ id: string }>();
+  const { durationId } = useDuration();
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -61,11 +63,24 @@ const SetBallot = () => {
       Start_at: `${startDate?.toISOString().split("T")[0]}T${startTime}:00`,
       End_at: `${endDate?.toISOString().split("T")[0]}T${endTime}:00`,
     };
+
     handleApiCall(
       API_URLS.SET_TIME_BALLOT.replace(":id", String(id)),
       "post",
       payload
     );
+    const fetchData = async () => {
+      try {
+        const response = await apiClient.post(
+          API_URLS.UPDATE.replace(":id", String(durationId))
+        );
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   };
 
   const postCandidateEditTime = () => {

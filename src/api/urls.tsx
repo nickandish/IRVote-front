@@ -81,6 +81,8 @@ export const API_URLS = {
   GET_CANDIDATE_PANEL: "/management_panel/CandidateGetuser/",
   PUT_CANDIDATE_PANEL: "/management_panel/CandidateSelfEdit/",
 
+  UPDATE: "/management_panel/UpdateElectionDuration/:id/",
+
   // ObserverPanel
   // charts
   VOTER_COUNT: "/observing_panel/VoterCount/:id/",
