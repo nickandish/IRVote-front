@@ -37,7 +37,7 @@
   }
 }
 .button {
-  margin-top: 1rem;
+  margin: auto 3rem;
   @include button();
   border-radius: 3rem !important;
   width: 12rem;

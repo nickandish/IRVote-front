@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Button } from "react-bootstrap";
 import {
   BarChart,
   Bar,
@@ -31,6 +31,9 @@ interface BallotData {
 
 const CandidateVoteResult = () => {
   const [ballotData, setBallotData] = useState<any>(null);
+  const [showPercentage, setShowPercentage] = useState<{
+    [key: string]: boolean;
+  }>({});
   const { observerDurationId } = useDuration();
 
   useEffect(() => {
@@ -64,46 +67,63 @@ const CandidateVoteResult = () => {
     }
   };
 
+  const toggleChart = (ballotName: string) => {
+    setShowPercentage((prevState) => ({
+      ...prevState,
+      [ballotName]: !prevState[ballotName],
+    }));
+  };
+
   return (
     <Container className="obs-list candidate-chart">
       <h3 className="mt-5">فعالیت رای دهندگان</h3>
       {Object.keys(ballotData).map((ballotName) => (
-        <>
+        <div key={ballotName}>
           <hr />
-          <div key={ballotName}>
-            <h4>{ballotName}</h4>
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart
-                width={600}
-                height={400}
-                data={transformChartData(ballotData[ballotName])}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          <h4>{ballotName}</h4>
+
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart
+              data={transformChartData(
+                ballotData[ballotName],
+                showPercentage[ballotName] ?? true
+              )}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar
+                dataKey={
+                  showPercentage[ballotName] ? "percentage" : "weighted_votes"
+                }
+                name={showPercentage[ballotName] ? "درصد آراء" : "تعداد آراء"}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="weighted_votes" name="تعداد آراء">
-                  {transformChartData(ballotData[ballotName]).map(
-                    (entry, index) => (
-                      <Cell key={`cell-${index}`} className={entry.className} />
-                    )
-                  )}
-                </Bar>
-                <Bar dataKey="percentage" name="درصد آراء">
-                  {transformChartData(ballotData[ballotName]).map(
-                    (entry, index) => (
-                      <Cell key={`cell-${index}`} className={entry.className} />
-                    )
-                  )}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+                {transformChartData(
+                  ballotData[ballotName],
+                  showPercentage[ballotName] ?? true
+                ).map((entry, index) => (
+                  <Cell
+                    key={`cell-${ballotName}-${index}`}
+                    className={entry.className}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+
           <Row>
-            <Col className="col-12 col-sm-7"></Col>
-            <Col className="col-12 col-sm-5">
+            <Col className="col-12 col-sm-6">
+              <Button
+                className="button"
+                onClick={() => toggleChart(ballotName)}
+              >
+                {showPercentage[ballotName] ? "نمایش عددی" : "نمایش درصدی"}
+              </Button>
+            </Col>
+            <Col className="col-12 col-sm-6">
               <button
                 className="button"
                 onClick={() => handlePostVote(ballotData[ballotName].ballot_id)}
@@ -112,14 +132,15 @@ const CandidateVoteResult = () => {
               </button>
             </Col>
           </Row>
-        </>
+        </div>
       ))}
     </Container>
   );
 };
 
-function transformChartData(ballot: BallotData) {
+function transformChartData(ballot: BallotData, showPercentage: boolean) {
   const { results, Main_count, Reserve_count } = ballot;
+  console.log(showPercentage);
 
   return results.map((candidate: CandidateResult, index: number) => {
     let className = "red-bar";
