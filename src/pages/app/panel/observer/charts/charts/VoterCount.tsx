@@ -59,7 +59,19 @@ const VoterCount: React.FC = () => {
     },
   ];
 
-  const isAboveLimit = data.Participated_voters_count >= data.vote_min_limit;
+  // Calculate participation percentage
+  const participationPercentage =
+    (data.Participated_voters_count / data.vote_min_limit) * 100;
+
+  // Determine the gradient based on the participation percentage
+  const getParticipationGradient = () => {
+    if (participationPercentage <= 2) return "#b40000, #ff0034"; // 0-2%
+    if (participationPercentage <= 25) return "#ff0034, #f38906"; // 2-25%
+    if (participationPercentage <= 50) return "#f38906, #d5dd23"; // 25-50%
+    if (participationPercentage <= 75) return "#d5dd23, #a6dd23"; // 50-75%
+    if (participationPercentage < 100) return "#a6dd23, #00a693"; // 75-100%
+    return "#00a693, #04b610"; // 100%
+  };
 
   return (
     <div
@@ -76,21 +88,21 @@ const VoterCount: React.FC = () => {
             bottom: 5,
           }}
         >
-          {/* Define Gradient */}
           <defs>
-            <linearGradient id="dynamicGradient" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient
+              id="participationGradient"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
               <stop
                 offset="0%"
-                stopColor={isAboveLimit ? "#26ba6d" : "#72d5f6"}
+                stopColor={getParticipationGradient().split(", ")[0]}
               />
-              <stop
-                offset="50%"
-                stopColor={isAboveLimit ? "#02d880" : "#72d5f6"}
-              />
-
               <stop
                 offset="100%"
-                stopColor={isAboveLimit ? "#72d5f6" : "#02d880"}
+                stopColor={getParticipationGradient().split(", ")[1]}
               />
             </linearGradient>
           </defs>
@@ -101,11 +113,10 @@ const VoterCount: React.FC = () => {
           <Tooltip />
           <Legend />
 
-          {/* Dynamic Gradient for Participated */}
           <Bar
             dataKey="Participated"
             stackId="a"
-            fill="url(#dynamicGradient)" // Use the gradient here
+            fill="url(#participationGradient)"
             name="شرکت کرده‌ها"
           >
             <LabelList dataKey="Participated" position="top" />
@@ -118,7 +129,6 @@ const VoterCount: React.FC = () => {
             name="باقی‌مانده‌ها"
           />
 
-          {/* Vote Minimum Limit as a Reference Line */}
           <ReferenceLine
             y={data.vote_min_limit}
             label={{
@@ -126,7 +136,7 @@ const VoterCount: React.FC = () => {
               position: "top",
               fill: "#000",
             }}
-            strokeDasharray="3 3"
+            strokeDasharray="10 10"
             strokeWidth={3}
           />
         </BarChart>

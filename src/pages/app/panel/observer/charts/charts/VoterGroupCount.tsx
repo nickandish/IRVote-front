@@ -62,11 +62,24 @@ const VoterGroupCount: React.FC = () => {
   if (durationError || error) return <p>ارور: {durationError || error}</p>;
   if (!data || !data.voter_groups) return <p>اطلاعاتی موجود نیست</p>;
 
-  const chartData = data.voter_groups.map((group) => ({
-    name: group.group,
-    voters: group.voter_count,
-    minLimit: group.VoterGroup_min_limit,
-  }));
+  const chartData = data.voter_groups.map((group) => {
+    const percentage = (group.voter_count / group.VoterGroup_min_limit) * 100;
+    return {
+      name: group.group,
+      voters: group.voter_count,
+      minLimit: group.VoterGroup_min_limit,
+      percentage: Math.min(percentage, 100),
+    };
+  });
+
+  const getColorForBelowLimit = (percentage: number) => {
+    if (percentage <= 2) return "#b40000";
+    if (percentage <= 25) return "#ff0034";
+    if (percentage <= 50) return "#f38906";
+    if (percentage <= 75) return "#d5dd23";
+    if (percentage <= 100) return "#a6dd23";
+    return "#a6dd23";
+  };
 
   return (
     <div style={{ width: "100%", height: 400 }}>
@@ -81,15 +94,10 @@ const VoterGroupCount: React.FC = () => {
           }}
         >
           <defs>
+            {/* Gradient for above limit */}
             <linearGradient id="aboveLimitGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#26ba6d" />
-              <stop offset="50%" stopColor="#02d880" />
-              <stop offset="100%" stopColor="#72d5f6" />
-            </linearGradient>
-            <linearGradient id="belowLimitGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#86f0ff" />
-              <stop offset="50%" stopColor="#72d5f6" />
-              <stop offset="100%" stopColor="#72d5f6" />
+              <stop offset="0%" stopColor="#00a693" />
+              <stop offset="100%" stopColor="#04b610" />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" />
@@ -102,10 +110,15 @@ const VoterGroupCount: React.FC = () => {
             name="تعداد رأی‌دهندگان"
             shape={(props: any) => {
               const { x, y, width, height, payload } = props;
+              const percentage = payload.percentage;
+              const isAboveLimit = payload.voters > payload.minLimit;
+
               const minLimitHeight =
                 payload.minLimit * (height / payload.voters);
 
-              const isAboveLimit = payload.voters >= payload.minLimit;
+              const fillColor = isAboveLimit
+                ? "url(#aboveLimitGradient)"
+                : getColorForBelowLimit(percentage);
 
               return (
                 <g>
@@ -114,11 +127,7 @@ const VoterGroupCount: React.FC = () => {
                     y={y}
                     width={width}
                     height={height}
-                    fill={
-                      isAboveLimit
-                        ? "url(#aboveLimitGradient)"
-                        : "url(#belowLimitGradient)"
-                    }
+                    fill={fillColor}
                   />
                   <line
                     x1={x}
@@ -127,6 +136,7 @@ const VoterGroupCount: React.FC = () => {
                     y2={y + height - minLimitHeight}
                     stroke="red"
                     strokeWidth="3"
+                    strokeDasharray="10 10"
                   />
                 </g>
               );

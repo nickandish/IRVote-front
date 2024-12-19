@@ -13,6 +13,7 @@ import {
   Legend,
   ResponsiveContainer,
   ReferenceLine,
+  Rectangle,
 } from "recharts";
 
 interface ProvinceData {
@@ -48,7 +49,6 @@ const VoterProvinceCount: React.FC = () => {
         );
         if (response.data) {
           setData(response.data);
-          console.log(response.data);
         } else {
           setError("Failed to fetch voter data");
         }
@@ -72,6 +72,22 @@ const VoterProvinceCount: React.FC = () => {
     isAboveLimit: province.voted_voters > data.Province_min_limit,
   }));
 
+  // گرادیانت پویا برای زیر خط حدنصاب
+  // const getBelowLimitGradient = (percentage: number) => {
+  //   if (percentage <= 20) return "#b40000"; // قرمز تیره
+  //   if (percentage <= 40) return "#ff0034"; // قرمز
+  //   if (percentage <= 60) return "#f38906"; // نارنجی
+  //   if (percentage <= 100) return "#d5dd23"; // زرد
+  //   return "#a6dd23"; // سبز کم‌رنگ
+  // };
+
+  // // گرادیانت پویا برای بالای خط حدنصاب
+  // const getAboveLimitGradient = (percentage: number) => {
+  //   if (percentage <= 50) return "#a6dd23"; // سبز کم‌رنگ
+  //   if (percentage <= 100) return "#00a693"; // سبز حدنصاب
+  //   return "#04b610";
+  // };
+
   return (
     <div style={{ width: "100%", height: 400 }}>
       <ResponsiveContainer>
@@ -85,15 +101,17 @@ const VoterProvinceCount: React.FC = () => {
           }}
         >
           <defs>
-            <linearGradient id="aboveLimitGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#26ba6d" />
-              <stop offset="50%" stopColor="#02d880" />
-              <stop offset="100%" stopColor="#72d5f6" />
-            </linearGradient>
             <linearGradient id="belowLimitGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#86f0ff" />
-              <stop offset="50%" stopColor="#72d5f6" />
-              <stop offset="100%" stopColor="#72d5f6" />
+              <stop offset="0%" stopColor="#a6dd23" />
+              <stop offset="25%" stopColor="#d5dd23" />
+              <stop offset="50%" stopColor="#f38906" />
+              <stop offset="75%" stopColor="#ff0034" />
+              <stop offset="100%" stopColor="#b40000" />
+            </linearGradient>
+            <linearGradient id="aboveLimitGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#04b610" />
+              <stop offset="50%" stopColor="#00a693" />
+              <stop offset="100%" stopColor="#a6dd23" />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" />
@@ -106,16 +124,17 @@ const VoterProvinceCount: React.FC = () => {
             name="رأی‌دهندگان"
             shape={(props: any) => {
               const { x, y, width, height, payload } = props;
-              const gradientId = payload.isAboveLimit
-                ? "aboveLimitGradient"
-                : "belowLimitGradient";
+              const isAboveLimit = payload.voters > data.Province_min_limit;
+
               return (
-                <rect
+                <Rectangle
                   x={x}
                   y={y}
                   width={width}
                   height={height}
-                  fill={`url(#${gradientId})`}
+                  fill={`url(#${
+                    isAboveLimit ? "aboveLimitGradient" : "belowLimitGradient"
+                  })`}
                 />
               );
             }}
