@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { API_URLS } from "../../../../../../api/urls";
 import { Alert } from "react-bootstrap";
-import img from "../../../../../../assets/femaileAvatar.svg";
-import "../../../../candidate/voteList/VoteList.scss";
 import { MdBlock } from "react-icons/md";
 import { LuTrash2 } from "react-icons/lu";
 import { TbPencil } from "react-icons/tb";
+
 import { useNavigate } from "react-router-dom";
 import { useDuration } from "../../../../../../api/contextApi/DurationContext";
 import apiClient from "../../../../../../api/axios";
-import { API_URLS } from "../../../../../../api/urls";
+import img from "../../../../../../assets/femaileAvatar.svg";
+import "../../../../candidate/voteList/VoteList.scss";
 import "../manageVoters.scss";
+import { FaRegCircleCheck } from "react-icons/fa6";
 
 interface TableVotersProps {
   searchQuery: string;
@@ -36,7 +38,7 @@ const TableVoters: React.FC<TableVotersProps> = ({ searchQuery }) => {
   const fetchVoters = async () => {
     try {
       const response = await apiClient.get(
-        API_URLS.GET_VOTER.replace(":id", durationId)
+        API_URLS.GET_VOTER.replace(":id", String(durationId))
       );
       setVoters(response.data);
     } catch (error) {
@@ -119,7 +121,10 @@ const TableVoters: React.FC<TableVotersProps> = ({ searchQuery }) => {
         </thead>
         <tbody>
           {filteredVoters.map((voter) => (
-            <tr key={voter.id}>
+            <tr
+              key={voter.id}
+              className={voter.Voting_status === 2 ? "susspend" : ""}
+            >
               <td>
                 <img src={voter.img || img} alt="Voter Avatar" />
               </td>
@@ -128,7 +133,13 @@ const TableVoters: React.FC<TableVotersProps> = ({ searchQuery }) => {
               </td>
               <td>{voter.mobile}</td>
               <td>{voter.voter_group}</td>
-              <td>{voter.Voting_status === 0 ? "رای داده" : "رای نداده"}</td>
+              <td>
+                {voter.Voting_status === 0
+                  ? "رای داده"
+                  : voter.Voting_status === 1
+                  ? "رای نداده"
+                  : "مسدود شده"}
+              </td>
               <td>
                 <TbPencil
                   onClick={() => handleEditClick(voter.id)}
@@ -136,10 +147,17 @@ const TableVoters: React.FC<TableVotersProps> = ({ searchQuery }) => {
                 />
               </td>
               <td>
-                <MdBlock
-                  className="icon1"
-                  onClick={() => suspendVoter(voter.id)}
-                />
+                {voter.Voting_status === 2 ? (
+                  <FaRegCircleCheck
+                    className="icon1"
+                    onClick={() => suspendVoter(voter.id)}
+                  />
+                ) : (
+                  <MdBlock
+                    className="icon1"
+                    onClick={() => suspendVoter(voter.id)}
+                  />
+                )}
               </td>
               <td>
                 <LuTrash2
